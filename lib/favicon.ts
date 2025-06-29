@@ -9,6 +9,6 @@ export const getFavicon = (url: string): string => {
     return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
   } catch {
     // Fallback to a default icon if URL parsing fails
-    return "https://www.google.com/s2/favicons?domain=example.com&sz=64";
+    return 'https://www.google.com/s2/favicons?domain=example.com&sz=64';
   }
 };

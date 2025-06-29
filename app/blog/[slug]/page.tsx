@@ -30,7 +30,7 @@ export const generateMetadata = async ({
   return createMetadata({
     title: page.title,
     description: page.description || '',
-    image: `/api/og?title=${page.title}&description=${page.description || ''}`,
+    image: page.cover,
   });
 };
 
@@ -64,9 +64,19 @@ const Page: FC<PageProperties> = async ({ params }) => {
           Blog
         </Link>
       </Section>
-      <Section className="gap-0">
+      <Section className="gap-1">
         <h1>{page.title}</h1>
         <p className="text-foreground-lighter">{page.description}</p>
+        <div className="flex gap-2">
+          {page.tags?.split(',').map((tag) => (
+            <code
+              className="rounded-md bg-secondary px-2 py-1 text-xs"
+              key={tag}
+            >
+              {tag}
+            </code>
+          ))}
+        </div>
       </Section>
       {page.image ? (
         <Section>
