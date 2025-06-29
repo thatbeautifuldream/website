@@ -10,7 +10,7 @@ type ViewAnimationProps = {
   children: ReactNode;
 };
 
-export const Section = ({ className, delay, children }: ViewAnimationProps) => {
+export const Section = ({ className, delay = 0, children }: ViewAnimationProps) => {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
@@ -21,8 +21,16 @@ export const Section = ({ className, delay, children }: ViewAnimationProps) => {
     <motion.div
       animate={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
       className={cn('grid gap-4', className)}
-      initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
-      transition={{ delay, duration: 0.8 }}
+      initial={{ filter: 'blur(3px)', translateY: -8, opacity: 0 }}
+      style={{
+        willChange: 'transform, opacity, filter'
+      }}
+      transition={{
+        delay,
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        type: 'tween'
+      }}
       viewport={{ once: true, amount: 0.3 }}
     >
       {children}
