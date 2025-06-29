@@ -2,6 +2,7 @@ import { MDXContent } from '@content-collections/mdx/react';
 import Image from 'next/image';
 import type { HTMLProps, ReactNode } from 'react';
 import { Tweet } from 'react-tweet';
+import { CodeBlock } from './code-block';
 import { Features } from './features';
 import { Link } from './link';
 import { Timeline } from './timeline';
@@ -10,6 +11,7 @@ import { YouTubeVideos } from './youtube-videos';
 
 type MdxProperties = {
   readonly code: string;
+  readonly showCopyButton?: boolean;
 };
 
 const a = (props: HTMLProps<HTMLAnchorElement>) => {
@@ -88,24 +90,37 @@ const iframe = (properties: HTMLProps<HTMLIFrameElement>) => (
   <iframe {...properties} />
 );
 
-export const Mdx = ({ code }: MdxProperties) => (
-  <MDXContent
-    code={code}
-    components={{
-      a,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      img,
-      iframe,
-      Video,
-      Callout,
-      Tweet,
-      Timeline,
-      Features,
-      YouTubeVideos,
-    }}
-  />
-);
+export const Mdx = ({ code, showCopyButton = false }: MdxProperties) => {
+  const pre = (props: HTMLProps<HTMLPreElement>) => (
+    <CodeBlock
+      className={props.className}
+      showCopyButton={showCopyButton}
+      title={props.title}
+    >
+      {props.children}
+    </CodeBlock>
+  );
+
+  return (
+    <MDXContent
+      code={code}
+      components={{
+        a,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        img,
+        iframe,
+        pre,
+        Video,
+        Callout,
+        Tweet,
+        Timeline,
+        Features,
+        YouTubeVideos,
+      }}
+    />
+  );
+};

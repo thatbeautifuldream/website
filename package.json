@@ -6,7 +6,8 @@
     "dev": "concurrently \"content-collections watch\" \"next dev --turbopack\"",
     "build": "content-collections build && next build",
     "start": "next start",
-    "lint": "ultracite lint"
+    "lint": "ultracite lint",
+    "gists:fetch": "tsx scripts/github.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
@@ -35,6 +36,7 @@
     "@content-collections/core": "^0.8.2",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.6",
+    "@octokit/rest": "^22.0.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

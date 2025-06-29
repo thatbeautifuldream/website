@@ -1,0 +1,100 @@
+---
+title: "using git worktree to work on feature branch easily "
+description: "using git worktree to work on feature branch easily "
+datePublished: 2025-04-16T21:29:25.000Z
+date: 2025-04-16T21:29:25.000Z
+slug: using-git-worktree-to-work-on-feature-branch-easily-
+tags: markdown, gist
+gistId: 4dafd25880d28bf9a963aed2d6d19d8a
+gistUrl: https://gist.github.com/thatbeautifuldream/4dafd25880d28bf9a963aed2d6d19d8a
+isPublic: true
+---
+
+## Description
+
+using git worktree to work on feature branch easily 
+
+## readme.md
+
+```markdown
+# Git Worktree Cheat Sheet
+
+## What is `git worktree`?
+Allows you to work on multiple branches **in parallel** using **multiple working directories**.
+
+---
+
+## Setup Instructions
+
+### 1. Go to your main repository
+
+\`\`\`bash
+cd ~/projects/your-main-repo
+\`\`\`
+
+### 2. Create and add a worktree for a branch
+
+\`\`\`bash
+git worktree add ../your-main-repo-feature-a feature-a
+\`\`\`
+
+- This creates a new folder: `../your-main-repo-feature-a`
+- Checks out `feature-a` branch inside it
+- Creates the branch if it doesn't already exist
+
+### 3. Add another one
+
+\`\`\`bash
+git worktree add ../your-main-repo-feature-b feature-b
+\`\`\`
+
+Now you have:
+
+- `your-main-repo/` (e.g. on main)
+- `your-main-repo-feature-a/` (on feature-a)
+- `your-main-repo-feature-b/` (on feature-b)
+
+## Usage Tips
+
+- Open each folder in a separate terminal or on your IDE window
+- Work, commit, pull/push like usual in each
+- No need to switch branches manually
+
+## Cleanup
+
+Remove a worktree:
+
+\`\`\`bash
+git worktree remove ../your-main-repo-feature-a
+\`\`\`
+
+## Delete the branch (optional):
+
+\`\`\`bash
+git branch -d feature-a
+\`\`\`
+
+## List active worktrees
+
+\`\`\`bash
+git worktree list
+\`\`\`
+
+## Full Flow
+
+\`\`\`bash
+# Main repo
+cd ~/projects/my-repo
+
+# Create worktree for feature-a
+git worktree add ../my-repo-feature-a feature-a
+
+# Create worktree for feature-b
+git worktree add ../my-repo-feature-b feature-b
+
+# List all active worktrees
+git worktree list
+\`\`\`
+
+```
+

@@ -1,0 +1,45 @@
+---
+title: "Precommit hook to discard all submodule changes"
+description: "Precommit hook to discard all submodule changes"
+datePublished: 2025-05-07T01:17:41.000Z
+date: 2025-05-07T01:17:41.000Z
+slug: precommit-hook-to-discard-all-submodule-changes
+tags: shell, gist
+gistId: 0d005023a2de1957db07f11ee1dc81ac
+gistUrl: https://gist.github.com/thatbeautifuldream/0d005023a2de1957db07f11ee1dc81ac
+isPublic: true
+---
+
+## Description
+
+Precommit hook to discard all submodule changes
+
+## pre-commit
+
+```shell
+#!/bin/bash
+# Git pre-commit hook: Discards all changes in submodules before committing. (.git/hooks/pre-commit)
+
+set -e
+echo "Discarding all changes in submodules before commit..."
+
+# Reset and clean all submodules recursively
+git submodule foreach --recursive '
+  git reset --hard
+  git clean -fdx
+'
+
+# Unstage any superproject submodule pointer updates, so submodule state never changes
+if [ -f .gitmodules ]; then
+  git config --file .gitmodules --get-regexp path | awk "{print \\$2}" | while read submodule
+  do
+    if git diff --cached --name-only | grep -q "^$submodule"; then
+      git reset HEAD "$submodule"
+    fi
+  done
+fi
+
+echo "All submodule changes have been discarded and unstaged."
+
+```
+

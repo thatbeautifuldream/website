@@ -1,0 +1,98 @@
+---
+title: "Conventional commit aliases"
+description: "Conventional commit aliases"
+datePublished: 2025-06-17T00:40:26.000Z
+date: 2025-06-17T00:40:26.000Z
+slug: conventional-commit-aliases
+tags: shell, gist
+gistId: 7420d8f0e8fe9e6264f660166ba1a46e
+gistUrl: https://gist.github.com/thatbeautifuldream/7420d8f0e8fe9e6264f660166ba1a46e
+isPublic: true
+---
+
+## Description
+
+Conventional commit aliases
+
+## .zshrc
+
+```shell
+# Commit, Add all, and Push — in one step.
+gcap() {
+    git add . && git commit -m "$*" && git push
+}
+
+# FEAT — New Feature.
+gfeat() {
+    gcap "feat: $@"
+}
+
+# FIX — Bug fix.
+gfix() {
+    gcap "fix: $@"
+}
+
+# DOCS — Documentation only.
+gdocs() {
+    gcap "docs: $@"
+}
+
+# STYLE — Code style changes (formatting, missing semi colons, etc).
+gstyle() {
+    gcap "style: $@"
+}
+
+# REFACTOR — Refactoring code (not fixing a bug or adding a feature).
+grefactor() {
+    gcap "refactor: $@"
+}
+
+# PERF — Performance improvements.
+gperf() {
+    gcap "perf: $@"
+}
+
+# TEST — Adding or updating tests.
+gtest() {
+    gcap "test: $@"
+}
+
+# BUILD — Build system or dependencies changes.
+gbuild() {
+    gcap "build: $@"
+}
+
+# CI — Continuous Integration related changes.
+gci() {
+    gcap "ci: $@"
+}
+
+# CHORE — Other changes that don’t modify src or test files.
+gchore() {
+    gcap "chore: $@"
+}
+
+# BREAKING CHANGE — Breaking change (major).
+gbrk() {
+    gcap "feat!: $@"
+}
+
+# TYPE HELPER — Shows all available commit types.
+gtype() {
+  echo ""
+  echo "Alias       | Commit Type  | Description"
+  echo "gfeat       | feat:        | A new feature"
+  echo "gfix        | fix:         | A bug fix"
+  echo "gdocs       | docs:        | Documentation only changes"
+  echo "gstyle      | style:       | Code style / formatting"
+  echo "grefactor   | refactor:    | Code refactoring"
+  echo "gperf       | perf:        | Performance improvements"
+  echo "gtest       | test:        | Adding or updating tests"
+  echo "gbuild      | build:       | Build system or dependencies"
+  echo "gci         | ci:          | CI configuration changes"
+  echo "gchore      | chore:       | Other (no src or test file changes)"
+  echo "gbrk        | feat!:       | Breaking change"
+  echo ""
+}
+```
+
