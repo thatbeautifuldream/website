@@ -6,6 +6,7 @@ import { Features } from './features';
 import { Link } from './link';
 import { Timeline } from './timeline';
 import { Video } from './video';
+import { YouTubeVideos } from './youtube-videos';
 
 type MdxProperties = {
   readonly code: string;
@@ -104,6 +105,7 @@ export const Mdx = ({ code }: MdxProperties) => (
       Tweet,
       Timeline,
       Features,
+      YouTubeVideos,
     }}
   />
 );
