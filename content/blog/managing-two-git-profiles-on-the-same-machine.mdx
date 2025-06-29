@@ -1,0 +1,87 @@
+---
+title: "Managing Two Git Profiles on the Same Machine"
+datePublished: Wed Jan 22 2025 19:29:49 GMT+0000 (Coordinated Universal Time)
+cuid: cm68at4uk000709kv4k454fzo
+slug: managing-two-git-profiles-on-the-same-machine
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1737571386496/a0f298b7-69f7-4e38-8a9a-2a3f508d8bc1.png
+tags: git, ssh-keys
+
+---
+
+Working with two Git profiles on the same machine might sound straightforward, but it can quickly turn into a frustrating experience. I faced this challenge when trying to maintain separate mac os profiles for personal and work projects. Here’s why maintining in the same profile was necessary for me and how I managed to resolve the issues.
+
+---
+
+## The Pain of getting the permissions mixed between Profiles
+
+As a developer juggling personal side projects and professional work, I found myself constantly switching between the tow user profiles. This led to several issue of **Mixed Permissions** I used to work on the different profile for work and personal projects, and used to struggle resetting permissions for brew, node and other binaries. These challenges forced me to find a better solution to manage multiple Git profiles on my machine.
+
+---
+
+## Setting Up Two Git Profiles
+
+To solve this, I set up separate SSH keys and configurations for each profile. Here’s how you can do it too:
+
+### 1\. Create SSH Keys for Each Account
+
+Generate separate SSH keys for your personal and work accounts and add them to respective [github accounts](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) :
+
+For macOS and Linux:
+
+```bash
+cd ~/.ssh
+ssh-keygen -t rsa -C "your_email_for_personal_account@example.com" -f "github-personal"
+ssh-keygen -t rsa -C "your_email_for_work_account@example.com" -f "github-work"
+```
+
+### 2\. Add SSH Keys to the SSH Agent
+
+Add the generated keys to your SSH agent:
+
+For macOS:
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/github-personal
+ssh-add --apple-use-keychain ~/.ssh/github-work
+```
+
+Fir Linux:
+
+```bash
+ssh-add ~/.ssh/github-personal
+ssh-add ~/.ssh/github-work
+```
+
+### 3\. Configure SSH for Multiple Accounts
+
+Edit the SSH config file to define host aliases for each account:  
+`nano ~/.ssh/config`
+
+```bash
+# Personal account
+Host github-personal
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github-personal
+
+# Work account
+Host github-work
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/github-work
+```
+
+4\. Use Correct Accounts for Repositories
+
+When cloning repositories, use the appropriate host alias:
+
+* For personal projects:  
+    `git clone git@github-personal:username/repo.git`
+    
+* For work projects:  
+    `git clone git@github-work:username/repo.git`
+    
+
+---
+
+If you’ve struggled with managing multiple Git accounts on the same machine, I hope this guide helps you as much as it helped me.

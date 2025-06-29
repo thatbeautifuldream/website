@@ -1,0 +1,45 @@
+---
+title: "Wait, so you're saying JavaScript isn't weird!"
+datePublished: Wed Jan 04 2023 04:12:54 GMT+0000 (Coordinated Universal Time)
+cuid: clch58xp2000108l4f0az4521
+slug: wait-so-youre-saying-javascript-isnt-weird
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1672804975914/6536422a-17f5-4b1b-a1e0-55107223a20d.png
+tags: javascript, javascript-type-coercion, devretro2022
+
+---
+
+Type coercion is the process of converting one data type to another. In JavaScript, type coercion is a common feature that allows the interpreter to implicitly convert values from one type to another when necessary. This can sometimes lead to unexpected results and has caused some people to view JavaScript as a "weird" language. However, it's important to understand that type coercion is a fundamental feature of JavaScript and is not a bug or a quirk of the language.
+
+One of the key features of type coercion in JavaScript is that it follows a set of rules for converting values from one type to another. These rules are known as the "Abstract Equality Comparison Algorithm" and are used to determine whether two values are equal. The algorithm defines a set of steps that the interpreter follows to compare two values, including converting the values to a common type if necessary.
+
+One of the more confusing aspects of type coercion in JavaScript is that it can sometimes lead to unexpected results when comparing values. For example, consider the following code:
+
+```javascript
+console.log(1 == "1");  // outputs "true"
+console.log(1 === "1");  // outputs "false"
+```
+
+In the first example, the interpreter uses type coercion to convert the string "1" to the number 1 and then compares the two values. Since they are now equal, the expression evaluates to true. In the second example, the interpreter does not perform any type of coercion and instead compares the values as they are. Since they are not the same type, the expression evaluates to false.
+
+Another aspect of type coercion in JavaScript is the concept of "truthy" and "falsy" values. In JavaScript, certain values are considered "falsy" when used in a boolean context, such as an if statement. These values include false, 0, null, undefined, NaN, and the empty string (""). All other values are considered "truthy". This means that the following code will output "Yes!" even though the variable x is not equal to true:
+
+```javascript
+let x = 1;
+if (x) {
+  console.log("Yes!");
+} else {
+  console.log("No...");
+}
+```
+
+## Abstract Operation - ToNumber()
+
+The ECMA International documentation for the JavaScript language includes a section on type conversion. Here is a quote from the documentation on the `ToNumber` abstract operation, which is used to convert a value to a number:
+
+"The ToNumber abstract operation converts a value to a Number value. If the value is a Number, the result is the value itself. If the value is a String, the result is the result of the String to Number conversion. If the value is a Boolean, the result is 1 if the value is true, and +0 if the value is false. If the value is null the result is +0 and for undefined, the result is NaN."
+
+In other words, the `ToNumber` operation is used to convert values of various types (such as strings, booleans, and null) to a number. If the value cannot be successfully converted to a number, the result is `NaN` (Not a Number).
+
+### Conclusion
+
+In conclusion, `ToPrimitive`, `ToNumber`, and `ToBoolean` abstract operations are few of many important tools in the JavaScript language that are used to convert values from one type to another. The `ToPrimitive` operation is the fundamental operation that underlies the basic language mechanisms for converting values, while `ToNumber` and `ToBoolean` are used to convert values to specific types. Understanding how these operations work can help you write more reliable and predictable code in JavaScript.
