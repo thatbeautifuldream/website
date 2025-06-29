@@ -58,6 +58,16 @@
     @apply min-w-0;
   }
 
+  /* Hide scrollbars across the project to prevent layout shift */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+  }
+
   body {
     text-rendering: optimizelegibility;
     font-feature-settings: "kern", "ss02";

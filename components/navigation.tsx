@@ -33,11 +33,6 @@ const links = [
     label: 'Blog',
     active: (pathname: string) => pathname.startsWith('/blog'),
   },
-  {
-    href: '/resume',
-    label: 'Resume',
-    active: (pathname: string) => pathname.startsWith('/resume'),
-  },
 ];
 
 export const Navigation = () => {
