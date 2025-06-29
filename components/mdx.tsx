@@ -4,6 +4,7 @@ import type { HTMLProps, ReactNode } from 'react';
 import { Tweet } from 'react-tweet';
 import { CodeBlock } from './code-block';
 import { Features } from './features';
+import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Timeline } from './timeline';
 import { Video } from './video';
@@ -31,15 +32,17 @@ const img = (properties: HTMLProps<HTMLImageElement>) => {
   }
 
   return (
-    <Image
-      alt={properties.alt}
-      className="my-4 overflow-hidden rounded-lg border border-border/50"
-      height={698}
-      quality={100}
-      src={properties.src}
-      unoptimized={properties.src.startsWith('http')}
-      width={1240}
-    />
+    <ImageZoom>
+      <Image
+        alt={properties.alt}
+        className="my-4 overflow-hidden rounded-lg border border-border/50"
+        height={698}
+        quality={100}
+        src={properties.src}
+        unoptimized={properties.src.startsWith('http')}
+        width={1240}
+      />
+    </ImageZoom>
   );
 };
 

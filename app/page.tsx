@@ -26,8 +26,6 @@ const HomePage = () => (
           alt=""
           className='size-10 rounded-full transition-all duration-300 hover:scale-110'
           height={40}
-          // placeholder="blur"
-          // priority
           src={'https://avatars.githubusercontent.com/u/28717686?v=4'}
           width={40}
         />
