@@ -6,7 +6,7 @@
     "dev": "concurrently \"content-collections watch\" \"next dev --turbopack\"",
     "build": "content-collections build && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "ultracite lint"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
