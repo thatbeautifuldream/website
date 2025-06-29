@@ -1,5 +1,6 @@
 import { allPages } from 'content-collections';
 import type { Metadata } from 'next';
+import { ImageZoom } from '@/components/image-zoom';
 import { Mdx } from '@/components/mdx';
 import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
@@ -19,16 +20,18 @@ export const metadata: Metadata = createMetadata({
 const HomePage = () => (
   <>
     <Section className="flex items-center gap-4">
-      {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
-      <img
-        alt=""
-        className="size-10 rounded-full"
-        height={40}
-        // placeholder="blur"
-        // priority
-        src={'https://avatars.githubusercontent.com/u/28717686?v=4'}
-        width={40}
-      />
+      <ImageZoom>
+        {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
+        <img
+          alt=""
+          className='size-10 rounded-full transition-all duration-300 hover:scale-110'
+          height={40}
+          // placeholder="blur"
+          // priority
+          src={'https://avatars.githubusercontent.com/u/28717686?v=4'}
+          width={40}
+        />
+      </ImageZoom>
       <div>
         <p className="font-medium text-foreground leading-normal">
           Milind Mishra
