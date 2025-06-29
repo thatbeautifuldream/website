@@ -76,8 +76,8 @@ const Page: FC<PageProperties> = async ({ params }) => {
                             'flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors',
                             'hover:text-foreground'
                         )}
-                        external
                         href={page.gistUrl}
+                        target="_blank"
                     >
                         <ExternalLinkIcon size={12} />
                         View on GitHub
