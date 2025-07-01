@@ -2,8 +2,27 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { RestEndpointMethodTypes } from "@octokit/rest";
-import githubService from "../service/github.service.js";
+import { fetchGistContent, getGists } from "../service/github.service.js";
+
+// Load environment variables from .env.local using ESM
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.join(__dirname, "..", ".env.local");
+
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, "utf8");
+  for (const line of envContent.split("\n")) {
+    const trimmedLine = line.trim();
+    if (trimmedLine && !trimmedLine.startsWith("#")) {
+      const [key, ...valueParts] = trimmedLine.split("=");
+      if (key && valueParts.length > 0) {
+        const value = valueParts.join("=").replace(/^["']|["']$/g, "");
+        process.env[key] = value;
+      }
+    }
+  }
+}
 
 // Type definitions
 type GistFile = {
@@ -99,6 +118,7 @@ function generateTags(gist: GistDetails): string {
  * Creates frontmatter for the MDX file
  */
 function createFrontmatter(gist: GistDetails): string {
+  console.log("🔨 Creating MDX frontmatter...");
   const files = gist.files;
   if (!files) {
     throw new Error("Gist has no files");
@@ -108,6 +128,10 @@ function createFrontmatter(gist: GistDetails): string {
   const slug = createSlug(title);
   const datePublished = new Date(gist.created_at || "").toISOString();
   const tags = generateTags(gist);
+
+  console.log(`   Title: ${title}`);
+  console.log(`   Slug: ${slug}`);
+  console.log(`   Date: ${datePublished}`);
 
   return `---
 title: "${title}"
@@ -145,36 +169,35 @@ function createContent(gist: GistDetails): string {
   //   content += `> **Public:** ${gist.public ? "Yes" : "No"}  \n`;
   //   content += `> **URL:** [View on GitHub](${gist.html_url})\n\n`;
 
-  if (gist.description) {
-    content += `## Description\n\n${gist.description}\n\n`;
-  }
+  // if (gist.description) {
+  //   content += `## Description\n\n${gist.description}\n\n`;
+  // }
 
   // Add files content
   const files = Object.values(gist.files).filter(Boolean) as GistFile[];
 
-  if (files.length === 1) {
-    const file = files[0];
-    content += `## ${file.filename}\n\n`;
+  // if (files.length === 1) {
+  //   const file = files[0];
+  //   // content += `## ${file.filename}\n\n`;
+  //   if (file.language) {
+  //     content += `\`\`\`${file.language.toLowerCase()} title="${
+  //       file.filename
+  //     }"\n${sanitizeContent(file.content)}\n\`\`\`\n\n`;
+  //   } else {
+  //     content += `\`\`\`\n${sanitizeContent(file.content)}\n\`\`\`\n\n`;
+  //   }
+  // } else {
+  for (const file of files) {
+    // content += `### ${file.filename}\n\n`;
     if (file.language) {
-      content += `\`\`\`${file.language.toLowerCase()}\n${sanitizeContent(
-        file.content
-      )}\n\`\`\`\n\n`;
+      content += `\`\`\`${file.language.toLowerCase()} title="${
+        file.filename
+      }"\n${sanitizeContent(file.content)}\n\`\`\`\n\n`;
     } else {
       content += `\`\`\`\n${sanitizeContent(file.content)}\n\`\`\`\n\n`;
     }
-  } else {
-    content += "## Files\n\n";
-    for (const file of files) {
-      content += `### ${file.filename}\n\n`;
-      if (file.language) {
-        content += `\`\`\`${file.language.toLowerCase()}\n${sanitizeContent(
-          file.content
-        )}\n\`\`\`\n\n`;
-      } else {
-        content += `\`\`\`\n${sanitizeContent(file.content)}\n\`\`\`\n\n`;
-      }
-    }
   }
+  // }
 
   return content;
 }
@@ -183,9 +206,13 @@ function createContent(gist: GistDetails): string {
  * Ensures the content directory exists
  */
 function ensureContentDirectory(): void {
-  if (!fs.existsSync(CONTENT_DIR)) {
+  console.log(`📁 Ensuring content directory exists: ${CONTENT_DIR}`);
+  if (fs.existsSync(CONTENT_DIR)) {
+    console.log("✅ Content directory already exists");
+  } else {
+    console.log("📁 Creating content directory...");
     fs.mkdirSync(CONTENT_DIR, { recursive: true });
-    console.log(`Created directory: ${CONTENT_DIR}`);
+    console.log("✅ Content directory created successfully");
   }
 }
 
@@ -194,23 +221,27 @@ function ensureContentDirectory(): void {
  */
 async function processGist(gist: GistListItem): Promise<string | null> {
   try {
-    console.log(
-      `Processing gist: ${gist.id} - ${gist.description || "No description"}`
-    );
+    console.log(`\n🔄 Processing gist: ${gist.id}`);
+    console.log(`   Description: ${gist.description || "No description"}`);
 
     // Fetch full gist content
-    const fullGist = await githubService.fetchGistContent(gist.id);
+    console.log("📥 Fetching full gist content...");
+    const fullGist = await fetchGistContent(gist.id);
 
     if (!fullGist) {
-      console.warn(`Could not fetch content for gist: ${gist.id}`);
+      console.log(`❌ Failed to fetch full gist content for: ${gist.id}`);
       return null;
     }
+
+    console.log("✅ Full gist content fetched");
 
     // Create slug from title/description
     const title = fullGist.description || `gist-${fullGist.id}`;
     const slug = createSlug(title);
     const fileName = `${slug}.mdx`;
     const filePath = path.join(CONTENT_DIR, fileName);
+
+    console.log(`💾 Writing file: ${fileName}`);
 
     // Create MDX content
     const frontmatter = createFrontmatter(fullGist);
@@ -219,11 +250,11 @@ async function processGist(gist: GistListItem): Promise<string | null> {
 
     // Write file
     fs.writeFileSync(filePath, mdxContent, "utf8");
-    console.log(`Created: ${fileName}`);
 
+    console.log(`✅ Successfully created: ${fileName}`);
     return fileName;
   } catch (error) {
-    console.error(`Error processing gist ${gist.id}:`, error);
+    console.error(`❌ Error processing gist ${gist.id}:`, error);
     return null;
   }
 }
@@ -233,11 +264,19 @@ async function processGist(gist: GistListItem): Promise<string | null> {
  */
 async function fetchGistsAndCreateMDXFiles(): Promise<void> {
   try {
-    console.log(`Fetching gists for user: ${GITHUB_USERNAME}`);
+    console.log("🚀 Starting gist fetching process...");
+    console.log(`👤 GitHub Username: ${GITHUB_USERNAME}`);
 
     // Fetch all gists
-    const gists = await githubService.getGists(GITHUB_USERNAME);
-    console.log(`Found ${gists.length} gists`);
+    console.log("📡 Fetching all gists...");
+    const gists = await getGists(GITHUB_USERNAME);
+
+    console.log(`✅ Gists fetched: ${gists.length} found`);
+
+    if (gists.length === 0) {
+      console.log("⚠️ No gists found for user");
+      return;
+    }
 
     // Ensure content directory exists
     ensureContentDirectory();
@@ -246,9 +285,19 @@ async function fetchGistsAndCreateMDXFiles(): Promise<void> {
     const BATCH_SIZE = 5; // Process 5 gists at a time to avoid rate limiting
     const processedFiles: string[] = [];
 
+    console.log(`🔄 Processing gists in batches of ${BATCH_SIZE}...`);
+
     for (let i = 0; i < gists.length; i += BATCH_SIZE) {
       const batch = gists.slice(i, i + BATCH_SIZE);
+      const batchNumber = Math.floor(i / BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(gists.length / BATCH_SIZE);
+
+      console.log(
+        `\n📦 Processing batch ${batchNumber}/${totalBatches} (${batch.length} gists)`
+      );
+
       const batchPromises = batch.map((gist) => processGist(gist));
+      // biome-ignore lint: intentional await in loop for rate limiting
       const batchResults = await Promise.all(batchPromises);
 
       // Collect successful results
@@ -258,16 +307,28 @@ async function fetchGistsAndCreateMDXFiles(): Promise<void> {
         }
       }
 
+      console.log(`✅ Batch ${batchNumber} completed`);
+
       // Add delay between batches to avoid rate limiting
       if (i + BATCH_SIZE < gists.length) {
+        console.log("⏳ Waiting 1 second before next batch...");
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
 
-    console.log(`\n✅ Successfully processed ${processedFiles.length} gists`);
-    console.log(`📁 Files created in: ${CONTENT_DIR}`);
+    console.log("\n🎉 Process completed!");
+    console.log(
+      `📊 Successfully processed ${processedFiles.length} out of ${gists.length} gists`
+    );
+
+    if (processedFiles.length > 0) {
+      console.log("📝 Created files:");
+      for (const file of processedFiles) {
+        console.log(`   - ${file}`);
+      }
+    }
   } catch (error) {
-    console.error("Failed to fetch gists:", error);
+    console.error("❌ Fatal error in fetchGistsAndCreateMDXFiles:", error);
     process.exit(1);
   }
 }
@@ -276,14 +337,26 @@ async function fetchGistsAndCreateMDXFiles(): Promise<void> {
  * Main execution
  */
 async function main(): Promise<void> {
-  console.log("🚀 Starting GitHub Gists to MDX conversion...\n");
-  await fetchGistsAndCreateMDXFiles();
-  console.log("\n🎉 Conversion completed!");
+  console.log("🔥 Gist MDX Generator Starting...");
+  console.log("=".repeat(50));
+
+  try {
+    await fetchGistsAndCreateMDXFiles();
+    console.log(`\n${"=".repeat(50)}`);
+    console.log("✅ Script completed successfully!");
+  } catch (error) {
+    console.error(`\n${"=".repeat(50)}`);
+    console.error("❌ Script failed:", error);
+    process.exit(1);
+  }
 }
 
 // Run the script
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(console.error);
+  main().catch((error) => {
+    console.error("❌ Unhandled error:", error);
+    process.exit(1);
+  });
 }
 
 export { fetchGistsAndCreateMDXFiles };

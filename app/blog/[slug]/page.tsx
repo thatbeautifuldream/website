@@ -66,17 +66,27 @@ const Page: FC<PageProperties> = async ({ params }) => {
       </Section>
       <Section className="gap-1">
         <h1>{page.title}</h1>
-        <p className="text-foreground-lighter">{page.description}</p>
-        <div className="flex gap-2">
+        {page.description && <p className="text-foreground-lighter text-sm">{page.description}</p>}
+        <div className="flex justify-between text-foreground-lighter text-xs">
+          <p>
+            Published on{' '}
+            {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
+              page.date
+            )}
+          </p>
+          <p>{page.readingTime}</p>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-2">
           {page.tags?.split(',').map((tag) => (
             <code
-              className="rounded-md bg-secondary px-2 py-1 text-xs"
+              className="whitespace-nowrap rounded-md bg-secondary px-2 py-1 text-xs"
               key={tag}
             >
               {tag}
             </code>
           ))}
         </div>
+
       </Section>
       {page.image ? (
         <Section>
@@ -97,18 +107,7 @@ const Page: FC<PageProperties> = async ({ params }) => {
           <Mdx code={page.body} />
         </Section>
       </article>
-      <Section
-        className="grid gap-1 text-foreground-lighter text-sm"
-        delay={0.4}
-      >
-        <p>
-          Published on{' '}
-          {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
-            page.date
-          )}
-        </p>
-        <p>{page.readingTime}</p>
-      </Section>
+
     </>
   );
 };

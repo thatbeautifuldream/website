@@ -1,0 +1,110 @@
+---
+title: "Git Config Switcher for Multiple GitHub Accounts"
+description: "Git Config Switcher for Multiple GitHub Accounts"
+datePublished: 2025-02-02T09:47:33.000Z
+date: 2025-02-02T09:47:33.000Z
+slug: git-config-switcher-for-multiple-github-accounts
+tags: shell, gist
+gistId: 89c0e7f03cb032594e105b3d645c4788
+gistUrl: https://gist.github.com/thatbeautifuldream/89c0e7f03cb032594e105b3d645c4788
+isPublic: true
+---
+
+```shell title=".zshrc"
+function check-git-config() {
+  local name=$(git config user.name)
+  local email=$(git config user.email)
+  local gh_user=$(git config user.github)
+  echo "  user.name:  $name"
+  echo "  user.email: $email"
+  echo "  user.github: $gh_user"
+  # Return values for reuse
+  echo "$name:$email:$gh_user"
+}
+
+# Define GitHub users
+declare -A GH_USERS=(
+  ["personal"]="thatbeautifuldream:Milind Mishra:milind.mishra4@gmail.com"
+  ["work"]="milind-foyer:Milind Mishra:milind@foyer.work"
+)
+
+function check-git-user() {
+  local current_user=$(gh auth status 2>&1 | grep "Logged in to github.com as" | awk '{print $6}')
+  echo "Current GitHub user: $current_user"
+  echo "$current_user"
+}
+
+function switch-git-user() {
+  local usage="Usage: switch-git-user [account]
+Available accounts:
+  personal - Personal GitHub account (thatbeautifuldream)
+  work     - Foyer work account (milind-foyer)
+  
+Commands:
+  list     - Show available accounts
+  current  - Show current GitHub user"
+
+  # If no arguments or "list" command, show available accounts
+  if [[ $# -eq 0 ]] || [[ "$1" == "list" ]]; then
+    echo "Available GitHub accounts:"
+    for key user in ${(kv)GH_USERS}; do
+      local config=(${(s/:/)user})
+      echo "  $key: ${config[1]} (${config[3]})"
+    done
+    return 0
+  fi
+
+  # Show current GitHub user
+  if [[ "$1" == "current" ]]; then
+    check-git-user
+    check-git-config
+    return 0
+  fi
+
+  # Check if account exists
+  if [[ -z "${GH_USERS[$1]}" ]]; then
+    echo "Error: Unknown account '$1'"
+    echo "$usage"
+    return 1
+  fi
+
+  local config=(${(s/:/)GH_USERS[$1]})
+  local gh_user="${config[1]}"
+  local git_name="${config[2]}"
+  local git_email="${config[3]}"
+
+  # Switch GitHub auth
+  echo "Switching to GitHub account: $gh_user"
+  gh auth switch --user "$gh_user"
+
+  # Update Git config
+  git config --global user.name "$git_name"
+  git config --global user.email "$git_email"
+  git config --global user.github "$gh_user"
+
+  echo "Updated Git configuration:"
+  check-git-config
+}
+
+function personal-mode() {
+  switch-git-user personal
+}
+
+function work-mode() {
+  switch-git-user work
+}
+
+# Auto-switch based on directory
+function chpwd() {
+  local current_dir="$PWD"
+  if [[ -d ".git" ]]; then
+    if [[ "$current_dir" == "$HOME/code/work/foyer"* ]]; then
+      switch-git-user work
+    else
+      switch-git-user personal
+    fi
+  fi
+}
+
+```
+
