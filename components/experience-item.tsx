@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { calculateDuration, formatDate } from '@/lib/experience';
 import { getFavicon } from '@/lib/favicon';
 import { Link } from './link';
+import { Section } from './section';
 
 type ExperienceItemProps = {
   company: string;
@@ -43,9 +44,8 @@ export const ExperienceItem = ({
       {/* Timeline line */}
       <div className="flex flex-col items-center">
         <div
-          className={`flex h-8 w-8 items-center justify-center rounded-full border-2 bg-background ${
-            current ? 'animate-pulse border-green-500' : 'border-border'
-          }`}
+          className={`flex h-8 w-8 items-center justify-center rounded-full border-2 bg-background ${current ? 'animate-pulse border-green-500' : 'border-border'
+            }`}
         >
           <Image
             alt=""
@@ -104,17 +104,19 @@ export const ExperienceItem = ({
             </button>
 
             {showHighlights && (
-              <ul className="space-y-1 text-foreground-lighter text-sm">
-                {highlights.map((highlight) => (
-                  <li
-                    className="flex gap-2 leading-relaxed"
-                    key={highlight.slice(0, 50)}
-                  >
-                    <span className="text-foreground-lighter">•</span>
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
+              <Section className="space-y-1 text-foreground-lighter text-sm">
+                <ul className="space-y-1">
+                  {highlights.map((highlight) => (
+                    <li
+                      className="flex gap-2 leading-relaxed"
+                      key={highlight.slice(0, 50)}
+                    >
+                      <span className="text-foreground-lighter">•</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Section>
             )}
           </div>
         )}

@@ -10,15 +10,7 @@ gistUrl: https://gist.github.com/thatbeautifuldream/81b5d579e38fb79432ac2f5d525d
 isPublic: true
 ---
 
-## Description
-
-AI for React Developers
-
-## Files
-
-### generate-text.ts
-
-```typescript
+```typescript title="generate-text.ts"
 // /app/api/generate-text/route.ts
 
 import { openai } from "@ai-sdk/openai";
@@ -41,9 +33,7 @@ export async function POST(req: Request, res: Response) {
 
 ```
 
-### stream-object.ts
-
-```typescript
+```typescript title="stream-object.ts"
 // /app/api/stream-object/route.ts
 
 import { openai } from "@ai-sdk/openai";
@@ -87,9 +77,7 @@ export async function POST(req: Request) {
 
 ```
 
-### stream-text.ts
-
-```typescript
+```typescript title="stream-text.ts"
 // /app/api/stream-text/route.ts
 
 import { openai } from "@ai-sdk/openai";
@@ -112,9 +100,7 @@ export async function POST(req: Request, res: Response) {
 
 ```
 
-### tool-calling.ts
-
-```typescript
+```typescript title="tool-calling.ts"
 // /app/api/tool-calling/route.ts
 
 import { openai } from "@ai-sdk/openai";

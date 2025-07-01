@@ -1,8 +1,8 @@
 import { MDXContent } from '@content-collections/mdx/react';
+import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import Image from 'next/image';
 import type { HTMLProps, ReactNode } from 'react';
 import { Tweet } from 'react-tweet';
-import { CodeBlock } from './code-block';
 import { Features } from './features';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
@@ -12,7 +12,6 @@ import { YouTubeVideos } from './youtube-videos';
 
 type MdxProperties = {
   readonly code: string;
-  readonly showCopyButton?: boolean;
 };
 
 const a = (props: HTMLProps<HTMLAnchorElement>) => {
@@ -93,17 +92,13 @@ const iframe = (properties: HTMLProps<HTMLIFrameElement>) => (
   <iframe {...properties} />
 );
 
-export const Mdx = ({ code, showCopyButton = false }: MdxProperties) => {
-  const pre = (props: HTMLProps<HTMLPreElement>) => (
-    <CodeBlock
-      className={props.className}
-      showCopyButton={showCopyButton}
-      title={props.title}
-    >
-      {props.children}
-    </CodeBlock>
-  );
+const pre = ({ ref: _ref, ...props }: HTMLProps<HTMLPreElement>) => (
+  <CodeBlock {...props}>
+    <Pre>{props.children}</Pre>
+  </CodeBlock>
+);
 
+export const Mdx = ({ code }: MdxProperties) => {
   return (
     <MDXContent
       code={code}

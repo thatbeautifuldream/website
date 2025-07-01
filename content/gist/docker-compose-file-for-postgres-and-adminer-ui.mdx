@@ -1,0 +1,37 @@
+---
+title: "Docker Compose file for Postgres and Adminer UI."
+description: "Docker Compose file for Postgres and Adminer UI."
+datePublished: 2024-02-13T17:13:56.000Z
+date: 2024-02-13T17:13:56.000Z
+slug: docker-compose-file-for-postgres-and-adminer-ui
+tags: yaml, gist
+gistId: 89f6abfd150e8ee149e1fbfe8c2abd1e
+gistUrl: https://gist.github.com/thatbeautifuldream/89f6abfd150e8ee149e1fbfe8c2abd1e
+isPublic: true
+---
+
+```yaml title="docker-compose.yml"
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+    environment:
+      - POSTGRES_DB=testDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+# DATABASE_URL="postgresql://postgres:postgres@localhost:5432/testDB?schema=public"
+```
+
