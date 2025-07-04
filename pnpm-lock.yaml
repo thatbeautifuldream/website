@@ -71,9 +71,9 @@ importers:
       sonner:
         specifier: ^2.0.5
         version: 2.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      svg-toolbelt:
-        specifier: ^0.7.0
-        version: 0.7.0
+      svg-pan-zoom:
+        specifier: ^3.6.2
+        version: 3.6.2
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -3059,9 +3059,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svg-toolbelt@0.7.0:
-    resolution: {integrity: sha512-EK5IYUc7Tk4H4d5QcJ7C6t9Qu1YAqpKECYABxUf2GAyGyNWKdy/+T5AJ0oKBmsbv3snCi/Zaev6tLQOqoxRJHw==}
-    engines: {node: '>=18'}
+  svg-pan-zoom@3.6.2:
+    resolution: {integrity: sha512-JwnvRWfVKw/Xzfe6jriFyfey/lWJLq4bUh2jwoR5ChWQuQoOH8FEh1l/bEp46iHHKHEJWIyFJETbazraxNWECg==}
 
   swr@2.3.3:
     resolution: {integrity: sha512-dshNvs3ExOqtZ6kJBaAsabhPdHyeY4P2cKwRCniDVifBMoG/SVI7tfLWqPXriVspf2Rg4tPzXJTnwaihIeFw2A==}
@@ -6575,7 +6574,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svg-toolbelt@0.7.0: {}
+  svg-pan-zoom@3.6.2: {}
 
   swr@2.3.3(react@19.1.0):
     dependencies:
