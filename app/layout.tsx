@@ -1,6 +1,7 @@
 import { mono, sans } from '@/lib/fonts';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
+import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
@@ -12,6 +13,13 @@ import { cn } from '@/lib/utils';
 
 type RootLayoutProps = {
   children: ReactNode;
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#eff1f5' },
+    { media: '(prefers-color-scheme: dark)', color: '#1e1e2e' },
+  ],
 };
 
 const RootLayout = ({ children }: RootLayoutProps) => (
