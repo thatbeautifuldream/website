@@ -20,6 +20,7 @@
     "fumadocs-core": "^15.6.0",
     "fumadocs-ui": "^15.6.0",
     "lucide-react": "^0.525.0",
+    "mermaid": "^11.8.0",
     "motion": "^12.19.2",
     "next": "15.3.4",
     "next-themes": "^0.4.6",
@@ -31,6 +32,7 @@
     "reading-time": "^1.5.0",
     "schema-dts": "^1.1.5",
     "sonner": "^2.0.5",
+    "svg-toolbelt": "^0.7.0",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

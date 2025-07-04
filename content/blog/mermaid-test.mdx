@@ -1,0 +1,79 @@
+---
+title: "Mermaid Diagrams Test Blog"
+datePublished: Sat Jul 4 2025 18:17:55 GMT+0000 (Coordinated Universal Time)
+cuid: cmcgkdf3h000u02l77odl0ckx
+slug: mermaid-test
+cover: https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/22312759/rickroll_4k.jpg
+tags: mermaid, diagrams, test
+---
+
+**Testing Mermaid diagram integration with various chart types and themes.**
+
+## 1. Basic Flowchart
+
+Let's start with a simple flowchart to test the basic functionality:
+
+<Mermaid
+  chart="
+graph TD;
+    A[Start] --> B{Is it working?};
+    B -->|Yes| C[Great!];
+    B -->|No| D[Debug];
+    D --> B;
+    C --> E[End];
+"
+/>
+
+## 2. Sequence Diagram
+
+Testing sequence diagrams for showing interactions between participants:
+
+<Mermaid
+  chart="
+sequenceDiagram
+    participant Alice
+    participant Bob
+    participant John
+    
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+"
+/>
+
+## 3. Class Diagram
+
+Testing class diagrams for showing object-oriented structure:
+
+<Mermaid
+  chart="
+classDiagram
+    class Animal {
+        +String name
+        +int age
+        +String species
+        +makeSound() void
+        +eat() void
+    }
+    
+    class Dog {
+        +String breed
+        +bark() void
+        +fetch() void
+    }
+    
+    class Cat {
+        +String furColor
+        +meow() void
+        +purr() void
+    }
+    
+    Animal <|-- Dog
+    Animal <|-- Cat
+"
+/>
