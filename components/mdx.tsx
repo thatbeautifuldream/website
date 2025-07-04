@@ -6,6 +6,7 @@ import { Tweet } from 'react-tweet';
 import { Features } from './features';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
+import { Mermaid } from './mdx/mermaid';
 import { Timeline } from './timeline';
 import { Video } from './video';
 import { YouTubeVideos } from './youtube-videos';
@@ -92,11 +93,17 @@ const iframe = (properties: HTMLProps<HTMLIFrameElement>) => (
   <iframe {...properties} />
 );
 
-const pre = ({ ref: _ref, ...props }: HTMLProps<HTMLPreElement>) => (
-  <CodeBlock {...props}>
-    <Pre>{props.children}</Pre>
-  </CodeBlock>
-);
+const pre = ({ ref: _ref, ...props }: HTMLProps<HTMLPreElement>) => {
+  if (props.children?.toString().includes('```mermaid')) {
+    return <Mermaid chart={props.children.toString()} />;
+  }
+
+  return (
+    <CodeBlock {...props}>
+      <Pre>{props.children}</Pre>
+    </CodeBlock>
+  );
+}
 
 export const Mdx = ({ code }: MdxProperties) => {
   return (
@@ -118,6 +125,7 @@ export const Mdx = ({ code }: MdxProperties) => {
         Timeline,
         Features,
         YouTubeVideos,
+        Mermaid,
       }}
     />
   );
