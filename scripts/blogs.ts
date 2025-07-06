@@ -116,7 +116,10 @@ function createMDXFrontmatter(frontmatter: BlogFrontmatter): string {
   const slug = frontmatter.slug || createSlug(title);
   const datePublished = frontmatter.datePublished || new Date().toISOString();
   const cuid = frontmatter.cuid || "";
-  const cover = frontmatter.cover || "";
+  const cover =
+    frontmatter.cover +
+      "?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp" ||
+    "";
   const tags = frontmatter.tags || "";
 
   console.log(`   Title: ${title}`);
