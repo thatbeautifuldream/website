@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Link } from '@/components/link';
@@ -49,7 +49,7 @@ export const Navigation = () => {
       <Link href="/">
         <Sign className="size-12" color="currentColor" />
       </Link>
-      <ul className="flex items-center gap-1 rounded-full bg-secondary/30 p-1">
+      <ul className="flex items-center gap-1 rounded-xl bg-secondary/30 p-1">
         {links.map(({ href, label, active }, index) => {
           const isActive = active(pathname);
           const isHovered = hoveredIndex === index;
@@ -58,28 +58,25 @@ export const Navigation = () => {
             <li key={href}>
               <Link
                 className={cn(
-                  'relative rounded-full border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
+                  'relative rounded-lg border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
                   isActive || (isHovered && 'text-foreground')
                 )}
                 href={href}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <AnimatePresence mode="wait">
-                  {(isActive || isHovered) && (
-                    <motion.span
-                      animate={{ opacity: 1, filter: 'blur(0px)' }}
-                      className="absolute inset-0 rounded-lg border bg-secondary shadow-sm"
-                      exit={{ opacity: 0, filter: 'blur(3px)' }}
-                      initial={{ opacity: 0, filter: 'blur(3px)' }}
-                      layoutId="nav-pill"
-                      transition={{
-                        duration: 0.3,
-                        ease: 'easeInOut',
-                      }}
-                    />
-                  )}
-                </AnimatePresence>
+                {(isActive || isHovered) && (
+                  <motion.span
+                    animate={{ opacity: 1 }}
+                    className="absolute inset-0 rounded-lg border bg-secondary"
+                    initial={{ opacity: 0 }}
+                    layoutId="nav-pill"
+                    transition={{
+                      duration: 0.2,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                )}
                 <span className="relative z-10">{label}</span>
               </Link>
             </li>
