@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "ultracite lint",
     "gists:fetch": "tsx scripts/gists.ts",
+    "gist:single": "tsx scripts/single-gist.ts",
     "blogs:fetch": "tsx scripts/blogs.ts"
   },
   "dependencies": {
