@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
+import { LayoutDebug } from '@/components/layout-debug';
 import { Navigation } from '@/components/navigation';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { cn } from '@/lib/utils';
@@ -45,6 +46,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         <Toaster />
         <ThemeSwitcher />
         <JsonLd />
+        <LayoutDebug />
         <Analytics />
       </ThemeProvider>
     </body>

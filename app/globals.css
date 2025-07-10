@@ -72,6 +72,11 @@
     display: none; /* WebKit browsers (Chrome, Safari, Edge) */
   }
 
+  .debug-layout * {
+    outline: 1px solid var(--border);
+    outline-offset: -1px;
+  }
+
   body {
     text-rendering: optimizelegibility;
     font-feature-settings: "kern", "ss02";
