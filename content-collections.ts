@@ -39,8 +39,8 @@ const pages = defineCollection({
   },
 });
 
-const posts = defineCollection({
-  name: "posts",
+const blogs = defineCollection({
+  name: "blogs",
   directory: "content",
   include: "blog/*.mdx",
   schema: (z) => ({
@@ -51,6 +51,43 @@ const posts = defineCollection({
     image: z.string().optional(),
     cover: z.string().optional(),
     cuid: z.string().optional(),
+    slug: z.string().optional(),
+    tags: z.string().optional(),
+  }),
+  transform: async (page, context) => {
+    const body = await compileMDX(context, page, {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [[rehypeCode, rehypeCodeOptions], remarkHeading],
+    });
+
+    // Support both date formats - use datePublished if available, fallback to date
+    const postDate = page.datePublished || page.date || new Date();
+
+    // Use cover image if available, fallback to image
+    const postImage = page.cover || page.image;
+
+    return {
+      ...page,
+      date: new Date(postDate),
+      image: postImage,
+      body,
+      slug: page.slug || page._meta.path,
+      readingTime: readingTime(page.content).text,
+    };
+  },
+});
+
+const posts = defineCollection({
+  name: "posts",
+  directory: "content",
+  include: "post/*.mdx",
+  schema: (z) => ({
+    title: z.string(),
+    description: z.string().optional(),
+    date: z.coerce.date().optional(),
+    datePublished: z.coerce.date().optional(),
+    image: z.string().optional(),
+    cover: z.string().optional(),
     slug: z.string().optional(),
     tags: z.string().optional(),
   }),
@@ -112,5 +149,5 @@ const gists = defineCollection({
 });
 
 export default defineConfig({
-  collections: [pages, posts, gists],
+  collections: [pages, blogs, posts, gists],
 });

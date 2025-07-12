@@ -1,4 +1,4 @@
-import { allPosts } from 'content-collections';
+import { allBlogs } from 'content-collections';
 import { ArrowLeftToLineIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -21,7 +21,7 @@ export const generateMetadata = async ({
   params,
 }: PageProperties): Promise<Metadata> => {
   const { slug } = await params;
-  const page = allPosts.find((p) => p._meta.path === `blog/${slug}`);
+  const page = allBlogs.find((p) => p._meta.path === `blog/${slug}`);
 
   if (!page) {
     return {};
@@ -35,13 +35,13 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = (): { slug: string }[] =>
-  allPosts.map((page) => ({
+  allBlogs.map((page) => ({
     slug: page._meta.path,
   }));
 
 const Page: FC<PageProperties> = async ({ params }) => {
   const { slug } = await params;
-  const page = allPosts.find((p) => p._meta.path === `blog/${slug}`);
+  const page = allBlogs.find((p) => p._meta.path === `blog/${slug}`);
 
   if (!page) {
     notFound();

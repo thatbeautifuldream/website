@@ -1,7 +1,7 @@
-import type { Post as PostType } from '@/.content-collections/generated';
+import type { Blog } from '@/.content-collections/generated';
 import { Link } from '@/components/link';
 
-type PostProps = Pick<PostType, '_meta' | 'title' | 'date'>;
+type PostProps = Pick<Blog, '_meta' | 'title' | 'date'>;
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',

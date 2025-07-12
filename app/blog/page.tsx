@@ -1,10 +1,10 @@
-import { allPosts } from 'content-collections';
+import { allBlogs } from 'content-collections';
 import type { Metadata } from 'next';
 import { Post } from '@/components/post';
 import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
 
-const postsByYear = allPosts
+const postsByYear = allBlogs
   .sort((a, b) => b.date.getTime() - a.date.getTime())
   .reduce(
     (acc, post) => {
@@ -15,7 +15,7 @@ const postsByYear = allPosts
       acc[year].push(post);
       return acc;
     },
-    {} as Record<number, typeof allPosts>
+    {} as Record<number, typeof allBlogs>
   );
 
 const title = 'Blog';
