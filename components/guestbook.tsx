@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 type TGuestbookEntry = {
-    id: number;
+    id: string;
     name: string;
     message: string;
     createdAt: string;
@@ -241,19 +241,13 @@ export function Guestbook() {
             </Section>
 
             {/* Guestbook Entries */}
-            <Section delay={0.4}>
-                <div className="space-y-4">
-                    <h2 className="font-normal text-foreground-lighter text-sm">
-                        Messages ({entries.length})
-                    </h2>
+            {entries.length > 0 && (
+                <Section delay={0.4}>
+                    <div className="space-y-4">
+                        <h2 className="font-normal text-foreground-lighter text-sm">
+                            Messages ({entries.length})
+                        </h2>
 
-                    {entries.length === 0 ? (
-                        <div className="py-8 text-center text-foreground-lighter">
-                            <p className="text-sm">
-                                No entries yet. Be the first to sign the guestbook!
-                            </p>
-                        </div>
-                    ) : (
                         <div className="space-y-4">
                             {entries.map((entry, index) => (
                                 <GuestbookEntry
@@ -263,9 +257,9 @@ export function Guestbook() {
                                 />
                             ))}
                         </div>
-                    )}
-                </div>
-            </Section>
+                    </div>
+                </Section>
+            )}
         </div>
     );
 }
