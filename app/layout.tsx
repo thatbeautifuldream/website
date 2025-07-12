@@ -10,6 +10,7 @@ import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { Navigation } from '@/components/navigation';
+import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { cn } from '@/lib/utils';
 
@@ -39,17 +40,19 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         disableTransitionOnChange
         enableSystem
       >
-        <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-          <Navigation />
-          {children}
-          <Footer />
-        </div>
-        <Toaster />
-        <ThemeSwitcher />
-        <JsonLd />
-        <LayoutDebug />
-        <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
-        <Analytics />
+        <QueryClientProviderWrapper>
+          <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+            <Navigation />
+            {children}
+            <Footer />
+          </div>
+          <Toaster />
+          <ThemeSwitcher />
+          <JsonLd />
+          <LayoutDebug />
+          <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
+          <Analytics />
+        </QueryClientProviderWrapper>
       </ThemeProvider>
     </body>
   </html>
