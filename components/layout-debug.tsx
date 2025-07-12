@@ -17,8 +17,13 @@ export function LayoutDebug() {
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            // Toggle debug mode with d key
-            if (event.key === 'd') {
+            // use cmd + option + o to toggle debug mode
+            if (event.metaKey && event.shiftKey && event.key === 'o') {
+                event.preventDefault();
+                toggleDebugMode();
+            }
+            // on pressing esc exit debug mode
+            if (event.key === 'Escape') {
                 event.preventDefault();
                 toggleDebugMode();
             }

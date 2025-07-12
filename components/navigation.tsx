@@ -38,6 +38,11 @@ const links = [
     label: 'Blog',
     active: (pathname: string) => pathname.startsWith('/blog'),
   },
+  {
+    href: '/chat',
+    label: 'Chat',
+    active: (pathname: string) => pathname.startsWith('/chat'),
+  },
 ];
 
 export const Navigation = () => {
