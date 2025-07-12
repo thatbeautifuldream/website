@@ -1,5 +1,6 @@
 import { desc } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { db } from "@/db/drizzle";
 import { guestbook, insertGuestbookSchema } from "@/db/schema";
 
@@ -52,13 +53,12 @@ export async function POST(request: NextRequest) {
       message: "Guestbook entry created successfully",
     });
   } catch (error) {
-    // Handle validation errors
-    if (error instanceof Error && error.name === "ZodError") {
+    if (error instanceof ZodError) {
       return NextResponse.json(
         {
           success: false,
           error: "Invalid data format",
-          details: error.message,
+          details: error.errors,
         },
         { status: 400 }
       );

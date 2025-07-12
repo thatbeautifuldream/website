@@ -1,21 +1,18 @@
+/** biome-ignore-all lint/correctness/noUnusedFunctionParameters: required by next app router> */
 import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { db } from "@/db/drizzle";
-import { guestbook, patchGuestbookSchema } from "@/db/schema";
+import {
+  guestbook,
+  guestbookParamsSchema,
+  patchGuestbookSchema,
+} from "@/db/schema";
 
 export async function GET(request: NextRequest) {
   try {
-    const id = Number.parseInt(
-      request.nextUrl.pathname.split("/").pop() || "0",
-      10
-    );
-
-    if (Number.isNaN(id)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid ID format" },
-        { status: 400 }
-      );
-    }
+    const params = await request.json();
+    const { id } = guestbookParamsSchema.parse(params);
 
     const [entry] = await db
       .select()
@@ -34,7 +31,18 @@ export async function GET(request: NextRequest) {
       success: true,
       data: entry,
     });
-  } catch (_error) {
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid ID format",
+          details: error.errors,
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: "Failed to fetch guestbook entry" },
       { status: 500 }
@@ -44,24 +52,13 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const id = Number.parseInt(
-      request.nextUrl.pathname.split("/").pop() || "0",
-      10
-    );
-
-    if (Number.isNaN(id)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid ID format" },
-        { status: 400 }
-      );
-    }
+    const params = await request.json();
+    const { id } = guestbookParamsSchema.parse(params);
 
     const body = await request.json();
 
-    // Validate the request body
     const validatedData = patchGuestbookSchema.parse(body);
 
-    // Update the guestbook entry
     const [updatedEntry] = await db
       .update(guestbook)
       .set(validatedData)
@@ -81,13 +78,12 @@ export async function PATCH(request: NextRequest) {
       message: "Guestbook entry updated successfully",
     });
   } catch (error) {
-    // Handle validation errors
-    if (error instanceof Error && error.name === "ZodError") {
+    if (error instanceof ZodError) {
       return NextResponse.json(
         {
           success: false,
           error: "Invalid data format",
-          details: error.message,
+          details: error.errors,
         },
         { status: 400 }
       );
@@ -102,17 +98,8 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const id = Number.parseInt(
-      request.nextUrl.pathname.split("/").pop() || "0",
-      10
-    );
-
-    if (Number.isNaN(id)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid ID format" },
-        { status: 400 }
-      );
-    }
+    const params = await request.json();
+    const { id } = guestbookParamsSchema.parse(params);
 
     const [deletedEntry] = await db
       .delete(guestbook)
@@ -131,7 +118,18 @@ export async function DELETE(request: NextRequest) {
       data: deletedEntry,
       message: "Guestbook entry deleted successfully",
     });
-  } catch (_error) {
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid ID format",
+          details: error.errors,
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: "Failed to delete guestbook entry" },
       { status: 500 }
