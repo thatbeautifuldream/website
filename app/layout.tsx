@@ -27,6 +27,12 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => (
   <html className="scroll-smooth" lang="en" suppressHydrationWarning>
+    <head>
+      <script
+        crossOrigin="anonymous"
+        src="//unpkg.com/react-scan/dist/auto.global.js"
+      />
+    </head>
     <body
       className={cn(
         sans.variable,
