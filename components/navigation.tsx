@@ -43,6 +43,11 @@ const links = [
     label: 'Chat',
     active: (pathname: string) => pathname.startsWith('/chat'),
   },
+  {
+    href: '/guestbook',
+    label: 'Guestbook',
+    active: (pathname: string) => pathname.startsWith('/guestbook'),
+  },
 ];
 
 export const Navigation = () => {

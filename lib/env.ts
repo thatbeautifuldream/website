@@ -4,9 +4,11 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     VERCEL_PROJECT_PRODUCTION_URL: z.string().min(1),
+    DATABASE_URL: z.string().min(1),
   },
   client: {},
   runtimeEnv: {
     VERCEL_PROJECT_PRODUCTION_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    DATABASE_URL: process.env.DATABASE_URL,
   },
 });

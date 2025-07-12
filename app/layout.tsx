@@ -1,5 +1,6 @@
 import { mono, sans } from '@/lib/fonts';
 import './globals.css';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
@@ -47,6 +48,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         <ThemeSwitcher />
         <JsonLd />
         <LayoutDebug />
+        <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
         <Analytics />
       </ThemeProvider>
     </body>
