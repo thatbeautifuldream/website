@@ -3,13 +3,12 @@ import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/drizzle";
 import { guestbook, patchGuestbookSchema } from "@/db/schema";
 
-type TRouteContext = {
-  params: { id: string };
-};
-
-export async function GET(request: NextRequest, context: TRouteContext) {
+export async function GET(request: NextRequest) {
   try {
-    const id = Number.parseInt(context.params.id, 10);
+    const id = Number.parseInt(
+      request.nextUrl.pathname.split("/").pop() || "0",
+      10
+    );
 
     if (Number.isNaN(id)) {
       return NextResponse.json(
@@ -43,9 +42,12 @@ export async function GET(request: NextRequest, context: TRouteContext) {
   }
 }
 
-export async function PATCH(request: NextRequest, context: TRouteContext) {
+export async function PATCH(request: NextRequest) {
   try {
-    const id = Number.parseInt(context.params.id, 10);
+    const id = Number.parseInt(
+      request.nextUrl.pathname.split("/").pop() || "0",
+      10
+    );
 
     if (Number.isNaN(id)) {
       return NextResponse.json(
@@ -98,9 +100,12 @@ export async function PATCH(request: NextRequest, context: TRouteContext) {
   }
 }
 
-export async function DELETE(request: NextRequest, context: TRouteContext) {
+export async function DELETE(request: NextRequest) {
   try {
-    const id = Number.parseInt(context.params.id, 10);
+    const id = Number.parseInt(
+      request.nextUrl.pathname.split("/").pop() || "0",
+      10
+    );
 
     if (Number.isNaN(id)) {
       return NextResponse.json(
