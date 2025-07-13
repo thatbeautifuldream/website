@@ -39,7 +39,7 @@ async function getAccessToken(): Promise<string> {
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: "1234567890", // TODO: Replace with actual refresh token from env
+      refresh_token: env.SPOTIFY_REFRESH_TOKEN,
     }),
   });
 
