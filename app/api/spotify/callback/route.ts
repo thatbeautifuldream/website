@@ -20,6 +20,8 @@ export async function GET(request: Request) {
     );
   }
 
+  const redirectUri = `https://${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`;
+
   try {
     const response = await fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
@@ -32,12 +34,27 @@ export async function GET(request: Request) {
       body: new URLSearchParams({
         grant_type: "authorization_code",
         code,
-        redirect_uri: `${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`,
+        redirect_uri: redirectUri,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to exchange code for tokens: ${response.status}`);
+      const errorData = await response.json();
+      return NextResponse.json(
+        {
+          error: "Failed to exchange code for tokens",
+          status: response.status,
+          details: errorData,
+          redirectUri,
+          // Include this for debugging
+          debugInfo: {
+            clientId: env.SPOTIFY_CLIENT_ID,
+            hasSecret: !!env.SPOTIFY_CLIENT_SECRET,
+            codeLength: code.length,
+          },
+        },
+        { status: 500 }
+      );
     }
 
     const tokens = await response.json();
@@ -51,9 +68,13 @@ export async function GET(request: Request) {
       refresh_token: tokens.refresh_token,
       expires_in: tokens.expires_in,
     });
-  } catch {
+  } catch (err) {
     return NextResponse.json(
-      { error: "Failed to exchange authorization code for tokens" },
+      {
+        error: "Failed to exchange authorization code for tokens",
+        message: err instanceof Error ? err.message : "Unknown error",
+        redirectUri,
+      },
       { status: 500 }
     );
   }
