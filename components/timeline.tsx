@@ -1,55 +1,85 @@
 'use client';
 
-import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 import { experience } from '@/lib/experience';
 import { ExperienceItem } from './experience-item';
 import { Section } from './section';
 
-export const Timeline = () => {
-  const [showAll, setShowAll] = useState(false);
+type TExperience = (typeof experience)[0];
 
-  const visibleCount = showAll ? experience.length : 4;
+export const Timeline = () => {
+  const [activeExperience, setActiveExperience] = useState<TExperience | null>(
+    null
+  );
+  const ref = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(ref as React.RefObject<HTMLElement>, () => {
+    setActiveExperience(null);
+  });
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setActiveExperience(null);
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   return (
-    <div className="space-y-2">
-      <div className="relative">
-        {/* All experiences with conditional rendering */}
-        {experience.slice(0, visibleCount).map((exp, index) => (
+    <>
+      {/* Overlay */}
+      <AnimatePresence>
+        {activeExperience ? (
+          <motion.div
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 z-40 bg-background/20"
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+          />
+        ) : null}
+      </AnimatePresence>
+
+      {/* Expanded Experience Modal */}
+      <AnimatePresence>
+        {activeExperience ? (
+          <motion.div
+            className='fixed top-8 z-50 mx-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-border bg-background shadow-2xl'
+            layoutId={`experience-${activeExperience.company}-${activeExperience.startDate}`}
+            ref={ref}
+            style={{ borderRadius: 12 }}
+          >
+            <ExperienceItem
+              {...activeExperience}
+              isExpanded={true}
+              onClose={() => setActiveExperience(null)}
+            />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      {/* Timeline List */}
+      <div className="relative space-y-2">
+        {experience.slice(0, 3).map((exp, index) => (
           <Section
             delay={index * 0.1}
             key={`${exp.company}-${exp.startDate}`}
           >
-            <ExperienceItem
-              company={exp.company}
-              current={exp.current}
-              endDate={exp.endDate}
-              highlights={exp.highlights}
-              location={exp.location}
-              position={exp.position}
-              startDate={exp.startDate}
-              summary={exp.summary}
-              url={exp.url}
-            />
+            <motion.div
+              className="cursor-pointer"
+              layoutId={`experience-${exp.company}-${exp.startDate}`}
+              onClick={() => setActiveExperience(exp)}
+              style={{ borderRadius: 8 }}
+            >
+              <ExperienceItem {...exp} isExpanded={false} />
+            </motion.div>
           </Section>
         ))}
-
-        {/* Remove the last timeline line */}
-        {visibleCount > 0 && (
-          <div className="absolute bottom-0 left-4 h-8 w-px bg-background" />
-        )}
       </div>
-
-      {!showAll && experience.length > 4 && (
-        <Section delay={4 * 0.1}>
-          <button
-            className="cursor-pointer text-left text-foreground-lighter text-sm transition-colors hover:text-foreground"
-            onClick={() => setShowAll(true)}
-            type="button"
-          >
-            Show {experience.length - 4} more positions...
-          </button>
-        </Section>
-      )}
-    </div>
+    </>
   );
 };
