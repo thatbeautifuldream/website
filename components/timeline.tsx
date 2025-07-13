@@ -48,7 +48,7 @@ export const Timeline = () => {
       <AnimatePresence>
         {activeExperience ? (
           <motion.div
-            className='fixed top-8 z-50 mx-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-border bg-background shadow-2xl'
+            className='fixed top-8 z-50 mx-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-border bg-background shadow-lg'
             layoutId={`experience-${activeExperience.company}-${activeExperience.startDate}`}
             ref={ref}
             style={{ borderRadius: 12 }}
