@@ -10,28 +10,28 @@ interface ElementInfo {
 }
 
 export function LayoutDebug() {
-    const { isDebugMode, toggleDebugMode } = useLayoutDebugStore();
+    const { isDebugMode, toggleDebugMode, setDebugMode } = useLayoutDebugStore();
     const [hoveredElement, setHoveredElement] = useState<ElementInfo | null>(
         null
     );
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            // use cmd + option + o to toggle debug mode
+            // use cmd + shift + o to toggle debug mode
             if (event.metaKey && event.shiftKey && event.key === 'o') {
                 event.preventDefault();
                 toggleDebugMode();
             }
-            // on pressing esc exit debug mode
+            // on pressing esc exit debug mode (only deactivate, don't toggle)
             if (event.key === 'Escape') {
                 event.preventDefault();
-                toggleDebugMode();
+                setDebugMode(false);
             }
         };
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [toggleDebugMode]);
+    }, [toggleDebugMode, setDebugMode]);
 
     useEffect(() => {
         // Apply or remove the debug class to the body
