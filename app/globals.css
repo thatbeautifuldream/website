@@ -20,6 +20,37 @@
   --success: #40a02b; /* Green */
   --warning: #df8e1d; /* Yellow */
   --error: #d20f39; /* Red */
+
+  /* Shadcn/UI specific variables */
+  --radius: 0.65rem;
+  --card: #eff1f5; /* Base */
+  --card-foreground: #4c4f69; /* Text */
+  --popover: #eff1f5; /* Base */
+  --popover-foreground: #4c4f69; /* Text */
+  --primary: #1e66f5; /* Blue */
+  --primary-foreground: #eff1f5; /* Base */
+  --secondary-foreground: #4c4f69; /* Text */
+  --muted: #ccd0da; /* Surface 0 */
+  --muted-foreground: #6c6f85; /* Subtext 0 */
+  --accent: #bcc0cc; /* Surface 1 */
+  --accent-foreground: #4c4f69; /* Text */
+  --destructive: #d20f39; /* Red */
+  --destructive-foreground: #eff1f5; /* Base */
+  --input: #ccd0da; /* Surface 0 */
+  --ring: #9ca0b0; /* Overlay 0 */
+  --chart-1: #1e66f5; /* Blue */
+  --chart-2: #179299; /* Teal */
+  --chart-3: #40a02b; /* Green */
+  --chart-4: #df8e1d; /* Yellow */
+  --chart-5: #ea76cb; /* Pink */
+  --sidebar: #e6e9ef; /* Mantle */
+  --sidebar-foreground: #4c4f69; /* Text */
+  --sidebar-primary: #1e66f5; /* Blue */
+  --sidebar-primary-foreground: #eff1f5; /* Base */
+  --sidebar-accent: #ccd0da; /* Surface 0 */
+  --sidebar-accent-foreground: #4c4f69; /* Text */
+  --sidebar-border: #bcc0cc; /* Surface 1 */
+  --sidebar-ring: #9ca0b0; /* Overlay 0 */
 }
 
 .dark {
@@ -37,6 +68,36 @@
   --success: #a6e3a1; /* Green */
   --warning: #f9e2af; /* Yellow */
   --error: #f38ba8; /* Red */
+
+  /* Shadcn/UI specific variables */
+  --card: #313244; /* Surface 0 */
+  --card-foreground: #cdd6f4; /* Text */
+  --popover: #313244; /* Surface 0 */
+  --popover-foreground: #cdd6f4; /* Text */
+  --primary: #89b4fa; /* Blue */
+  --primary-foreground: #1e1e2e; /* Base */
+  --secondary-foreground: #cdd6f4; /* Text */
+  --muted: #313244; /* Surface 0 */
+  --muted-foreground: #a6adc8; /* Subtext 0 */
+  --accent: #45475a; /* Surface 1 */
+  --accent-foreground: #cdd6f4; /* Text */
+  --destructive: #f38ba8; /* Red */
+  --destructive-foreground: #1e1e2e; /* Base */
+  --input: #45475a; /* Surface 1 */
+  --ring: #6c7086; /* Overlay 0 */
+  --chart-1: #89b4fa; /* Blue */
+  --chart-2: #94e2d5; /* Teal */
+  --chart-3: #a6e3a1; /* Green */
+  --chart-4: #f9e2af; /* Yellow */
+  --chart-5: #f5c2e7; /* Pink */
+  --sidebar: #181825; /* Mantle */
+  --sidebar-foreground: #cdd6f4; /* Text */
+  --sidebar-primary: #89b4fa; /* Blue */
+  --sidebar-primary-foreground: #1e1e2e; /* Base */
+  --sidebar-accent: #313244; /* Surface 0 */
+  --sidebar-accent-foreground: #cdd6f4; /* Text */
+  --sidebar-border: #45475a; /* Surface 1 */
+  --sidebar-ring: #6c7086; /* Overlay 0 */
 }
 
 @theme inline {
@@ -50,6 +111,37 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+
+  /* Shadcn/UI variables */
+  --color-radius: var(--radius);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
