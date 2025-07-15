@@ -5,6 +5,7 @@ export function GET() {
   const scopes = [
     "user-read-currently-playing",
     "user-read-playback-state",
+    "user-top-read",
   ].join(" ");
 
   const redirectUri = `https://${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`;
