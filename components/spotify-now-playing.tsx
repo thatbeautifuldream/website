@@ -119,7 +119,7 @@ export const SpotifyNowPlaying = () => {
                             {/** biome-ignore lint/performance/noImgElement: spotify album image */}
                             <img
                                 alt={`${track.album.name} cover`}
-                                className="size-12 rounded-md object-cover"
+                                className="size-16 rounded-md object-cover"
                                 height={48}
                                 src={track.album.image}
                                 width={48}

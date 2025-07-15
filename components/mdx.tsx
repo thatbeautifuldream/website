@@ -8,6 +8,7 @@ import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Mermaid } from './mdx/mermaid';
 import { SpotifyNowPlaying } from './spotify-now-playing';
+import { SpotifyTopTracks } from './spotify-top-tracks';
 import { Timeline } from './timeline';
 import { Video } from './video';
 import { YouTubeVideos } from './youtube-videos';
@@ -208,6 +209,7 @@ export const Mdx = ({ code }: MdxProperties) => {
         Features,
         YouTubeVideos,
         SpotifyNowPlaying,
+        SpotifyTopTracks,
         Mermaid,
       }}
     />
