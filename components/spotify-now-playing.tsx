@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { ExternalLink, Mic, Music } from 'lucide-react';
+import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Section } from './section';
 
@@ -114,14 +115,16 @@ export const SpotifyNowPlaying = () => {
 
                 <div className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3 transition-colors hover:bg-secondary/40">
                     {track.album.image && (
-                        // biome-ignore lint/performance/noImgElement: spotify album image hai chalega
-                        <img
-                            alt={`${track.album.name} cover`}
-                            className="size-12 rounded-md object-cover"
-                            height={48}
-                            src={track.album.image}
-                            width={48}
-                        />
+                        <ImageZoom>
+                            {/** biome-ignore lint/performance/noImgElement: spotify album image */}
+                            <img
+                                alt={`${track.album.name} cover`}
+                                className="size-12 rounded-md object-cover"
+                                height={48}
+                                src={track.album.image}
+                                width={48}
+                            />
+                        </ImageZoom>
                     )}
 
                     <div className="flex-1 space-y-1">
@@ -176,14 +179,16 @@ export const SpotifyNowPlaying = () => {
 
                 <div className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3 transition-colors hover:bg-secondary/40">
                     {(episode.image || episode.show.image) && (
-                        // biome-ignore lint/performance/noImgElement: spotify episode image hai chalega
-                        <img
-                            alt={`${episode.show.name} cover`}
-                            className="size-12 rounded-md object-cover"
-                            height={48}
-                            src={episode.image || episode.show.image}
-                            width={48}
-                        />
+                        <ImageZoom>
+                            {/** biome-ignore lint/performance/noImgElement: spotify episode image */}
+                            <img
+                                alt={`${episode.show.name} cover`}
+                                className="size-12 rounded-md object-cover"
+                                height={48}
+                                src={episode.image || episode.show.image}
+                                width={48}
+                            />
+                        </ImageZoom>
                     )}
 
                     <div className="flex-1 space-y-1">
