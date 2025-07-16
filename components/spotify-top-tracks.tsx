@@ -1,7 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { ExternalLink, Music, TrendingUp } from 'lucide-react';
+import { ExternalLink, Loader2Icon, Music, TrendingUp } from 'lucide-react';
+import { motion } from 'motion/react';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Section } from './section';
@@ -64,19 +65,23 @@ export const SpotifyTopTracks = () => {
                     <TrendingUp className="size-4 text-green-500" />
                     <span className="font-medium text-foreground">Top Tracks</span>
                 </div>
-                <div className="space-y-3">
-                    {Array.from({ length: 5 }, (_, i) => (
-                        <div
-                            className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3"
-                            key={`loading-track-${i + 1}`}
+                <div className="flex items-center justify-center rounded-lg border bg-secondary/30 p-8">
+                    <div className="flex items-center gap-3">
+                        <Loader2Icon className="size-6 animate-spin" />
+                        <motion.div
+                            animate={{ opacity: [0.5, 1, 0.5] }}
+                            className="text-foreground-lighter"
+                            transition={{
+                                duration: 1.5,
+                                repeat: Number.POSITIVE_INFINITY,
+                                ease: 'easeInOut',
+                            }}
                         >
-                            <div className="size-12 animate-pulse rounded-md bg-secondary/50" />
-                            <div className="flex-1 space-y-2">
-                                <div className="h-4 animate-pulse rounded bg-secondary/50" />
-                                <div className="h-3 w-2/3 animate-pulse rounded bg-secondary/50" />
-                            </div>
-                        </div>
-                    ))}
+                            <span className="text-sm">
+                                Curating top 5 tracks...
+                            </span>
+                        </motion.div>
+                    </div>
                 </div>
             </Section>
         );
@@ -130,7 +135,7 @@ export const SpotifyTopTracks = () => {
                                                 width={64}
                                             />
                                         </ImageZoom>
-                                        <div className='-right-3 absolute bottom-0 flex size-8 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm'>
+                                        <div className="-right-3 absolute bottom-0 flex size-8 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm">
                                             <span className="select-none font-black text-2xl text-foreground">
                                                 {index + 1}
                                             </span>
