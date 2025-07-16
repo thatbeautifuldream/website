@@ -7,6 +7,7 @@ import { Section } from '@/components/section';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Loader2Icon, TrendingUp } from 'lucide-react';
 
 type TGuestbookEntry = {
     id: string;
@@ -125,9 +126,9 @@ export function Guestbook() {
 
     if (isLoading) {
         return (
-            <Section>
-                <div className="flex items-center justify-center py-8">
-                    <div className="h-8 w-8 animate-spin rounded-full border-foreground border-b-2" />
+            <Section className="gap-2">
+                <div className="animate-pulse text-foreground-lighter text-sm">
+                    Loading up the guestbook...
                 </div>
             </Section>
         );
@@ -138,7 +139,7 @@ export function Guestbook() {
             <Section>
                 <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-6 text-center">
                     <p className="text-destructive">
-                        Error loading guestbook: {error.message}
+                        Guestbook is shy right now, try reloading?
                     </p>
                 </div>
             </Section>
