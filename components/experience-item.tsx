@@ -73,6 +73,7 @@ export const ExperienceItem = ({
               <motion.h3
                 className="font-medium text-foreground transition-colors hover:text-foreground-light"
                 layoutId={`company-${company}-${startDate}`}
+                layout="position"
               >
                 {company}
               </motion.h3>
@@ -135,6 +136,7 @@ export const ExperienceItem = ({
               <motion.h2
                 className="font-medium text-foreground"
                 layoutId={`company-${company}-${startDate}`}
+                layout="position"
               >
                 {company}
               </motion.h2>
