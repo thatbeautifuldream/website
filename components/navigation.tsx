@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Link } from '@/components/link';
-import { cn } from '@/lib/utils';
+import { cn, getDeviceType } from '@/lib/utils';
 import { Sign } from './sign';
 
 const links = [
@@ -13,21 +13,11 @@ const links = [
     label: 'Home',
     active: (pathname: string) => pathname === '/',
   },
-  // {
-  //   href: '/about',
-  //   label: 'About',
-  //   active: (pathname: string) => pathname.startsWith('/about'),
-  // },
   {
     href: '/work',
     label: 'Work',
     active: (pathname: string) => pathname.startsWith('/work'),
   },
-  // {
-  //   href: '/projects',
-  //   label: 'Projects',
-  //   active: (pathname: string) => pathname.startsWith('/projects'),
-  // },
   {
     href: '/gist',
     label: 'Gist',
@@ -53,6 +43,12 @@ const links = [
 export const Navigation = () => {
   const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const deviceType = getDeviceType();
+
+  const linksToShow =
+    deviceType === 'mobile'
+      ? links.filter(link => link.href !== '/chat')
+      : links;
 
   return (
     <nav className="flex items-center justify-between text-xs">
@@ -60,7 +56,7 @@ export const Navigation = () => {
         <Sign className="size-12" color="currentColor" />
       </Link>
       <ul className="flex items-center gap-1 rounded-xl bg-secondary/30 p-1">
-        {links.map(({ href, label, active }, index) => {
+        {linksToShow.map(({ href, label, active }, index) => {
           const isActive = active(pathname);
           const isHovered = hoveredIndex === index;
 
