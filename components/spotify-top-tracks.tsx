@@ -68,19 +68,9 @@ export const SpotifyTopTracks = () => {
                 <div className="flex items-center justify-center rounded-lg border bg-secondary/30 p-8">
                     <div className="flex items-center gap-3">
                         <Loader2Icon className="size-6 animate-spin" />
-                        <motion.div
-                            animate={{ opacity: [0.5, 1, 0.5] }}
-                            className="text-foreground-lighter"
-                            transition={{
-                                duration: 1.5,
-                                repeat: Number.POSITIVE_INFINITY,
-                                ease: 'easeInOut',
-                            }}
-                        >
-                            <span className="text-sm">
-                                Curating top 5 tracks...
-                            </span>
-                        </motion.div>
+                        <div className="animate-pulse text-foreground-lighter text-sm">
+                            Curating top 5 tracks...
+                        </div>
                     </div>
                 </div>
             </Section>
@@ -95,9 +85,9 @@ export const SpotifyTopTracks = () => {
                     <span className="font-medium text-foreground">Top Tracks</span>
                 </div>
                 <div className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3">
-                    <div className="flex items-center gap-2 text-foreground-lighter text-sm">
+                    <div className="flex items-center gap-2 text-destructive text-sm">
                         <Music className="size-4" />
-                        <span>Unable to load top tracks</span>
+                        <span>Spotify lost the beat—top tracks not found!</span>
                     </div>
                 </div>
             </Section>
@@ -135,11 +125,16 @@ export const SpotifyTopTracks = () => {
                                                 width={64}
                                             />
                                         </ImageZoom>
-                                        <div className="-right-3 absolute bottom-0 flex size-8 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm">
-                                            <span className="select-none font-black text-2xl text-foreground">
-                                                {index + 1}
-                                            </span>
-                                        </div>
+                                        <Section delay={index * 0.2}>
+                                            <motion.div
+                                                className="-right-3 absolute bottom-0 flex size-8 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm"
+                                                whileHover={{ scale: 1.1 }}
+                                            >
+                                                <span className="select-none font-black text-2xl text-foreground">
+                                                    {index + 1}
+                                                </span>
+                                            </motion.div>
+                                        </Section>
                                     </div>
                                 )}
                             </div>
@@ -193,6 +188,6 @@ export const SpotifyTopTracks = () => {
                     </Section>
                 ))}
             </div>
-        </div>
+        </div >
     );
 };
