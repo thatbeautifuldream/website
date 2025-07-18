@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { ExternalLink, Mic, Music } from 'lucide-react';
+import { AnnoyedIcon, ExternalLink, Mic, Music } from 'lucide-react';
 import { ImageZoom } from './image-zoom';
 import { motion } from 'motion/react';
 import { Link } from './link';
@@ -86,9 +86,9 @@ export const SpotifyNowPlaying = () => {
                     <Music className="size-4 text-green-500" />
                     <span className="font-medium text-foreground">Now Playing</span>
                 </div>
-                <div className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3">
-                    <div className="flex items-center gap-2 text-foreground-lighter text-sm">
-                        <Music className="size-4" />
+                <div className="flex items-center gap-3 rounded-lg border-destructive bg-destructive/10 hover:bg-destructive/20 transition-all p-3">
+                    <div className="flex items-center gap-2 text-destructive text-sm">
+                        <AnnoyedIcon className="size-4" />
                         <span>Unable to load current track</span>
                     </div>
                 </div>
