@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ExternalLink, Loader2Icon, Music, TrendingUp } from 'lucide-react';
+import { AnnoyedIcon, ExternalLink, Loader2Icon, Music, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
@@ -64,9 +64,8 @@ export const SpotifyTopTracks = () => {
                     <TrendingUp className="size-4 text-green-500" />
                     <span className="font-medium text-foreground">Top Tracks</span>
                 </div>
-                <div className="flex items-center justify-center rounded-lg border bg-secondary/30 p-8">
+                <div className="flex items-center justify-center p-8">
                     <div className="flex items-center gap-3">
-                        <Loader2Icon className="size-6 animate-spin" />
                         <div className="animate-pulse text-foreground-lighter text-sm">
                             Curating top 5 tracks...
                         </div>
@@ -83,9 +82,9 @@ export const SpotifyTopTracks = () => {
                     <TrendingUp className="size-4 text-green-500" />
                     <span className="font-medium text-foreground">Top Tracks</span>
                 </div>
-                <div className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3">
+                <div className="flex items-center gap-3 rounded-lg border-destructive bg-destructive/10 hover:bg-destructive/20 transition-all p-3">
                     <div className="flex items-center gap-2 text-destructive text-sm">
-                        <Music className="size-4" />
+                        <AnnoyedIcon className="size-4" />
                         <span>Spotify lost the beat—top tracks not found!</span>
                     </div>
                 </div>
