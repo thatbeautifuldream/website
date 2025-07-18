@@ -53,7 +53,7 @@ export function VisitorCounter() {
                 'fixed right-5 top-4 flex items-center gap-2 rounded-full bg-secondary/80 px-3 py-1 ring-1 ring-border shadow transition-all cursor-pointer hover:bg-secondary/90 active:scale-95 hover:scale-105 select-none'
             )}
             aria-label="Live visitor count"
-            onClick={() => refetch()}
+        // onClick={() => refetch()}
         >
             <span className="inline-block size-2 rounded-full bg-green-500" />
             <span className="font-mono text-sm text-foreground"><NumberFlow value={count} /></span>

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { env } from '@/lib/env';
+import { cache } from '@/cache/redis';
 
-// In-memory storage (for testing)
-// Latter, will use redis or database, likely redis from upstash 
-let visitorsData: { [key: string]: number } = {};
+// Expiration time for online visitors (in seconds)
+const EXPIRATION_SECONDS = 30 * 60; // 30 minutes
 
 export async function GET(request: NextRequest) {
     try {
@@ -30,25 +30,18 @@ export async function GET(request: NextRequest) {
             .digest('hex')
             .substring(0, 16);
 
-        // Current timestamp
-        const now = Date.now();
-        const expirationTime = 30 * 60 * 1000; // 30 minutes in milliseconds
-
-        // Add or update the current visitor
         if (anonymizedIp !== 'unknown') {
-            // Filter out expired visitors
-            Object.keys(visitorsData).forEach(id => {
-                if (now - visitorsData[id] > expirationTime) {
-                    delete visitorsData[id];
-                }
-            });
+            // Use a Redis SET to store online visitors
+            // Key: "visitors_online", Value: anonymizedIp, Expiry: 30 min
+            await cache.sadd('visitors_online', anonymizedIp);
+            await cache.expire('visitors_online', EXPIRATION_SECONDS);
 
-            // Add or update current visitor
-            visitorsData[anonymizedIp] = now;
+            // set a per-IP key for more granular expiry
+            await cache.set(`visitor:${anonymizedIp}`, Date.now(), { ex: EXPIRATION_SECONDS });
         }
 
         // Count online users
-        const count = Object.keys(visitorsData).length;
+        const count = await cache.scard('visitors_online');
 
         return NextResponse.json({ success: true, count });
     } catch (err) {
