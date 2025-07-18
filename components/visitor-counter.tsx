@@ -50,7 +50,7 @@ export function VisitorCounter() {
     return (
         <div
             className={cn(
-                'fixed right-5 top-4 flex items-center gap-2 rounded-full bg-secondary/80 px-3 py-1 ring-1 ring-border shadow transition-all'
+                'fixed right-5 top-4 flex items-center gap-2 rounded-full bg-secondary/80 px-3 py-1 ring-1 ring-border shadow transition-all cursor-pointer hover:bg-secondary/90 active:scale-95 hover:scale-105 select-none'
             )}
             aria-label="Live visitor count"
             onClick={() => refetch()}
