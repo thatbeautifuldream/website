@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ExternalLink, Mic, Music } from 'lucide-react';
 import { ImageZoom } from './image-zoom';
+import { motion } from 'motion/react';
 import { Link } from './link';
 import { Section } from './section';
 
@@ -113,16 +114,17 @@ export const SpotifyNowPlaying = () => {
                     <span className="font-medium text-foreground">Now Playing</span>
                 </div>
 
-                <div className="flex items-center gap-3 rounded-lg border bg-secondary/30 p-3 transition-colors hover:bg-secondary/40">
+                <div className="flex items-center gap-3 p-3">
                     {track.album.image && (
                         <ImageZoom>
                             {/** biome-ignore lint/performance/noImgElement: spotify album image */}
-                            <img
+                            <motion.img
                                 alt={`${track.album.name} cover`}
                                 className="size-16 rounded-md object-cover"
                                 height={48}
                                 src={track.album.image}
                                 width={48}
+                                whileHover={{ scale: 1.05 }}
                             />
                         </ImageZoom>
                     )}
