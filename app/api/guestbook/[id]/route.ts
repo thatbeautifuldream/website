@@ -6,7 +6,7 @@ import { db } from "@/db/drizzle";
 import {
   guestbook,
   guestbookParamsSchema,
-  patchGuestbookSchema,
+  updateGuestbookSchema,
 } from "@/db/schema";
 
 export async function GET(request: NextRequest) {
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
         {
           success: false,
           error: "Invalid ID format",
-          details: error.errors,
+          details: error.cause,
         },
         { status: 400 }
       );
@@ -57,7 +57,7 @@ export async function PATCH(request: NextRequest) {
 
     const body = await request.json();
 
-    const validatedData = patchGuestbookSchema.parse(body);
+    const validatedData = updateGuestbookSchema.parse(body);
 
     const [updatedEntry] = await db
       .update(guestbook)
@@ -83,7 +83,7 @@ export async function PATCH(request: NextRequest) {
         {
           success: false,
           error: "Invalid data format",
-          details: error.errors,
+          details: error.cause,
         },
         { status: 400 }
       );
@@ -124,7 +124,7 @@ export async function DELETE(request: NextRequest) {
         {
           success: false,
           error: "Invalid ID format",
-          details: error.errors,
+          details: error.cause,
         },
         { status: 400 }
       );

@@ -54,7 +54,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
             <Footer />
           </div>
           <Toaster />
-          <VisitorCounter />
+          {/* <VisitorCounter /> */}
           <ThemeSwitcher />
           <JsonLd />
           <LayoutDebug />

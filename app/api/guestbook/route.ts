@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: "Invalid data format",
-          details: error.errors,
+          details: error.cause,
         },
         { status: 400 }
       );

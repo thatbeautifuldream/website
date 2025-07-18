@@ -8,6 +8,13 @@
       "when": 1752327636017,
       "tag": "0000_fluffy_power_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752873460365,
+      "tag": "0001_lean_trauma",
+      "breakpoints": true
     }
   ]
 }
