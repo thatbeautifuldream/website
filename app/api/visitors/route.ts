@@ -31,17 +31,55 @@ export async function GET(request: NextRequest) {
             .substring(0, 16);
 
         if (anonymizedIp !== 'unknown') {
-            // Use a Redis SET to store online visitors
-            // Key: "visitors_online", Value: anonymizedIp, Expiry: 30 min
             await cache.sadd('visitors_online', anonymizedIp);
-            await cache.expire('visitors_online', EXPIRATION_SECONDS);
-
-            // set a per-IP key for more granular expiry
-            await cache.set(`visitor:${anonymizedIp}`, Date.now(), { ex: EXPIRATION_SECONDS });
+            // Collect more metadata
+            const referer = request.headers.get('referer') || '';
+            const acceptLanguage = request.headers.get('accept-language') || '';
+            const path = request.nextUrl.pathname;
+            const method = request.method;
+            // Parse device/browser info from user-agent
+            const deviceType = /mobile|android|iphone|ipad/i.test(userAgent) ? 'mobile' : 'desktop';
+            let browser = 'unknown', os = 'unknown';
+            if (/chrome/i.test(userAgent)) browser = 'chrome';
+            else if (/firefox/i.test(userAgent)) browser = 'firefox';
+            else if (/safari/i.test(userAgent)) browser = 'safari';
+            else if (/edge/i.test(userAgent)) browser = 'edge';
+            else if (/opera/i.test(userAgent)) browser = 'opera';
+            if (/windows/i.test(userAgent)) os = 'windows';
+            else if (/mac/i.test(userAgent)) os = 'macos';
+            else if (/linux/i.test(userAgent)) os = 'linux';
+            else if (/android/i.test(userAgent)) os = 'android';
+            else if (/iphone|ipad/i.test(userAgent)) os = 'ios';
+            const meta = {
+                userAgent,
+                timestamp: Date.now(),
+                ip: ip,
+                forwarded: forwarded || '',
+                referer,
+                acceptLanguage,
+                path,
+                method,
+                deviceType,
+                browser,
+                os,
+            };
+            await cache.hmset(`visitor_meta:${anonymizedIp}`, meta);
+            await cache.expire(`visitor_meta:${anonymizedIp}`, EXPIRATION_SECONDS);
         }
 
-        // Count online users
-        const count = await cache.scard('visitors_online');
+        // Count only online users with valid metadata
+        const allIps = await cache.smembers('visitors_online');
+        let count = 0;
+        for (const ip of allIps) {
+            const exists = await cache.exists(`visitor_meta:${ip}`);
+            if (exists) {
+                count++;
+            } else {
+                // Clean up expired IPs and their metadata
+                await cache.srem('visitors_online', ip);
+                await cache.del(`visitor_meta:${ip}`);
+            }
+        }
 
         return NextResponse.json({ success: true, count });
     } catch (err) {
