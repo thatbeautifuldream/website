@@ -11,9 +11,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
-    "gists:fetch": "tsx scripts/gists.ts",
-    "gist:single": "tsx scripts/single-gist.ts",
-    "blogs:fetch": "tsx scripts/blogs.ts"
+    "gists:fetch": "tsx lib/scripts/gists.ts",
+    "gist:single": "tsx lib/scripts/single-gist.ts",
+    "blogs:fetch": "tsx lib/scripts/blogs.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",

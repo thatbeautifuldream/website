@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useLayoutDebugStore } from '@/stores/use-layout-debug-store';
+import { useLayoutDebugStore } from '@/lib/stores/use-layout-debug-store';
 
 interface ElementInfo {
     classNames: string[];
