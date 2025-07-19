@@ -1,9 +1,15 @@
 'use client';
 
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { AnnoyedIcon, ExternalLink, Loader2Icon, Music, TrendingUp } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import {
+    AnnoyedIcon,
+    ExternalLink,
+    Loader2Icon,
+    Music,
+    TrendingUp,
+} from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { useState } from 'react';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Section } from './section';
@@ -82,7 +88,7 @@ export const SpotifyTopTracks = () => {
                     <TrendingUp className="size-4 text-green-500" />
                     <span className="font-medium text-foreground">Top Tracks</span>
                 </div>
-                <div className="flex items-center gap-3 rounded-lg border-destructive bg-destructive/10 hover:bg-destructive/20 transition-all p-3">
+                <div className='flex items-center gap-3 rounded-lg border-destructive bg-destructive/10 p-3 transition-all hover:bg-destructive/20'>
                     <div className="flex items-center gap-2 text-destructive text-sm">
                         <AnnoyedIcon className="size-4" />
                         <span>Spotify lost the beat—top tracks not found!</span>
@@ -100,43 +106,43 @@ export const SpotifyTopTracks = () => {
     if (!expanded) {
         return (
             <Section className="gap-2">
-                <div className="flex items-center gap-2 mb-2">
+                <div className='mb-2 flex items-center gap-2'>
                     <TrendingUp className="size-4 text-green-500" />
                     <span className="font-medium text-foreground">Top Tracks</span>
                     <span className="text-foreground-lighter text-sm">(All Time)</span>
                 </div>
                 <motion.div
+                    className='flex cursor-pointer justify-center gap-4'
                     layout
-                    className="flex gap-4 justify-center cursor-pointer"
                     onClick={() => setExpanded(true)}
                 >
                     {topTracksData.tracks.map((track, index) => (
                         <motion.div
-                            key={track.id}
-                            layoutId={`album-cover-${track.id}`}
-                            layout="position"
                             className="relative"
+                            key={track.id}
+                            layout="position"
+                            layoutId={`album-cover-${track.id}`}
                             whileHover={{ scale: 1.05 }}
                         >
                             <img
                                 alt={`${track.album.name} cover`}
-                                className="size-16 rounded-md object-cover border border-border"
+                                className='size-16 rounded-md border border-border object-cover'
                                 height={64}
                                 src={track.album.image}
                                 width={64}
                             />
                             <motion.div
-                                className="absolute -right-2 -bottom-2 flex size-6 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm"
+                                className='-right-2 -bottom-2 absolute flex size-6 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm'
                                 layoutId={`album-rank-${track.id}`}
                             >
-                                <span className="select-none font-black text-lg text-foreground">
+                                <span className='select-none font-black text-foreground text-lg'>
                                     {index + 1}
                                 </span>
                             </motion.div>
                         </motion.div>
                     ))}
                 </motion.div>
-                <div className="mt-4 text-center text-xs text-foreground-lighter">
+                <div className='mt-4 text-center text-foreground-lighter text-xs'>
                     Click to reveal top tracks
                 </div>
             </Section>
@@ -147,11 +153,11 @@ export const SpotifyTopTracks = () => {
     return (
         <AnimatePresence>
             <motion.div
-                layout
-                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
                 className="space-y-4"
+                exit={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 20 }}
+                layout
             >
                 <Section className="gap-2">
                     <div className="flex items-center gap-2">
@@ -159,7 +165,7 @@ export const SpotifyTopTracks = () => {
                         <span className="font-medium text-foreground">Top Tracks</span>
                         <span className="text-foreground-lighter text-sm">(All Time)</span>
                         <button
-                            className="ml-auto rounded px-2 py-1 text-xs text-foreground-lighter hover:bg-accent/10"
+                            className='ml-auto rounded px-2 py-1 text-foreground-lighter text-xs hover:bg-accent/10'
                             onClick={() => setExpanded(false)}
                         >
                             Collapse
@@ -170,9 +176,9 @@ export const SpotifyTopTracks = () => {
                     {topTracksData.tracks.map((track, index) => (
                         <Section className="gap-0" delay={index * 0.1} key={track.id}>
                             <motion.div
-                                layoutId={`album-cover-${track.id}`}
-                                layout="position"
                                 className="flex items-center gap-3 rounded-lg p-3 transition-colors"
+                                layout="position"
+                                layoutId={`album-cover-${track.id}`}
                             >
                                 <div className="relative flex items-center gap-3">
                                     {track.album.image && (
@@ -183,8 +189,8 @@ export const SpotifyTopTracks = () => {
                                                     className="size-16 rounded-md object-cover"
                                                     height={64}
                                                     src={track.album.image}
-                                                    width={64}
                                                     whileHover={{ scale: 1.05 }}
+                                                    width={64}
                                                 />
                                             </ImageZoom>
                                             <motion.div

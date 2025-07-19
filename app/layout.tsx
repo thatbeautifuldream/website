@@ -12,7 +12,7 @@ import { LayoutDebug } from '@/components/layout-debug';
 import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
-import { VisitorCounter } from '@/components/visitor-counter';
+// import { VisitorCounter } from '@/components/visitor-counter';
 import { cn } from '@/lib/utils';
 
 type RootLayoutProps = {
