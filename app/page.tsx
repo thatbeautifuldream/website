@@ -19,7 +19,7 @@ export const metadata: Metadata = createMetadata({
 
 const HomePage = () => (
   <>
-    <Section className="flex items-center gap-4">
+    <Section className="flex items-center gap-4" delay={0.2}>
       <ImageZoom>
         {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
         <img
@@ -41,7 +41,7 @@ const HomePage = () => (
       </div>
     </Section>
     <article>
-      <Section delay={0.2}>
+      <Section delay={0.3}>
         <Mdx code={page.body} />
       </Section>
     </article>
