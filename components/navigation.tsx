@@ -19,6 +19,11 @@ const links = [
     active: (pathname: string) => pathname.startsWith('/work'),
   },
   {
+    href: '/about',
+    label: 'About',
+    active: (pathname: string) => pathname.startsWith('/about'),
+  },
+  {
     href: '/gist',
     label: 'Gist',
     active: (pathname: string) => pathname.startsWith('/gist'),
@@ -28,27 +33,17 @@ const links = [
     label: 'Blog',
     active: (pathname: string) => pathname.startsWith('/blog'),
   },
-  {
-    href: '/chat',
-    label: 'Chat',
-    active: (pathname: string) => pathname.startsWith('/chat'),
-  },
-  {
-    href: '/guestbook',
-    label: 'Guestbook',
-    active: (pathname: string) => pathname.startsWith('/guestbook'),
-  },
 ];
 
 export const Navigation = () => {
   const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const deviceType = getDeviceType();
+  // const deviceType = getDeviceType();
 
-  const linksToShow =
-    deviceType === 'mobile'
-      ? links.filter(link => link.href !== '/chat')
-      : links;
+  // const linksToShow =
+  //   deviceType === 'mobile'
+  //     ? links.filter(link => link.href !== '/chat')
+  //     : links;
 
   return (
     <nav className="flex items-center justify-between text-xs">
@@ -56,7 +51,7 @@ export const Navigation = () => {
         <Sign className="size-12" color="currentColor" />
       </Link>
       <ul className="flex items-center gap-1 rounded-xl bg-secondary/30 p-1">
-        {linksToShow.map(({ href, label, active }, index) => {
+        {links.map(({ href, label, active }, index) => {
           const isActive = active(pathname);
           const isHovered = hoveredIndex === index;
 

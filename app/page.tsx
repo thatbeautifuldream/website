@@ -24,7 +24,7 @@ const HomePage = () => (
         {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
         <img
           alt=""
-          className='size-10 rounded-full transition-all duration-300 hover:scale-110'
+          className="size-10 rounded-full transition-all duration-300 hover:scale-110"
           height={40}
           src={'https://avatars.githubusercontent.com/u/28717686?v=4'}
           width={40}

@@ -1,11 +1,11 @@
-import { Bricolage_Grotesque, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono } from "next/font/google";
 
-export const sans = Bricolage_Grotesque({
-  subsets: ['latin'],
-  variable: '--font-sans',
+export const sans = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const mono = Geist_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
+  subsets: ["latin"],
+  variable: "--font-mono",
 });

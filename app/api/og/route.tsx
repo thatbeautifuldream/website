@@ -92,9 +92,9 @@ export const GET = async (request: NextRequest) => {
       height: 630,
       fonts: [
         {
-          name: 'Bricolage+Grotesque',
+          name: 'Geist',
           data: await loadGoogleFont(
-            'Bricolage+Grotesque',
+            'Geist',
             allText,
             '400;700;800'
           ),
@@ -102,9 +102,9 @@ export const GET = async (request: NextRequest) => {
           weight: 400,
         },
         {
-          name: 'Bricolage+Grotesque',
+          name: 'Geist',
           data: await loadGoogleFont(
-            'Bricolage+Grotesque',
+            'Geist',
             allText,
             '400;700;800'
           ),
@@ -112,9 +112,9 @@ export const GET = async (request: NextRequest) => {
           weight: 700,
         },
         {
-          name: 'Bricolage+Grotesque',
+          name: 'Geist',
           data: await loadGoogleFont(
-            'Bricolage+Grotesque',
+            'Geist',
             allText,
             '400;700;800'
           ),
