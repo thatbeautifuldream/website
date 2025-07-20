@@ -102,7 +102,9 @@ const pre = ({ ref: _ref, ...props }: HTMLProps<HTMLPreElement>) => {
 
   return (
     <CodeBlock {...props}>
-      <Pre>{props.children}</Pre>
+      <Pre style={{ fontFamily: 'var(--font-mono)' }}>
+        {props.children}
+      </Pre>
     </CodeBlock>
   );
 };

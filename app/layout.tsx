@@ -12,7 +12,6 @@ import { LayoutDebug } from '@/components/layout-debug';
 import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
-// import { VisitorCounter } from '@/components/visitor-counter';
 import { cn } from '@/lib/utils';
 
 type RootLayoutProps = {
@@ -28,12 +27,6 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => (
   <html className="scroll-smooth" lang="en" suppressHydrationWarning>
-    {/* <head>
-      <script
-        crossOrigin="anonymous"
-        src="//unpkg.com/react-scan/dist/auto.global.js"
-      />
-    </head> */}
     <body
       className={cn(
         sans.variable,
@@ -54,7 +47,6 @@ const RootLayout = ({ children }: RootLayoutProps) => (
             <Footer />
           </div>
           <Toaster />
-          {/* <VisitorCounter /> */}
           <ThemeSwitcher />
           <JsonLd />
           <LayoutDebug />
