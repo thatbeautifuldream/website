@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Link } from '@/components/link';
-import { cn, getDeviceType } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { Sign } from './sign';
 
 const links = [
@@ -38,12 +38,6 @@ const links = [
 export const Navigation = () => {
   const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  // const deviceType = getDeviceType();
-
-  // const linksToShow =
-  //   deviceType === 'mobile'
-  //     ? links.filter(link => link.href !== '/chat')
-  //     : links;
 
   return (
     <nav className="flex items-center justify-between text-xs">
