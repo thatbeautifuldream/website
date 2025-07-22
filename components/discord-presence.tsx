@@ -126,11 +126,11 @@ function SpotifyCard({
     );
     duration = spotify.timestamps.end - spotify.timestamps.start;
     progressLabel = (
-      <div className='mt-1 flex items-center gap-2 text-foreground-light text-xs'>
+      <div className="mt-1 flex items-center gap-2 text-foreground-light text-xs">
         <span>{formatTime(progress)}</span>
-        <div className='relative mx-1 h-1 min-w-[40px] flex-1 overflow-hidden rounded bg-muted'>
+        <div className="relative mx-1 h-1 min-w-[40px] flex-1 overflow-hidden rounded bg-muted">
           <div
-            className='absolute top-0 left-0 h-full bg-primary/50'
+            className="absolute top-0 left-0 h-full bg-primary/50"
             style={{ width: `${(progress / duration) * 100}%` }}
           />
         </div>
@@ -159,7 +159,7 @@ function SpotifyCard({
       <div className="min-w-0 flex-1 space-y-1">
         {spotify.track_id ? (
           <Link
-            className='flex items-center gap-1 truncate font-medium text-base text-foreground hover:underline'
+            className="flex items-center gap-1 truncate font-medium text-base text-foreground hover:underline"
             href={`https://open.spotify.com/track/${spotify.track_id}`}
           >
             {spotify.song}
@@ -206,7 +206,25 @@ export function DiscordPresence() {
     : [];
 
   if (!hasSpotify && filteredActivities.length === 0) {
-    return null;
+    return (
+      <Section className="gap-2">
+        <div className="flex items-center gap-3 p-3">
+          <ImageZoom>
+            <div className="flex size-16 items-center justify-center rounded-md bg-muted">
+              <span className="text-3xl">🕺🏻</span>
+            </div>
+          </ImageZoom>
+          <div className="min-w-0 flex-1 space-y-1">
+            <span className="block truncate font-medium text-base text-foreground">
+              No activity
+            </span>
+            <span className="block truncate text-foreground-light text-xs">
+              Nothing on my mind right now
+            </span>
+          </div>
+        </div>
+      </Section>
+    );
   }
 
   return (
