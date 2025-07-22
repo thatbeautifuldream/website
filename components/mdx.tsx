@@ -9,6 +9,7 @@ import { Link } from './link';
 import { Mermaid } from './mdx/mermaid';
 import { SpotifyNowPlaying } from './spotify-now-playing';
 import { SpotifyTopTracks } from './spotify-top-tracks';
+import { DiscordPresence } from './discord-presence';
 import { Timeline } from './timeline';
 import { Video } from './video';
 import { YouTubeVideos } from './youtube-videos';
@@ -212,6 +213,7 @@ export const Mdx = ({ code }: MdxProperties) => {
         YouTubeVideos,
         SpotifyNowPlaying,
         SpotifyTopTracks,
+        DiscordPresence,
         Mermaid,
       }}
     />
