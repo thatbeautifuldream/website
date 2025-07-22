@@ -1,117 +1,221 @@
-"use client";
+/** biome-ignore-all lint/performance/noImgElement: need to use img element for discord activity image */
+'use client';
 
-import { useLanyardWS } from "use-lanyard";
-import { ExternalLink, Music, Gamepad2 } from "lucide-react";
-import { ImageZoom } from "./image-zoom";
+import { ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
+import type { JSX } from 'react';
+import { useLanyardWS } from 'use-lanyard';
+import { ImageZoom } from './image-zoom';
+import { Link } from './link';
+import { Section } from './section';
 
-const DISCORD_ID = "451669359866413076";
+const DISCORD_ID = '451669359866413076';
+
+// Type for Discord activity (minimal, for image extraction)
+type TDiscordActivity = {
+  id?: string;
+  name?: string;
+  application_id?: string;
+  assets?: {
+    large_image?: string;
+    small_image?: string;
+  };
+  state?: string;
+  details?: string;
+};
+
+// Type for Spotify (minimal, for image extraction)
+type TSpotify = {
+  album_art_url?: string | null;
+  song?: string | null;
+  artist?: string | null;
+  track_id?: string | null;
+};
+
+function getActivityImage(activity: TDiscordActivity | null): string | null {
+  if (!activity?.assets) {
+    return null;
+  }
+  const { large_image, small_image } = activity.assets;
+  const image = large_image || small_image;
+  if (!image) {
+    return null;
+  }
+  // Handle mp:external/ images (Discord external asset proxy)
+  if (image.startsWith('mp:external/')) {
+    // Extract the actual external URL after '/https/'
+    const httpsIndex = image.indexOf('/https/');
+    if (httpsIndex !== -1) {
+      return `https://${image.slice(httpsIndex + '/https/'.length)}`;
+    }
+    return null;
+  }
+  if (image.startsWith('spotify:')) {
+    // handled by Spotify section
+    return null;
+  }
+  if (activity.application_id && image) {
+    return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png`;
+  }
+  return null;
+}
+
+function formatTime(ms: number): string {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function ActivityCard({ activity }: { activity: TDiscordActivity }) {
+  const image = getActivityImage(activity);
+  return (
+    <div className="flex items-center gap-3 p-3">
+      <ImageZoom>
+        {image ? (
+          <motion.img
+            alt={activity?.name ? `${activity.name} icon` : 'Activity icon'}
+            className="size-16 rounded-md object-cover"
+            height={56}
+            src={image}
+            whileHover={{ scale: 1.05 }}
+            width={56}
+          />
+        ) : (
+          <div className="flex size-16 items-center justify-center rounded-md bg-muted">
+            <span className="text-3xl">🎮</span>
+          </div>
+        )}
+      </ImageZoom>
+      <div className="min-w-0 flex-1 space-y-1">
+        <span className="block truncate font-medium text-base text-foreground">
+          {activity?.name}
+        </span>
+        {activity?.state && (
+          <span className="block truncate text-foreground-light text-xs">
+            {activity.state}
+          </span>
+        )}
+        {activity?.details && (
+          <span className="block truncate text-foreground-light text-xs">
+            {activity.details}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function SpotifyCard({
+  spotify,
+}: {
+  spotify: TSpotify & { timestamps?: { start?: number; end?: number } };
+}) {
+  // Try to get progress and duration if timestamps are available
+  let progress = 0;
+  let duration = 0;
+  let progressLabel: JSX.Element | null = null;
+  if (spotify.timestamps?.start && spotify.timestamps?.end) {
+    const now = Date.now();
+    progress = Math.max(
+      0,
+      Math.min(
+        now - spotify.timestamps.start,
+        spotify.timestamps.end - spotify.timestamps.start
+      )
+    );
+    duration = spotify.timestamps.end - spotify.timestamps.start;
+    progressLabel = (
+      <div className='mt-1 flex items-center gap-2 text-foreground-light text-xs'>
+        <span>{formatTime(progress)}</span>
+        <div className='relative mx-1 h-1 min-w-[40px] flex-1 overflow-hidden rounded bg-muted'>
+          <div
+            className='absolute top-0 left-0 h-full bg-primary/50'
+            style={{ width: `${(progress / duration) * 100}%` }}
+          />
+        </div>
+        <span>{formatTime(duration)}</span>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-3 p-3">
+      <ImageZoom>
+        {spotify.album_art_url ? (
+          <motion.img
+            alt={spotify.song ? `${spotify.song} cover` : 'Spotify album cover'}
+            className="size-16 rounded-md object-cover"
+            height={56}
+            src={spotify.album_art_url}
+            whileHover={{ scale: 1.05 }}
+            width={56}
+          />
+        ) : (
+          <div className="flex size-16 items-center justify-center rounded-md bg-muted text-muted-foreground">
+            <span className="text-3xl">🎵</span>
+          </div>
+        )}
+      </ImageZoom>
+      <div className="min-w-0 flex-1 space-y-1">
+        {spotify.track_id ? (
+          <Link
+            className='flex items-center gap-1 truncate font-medium text-base text-foreground hover:underline'
+            href={`https://open.spotify.com/track/${spotify.track_id}`}
+          >
+            {spotify.song}
+            <ExternalLink className="size-3" />
+          </Link>
+        ) : (
+          <span className="block truncate font-medium text-base text-foreground">
+            {spotify.song}
+          </span>
+        )}
+        <span className="block truncate text-foreground-light text-xs">
+          by {spotify.artist}
+        </span>
+        {progressLabel}
+      </div>
+    </div>
+  );
+}
 
 export function DiscordPresence() {
   const data = useLanyardWS(DISCORD_ID);
-  if (!data) return null;
+  if (!data) {
+    return null;
+  }
 
-  const { discord_user, activities, listening_to_spotify, spotify } = data;
-  const hasSpotify = listening_to_spotify && spotify;
+  const { activities, listening_to_spotify, spotify } = data;
+  const hasSpotify: boolean = Boolean(listening_to_spotify && spotify);
   const hasActivity = activities && activities.length > 0;
+  const spotifyObj:
+    | (TSpotify & { timestamps?: { start?: number; end?: number } })
+    | null =
+    hasSpotify && spotify
+      ? (spotify as TSpotify & {
+        timestamps?: { start?: number; end?: number };
+      })
+      : null;
 
-  // Discord badges (basic, can be extended)
-  const badges = [];
-  if (discord_user?.avatar_decoration) badges.push({ icon: discord_user.avatar_decoration, label: "Decoration" });
-  if (discord_user?.bot) badges.push({ icon: "/bot-badge.svg", label: "Bot" });
-  // Add more badges as needed
+  // Filter out the Spotify activity from the activities array
+  const filteredActivities = hasActivity
+    ? activities.filter(
+      (activity: TDiscordActivity) =>
+        activity.name?.toLowerCase() !== 'spotify'
+    )
+    : [];
+
+  if (!hasSpotify && filteredActivities.length === 0) {
+    return null;
+  }
 
   return (
-    <div className="rounded-xl bg-[#181A20] border border-[#23262F] shadow-lg p-4 w-full max-w-md mx-auto">
-      {/* User header */}
-      <div className="flex items-center gap-3 pb-2">
-        <div className="relative">
-          <img
-            src={`https://cdn.discordapp.com/avatars/${discord_user?.id}/${discord_user?.avatar}.png?size=128`}
-            alt={discord_user?.username || "Discord Avatar"}
-            width={48}
-            height={48}
-            className="rounded-full border border-[#23262F]"
-          />
-          {/* Status dot could go here */}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-white text-base truncate">
-              {discord_user?.username}
-              {discord_user?.discriminator && (
-                <span className="text-[#A3A6B3] font-normal">#{discord_user.discriminator}</span>
-              )}
-            </span>
-            {badges.map((badge, i) => (
-              <span key={i} title={badge.label} className="inline-block">
-                <Image src={badge.icon} alt={badge.label} width={18} height={18} />
-              </span>
-            ))}
-          </div>
-          <a
-            href={`https://github.com/${discord_user?.username?.toLowerCase()}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-[#A3A6B3] hover:underline flex items-center gap-1"
-          >
-            github.com/{discord_user?.username?.toLowerCase()}
-          </a>
-        </div>
-      </div>
-      <div className="border-t border-[#23262F] my-2" />
-
-      {/* Spotify or activity */}
-      {hasSpotify && (
-        <div className="flex gap-3 items-center mt-2">
-          <div className="flex-shrink-0">
-            <ImageZoom>
-              <img
-                src={spotify.album_art_url}
-                alt={spotify.song}
-                className="rounded-md shadow"
-                width={56}
-                height={56}
-                loading="lazy"
-              />
-            </ImageZoom>
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="text-green-500 text-xs font-semibold tracking-wide mb-1">LISTENING TO SPOTIFY...</span>
-            <span className="text-white font-medium truncate text-base">{spotify.song}</span>
-            <span className="text-[#A3A6B3] text-xs truncate">By {spotify.artist}</span>
-            <a
-              href={`https://open.spotify.com/track/${spotify.track_id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-green-400 hover:underline mt-1 flex items-center gap-1"
-            >
-              Listen on Spotify <ExternalLink className="size-3" />
-            </a>
-          </div>
-        </div>
-      )}
-      {!hasSpotify && hasActivity && (
-        <div className="flex gap-3 items-center mt-2">
-          <div className="flex-shrink-0">
-            <div className="rounded-md bg-[#23262F] flex items-center justify-center w-14 h-14">
-              <Gamepad2 className="text-[#A3A6B3]" size={28} />
-            </div>
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="text-[#A3A6B3] text-xs font-semibold tracking-wide mb-1">ACTIVITY</span>
-            <span className="text-white font-medium truncate text-base">{activities[0].name}</span>
-            {activities[0].state && (
-              <span className="text-[#A3A6B3] text-xs truncate">{activities[0].state}</span>
-            )}
-            {activities[0].details && (
-              <span className="text-[#A3A6B3] text-xs truncate">{activities[0].details}</span>
-            )}
-          </div>
-        </div>
-      )}
-      {!hasSpotify && !hasActivity && (
-        <div className="text-[#A3A6B3] text-xs text-center py-4">No activity</div>
-      )}
-    </div>
+    <Section className="gap-2">
+      {hasSpotify && spotifyObj && <SpotifyCard spotify={spotifyObj} />}
+      {filteredActivities.length > 0 &&
+        filteredActivities.map((activity: TDiscordActivity, idx: number) => (
+          <ActivityCard activity={activity} key={activity.id || idx} />
+        ))}
+    </Section>
   );
 }
