@@ -67,7 +67,7 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
                     Daily Coding Activity
                 </CardTitle>
                 <CardDescription>
-                    Last {data.length} days • {totalHours.toFixed(1)}h total • {averageHours.toFixed(1)}h average
+                    From the last {data.length} days
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -112,7 +112,7 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
                                                 <div className="h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: "var(--chart-1)" }} />
                                                 <span className="text-muted-foreground">Coding Time</span>
                                                 <span className="text-foreground font-mono font-medium tabular-nums ml-auto">
-                                                    {data.value}h ({originalData.grand_total.text})
+                                                    ({originalData.grand_total.text})
                                                 </span>
                                             </div>
                                         </div>
