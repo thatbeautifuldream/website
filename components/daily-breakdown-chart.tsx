@@ -78,7 +78,7 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
                             bottom: 12,
                         }}
                     >
-                        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                        <CartesianGrid vertical={false} />
                         <XAxis
                             dataKey="date"
                             tickLine={false}
@@ -118,20 +118,24 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
                         />
                         <Line
                             dataKey="codingTime"
-                            type="monotone"
+                            type="bump"
                             stroke="var(--chart-1)"
+                            dot={false}
                             strokeWidth={2}
-                            dot={{
-                                fill: "var(--chart-1)",
-                                strokeWidth: 2,
-                                r: 4
-                            }}
-                            activeDot={{
-                                r: 6,
-                                stroke: "var(--background)",
-                                strokeWidth: 2
-                            }}
+                            filter="url(#rainbow-line-glow)"
                         />
+                        <defs>
+                            <filter
+                                id="rainbow-line-glow"
+                                x="-20%"
+                                y="-20%"
+                                width="140%"
+                                height="140%"
+                            >
+                                <feGaussianBlur stdDeviation="10" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
                     </LineChart>
                 </ChartContainer>
             </CardContent>
