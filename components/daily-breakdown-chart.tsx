@@ -42,14 +42,18 @@ const chartConfig = {
 
 export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
     // Transform data for the chart
-    const chartData = data.map((day) => ({
-        date: new Date(day.range.date).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric'
-        }),
-        codingTime: Math.round(day.grand_total.total_seconds / 3600 * 100) / 100, // Convert to hours
-        originalData: day,
-    }));
+    const chartData = data.map((day) => {
+        const date = new Date(day.range.date);
+        return {
+            date: date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric'
+            }),
+            weekday: date.toLocaleDateString('en-US', { weekday: 'short' }),
+            codingTime: Math.round(day.grand_total.total_seconds / 3600 * 100) / 100, // Convert to hours
+            originalData: day,
+        };
+    });
 
     // Calculate total hours for display
     const totalHours = chartData.reduce((sum, item) => sum + item.codingTime, 0);
@@ -80,7 +84,7 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
                     >
                         <CartesianGrid vertical={false} />
                         <XAxis
-                            dataKey="date"
+                            dataKey="weekday"
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
@@ -102,7 +106,7 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
 
                                 return (
                                     <div className="border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl">
-                                        <div className="font-medium">{label}</div>
+                                        <div className="font-medium">{originalData.range.text}</div>
                                         <div className="grid gap-1.5">
                                             <div className="flex items-center gap-2">
                                                 <div className="h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: "var(--chart-1)" }} />
