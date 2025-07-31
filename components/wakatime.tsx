@@ -19,14 +19,14 @@ export function Wakatime() {
         return (
             <Section>
                 <div className="space-y-4">
-                    <div className="rounded-lg border border-border/50 bg-card p-6">
+                    <div className="p-6">
                         <div className="flex items-center justify-center py-8">
                             <div className="text-center space-y-3">
                                 <p className="text-foreground-lighter text-md">
-                                    <span className="animate-pulse">Analyzing my coding habits...</span>
+                                    <span className="animate-pulse">Analyzing Milind's coding habits...</span>
                                 </p>
                                 <p className="text-foreground-lighter/60 text-xs">
-                                    Counting how many times I've typed "console.log" today
+                                    Counting how many times he has typed "console.log" today
                                 </p>
                             </div>
                         </div>
