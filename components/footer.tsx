@@ -10,7 +10,7 @@ const routes = [
 export const Footer = () => (
   <Section delay={0.1}>
     <footer className="text-foreground-lighter text-sm leading-relaxed">
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-2">
         <div className="flex flex-wrap items-center text-xs">
           {routes.map((route, index) => (
             <div key={route.href} className="flex items-center">
