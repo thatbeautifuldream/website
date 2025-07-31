@@ -4,10 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Activity } from 'lucide-react';
 import { Section } from '@/components/section';
 import { orpc } from '@/lib/orpc';
+import { DailyBreakdownChart } from '@/components/daily-breakdown-chart';
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: '2-digit',
+    weekday: 'long',
 });
 
 export function Wakatime() {
@@ -85,83 +85,27 @@ export function Wakatime() {
 
             <Section delay={0.1}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="rounded-lg border border-border/50 bg-card p-4 flex flex-col space-y-2">
+                    <div className="rounded-lg border shadow-sm bg-card p-4 flex flex-col space-y-2">
                         <h3 className="font-medium text-foreground text-sm">Total Time</h3>
-                        <p className="text-2xl font-bold text-foreground">{totalText}</p>
+                        <p className="text-2xl font-semibold text-foreground">{totalText}</p>
                     </div>
-                    <div className="rounded-lg border border-border/50 bg-card p-4 flex flex-col space-y-2">
+                    <div className="rounded-lg border shadow-sm bg-card p-4 flex flex-col space-y-2">
                         <h3 className="font-medium text-foreground text-sm">Daily Average</h3>
-                        <p className="text-2xl font-bold text-foreground">{dailyAverageText}</p>
+                        <p className="text-2xl font-semibold text-foreground">{dailyAverageText}</p>
                     </div>
-                    <div className="rounded-lg border border-border/50 bg-card p-4 flex flex-col space-y-2">
-                        <h3 className="font-medium text-foreground text-sm">Days Tracked</h3>
-                        <p className="text-2xl font-bold text-foreground">{data.length}</p>
+                    <div className="rounded-lg border shadow-sm bg-card p-4 flex flex-col space-y-2">
+                        <h3 className="font-medium text-foreground text-sm">Most Active Day</h3>
+                        <p className="text-2xl font-semibold text-foreground">{dateFormatter.format(new Date(data.reduce((max, day) =>
+                            day.grand_total.total_seconds > max.grand_total.total_seconds ? day : max
+                        ).range.date))}</p>
                     </div>
                 </div>
             </Section>
 
             <div className="flex flex-col space-y-10">
                 <Section delay={0.2}>
-                    <h2 className="font-normal text-foreground-lighter text-sm">Daily Breakdown (Last 7 days)</h2>
-                    <ul className="grid gap-6 list-none pl-0">
-                        {data.map((day, index) => (
-                            <li key={day.range.date}>
-                                <div className="group flex flex-col gap-1 border-none text-sm sm:flex-row sm:items-center sm:gap-2">
-                                    <p className="text-foreground">{day.range.text}</p>
-                                    <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
-                                    <p className="text-foreground-lighter transition-colors group-hover:text-foreground-light">
-                                        {day.grand_total.text}
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    <DailyBreakdownChart data={data} />
                 </Section >
-                <Section delay={0.3}>
-                    <h2 className="font-normal text-foreground-lighter text-sm">
-                        Additional Stats
-                    </h2>
-                    <ul className="grid gap-6 list-none pl-0">
-                        <li>
-                            <div className="group flex flex-col gap-1 border-none text-sm sm:flex-row sm:items-center sm:gap-2">
-                                <p className="text-foreground">Total Hours</p>
-                                <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
-                                <p className="text-foreground-lighter transition-colors group-hover:text-foreground-light">
-                                    {(totalSeconds / 3600).toFixed(2)}h
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="group flex flex-col gap-1 border-none text-sm sm:flex-row sm:items-center sm:gap-2">
-                                <p className="text-foreground">Average per Day</p>
-                                <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
-                                <p className="text-foreground-lighter transition-colors group-hover:text-foreground-light">
-                                    {(dailyAverageSeconds / 3600).toFixed(2)}h
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="group flex flex-col gap-1 border-none text-sm sm:flex-row sm:items-center sm:gap-2">
-                                <p className="text-foreground">Most Active Day</p>
-                                <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
-                                <p className="text-foreground-lighter transition-colors group-hover:text-foreground-light">
-                                    {data.reduce((max, day) =>
-                                        day.grand_total.total_seconds > max.grand_total.total_seconds ? day : max
-                                    ).range.text}
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="group flex flex-col gap-1 border-none text-sm sm:flex-row sm:items-center sm:gap-2">
-                                <p className="text-foreground">Timezone</p>
-                                <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
-                                <p className="text-foreground-light transition-colors group-hover:text-foreground-light">
-                                    {firstDay.range.timezone}
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </Section>
             </div>
         </div >
     );
