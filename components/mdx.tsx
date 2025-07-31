@@ -13,6 +13,7 @@ import { DiscordPresence } from './discord-presence';
 import { Timeline } from './timeline';
 import { Video } from './video';
 import { YouTubeVideos } from './youtube-videos';
+import { Wakatime } from './wakatime';
 
 type MdxProperties = {
   readonly code: string;
@@ -215,6 +216,7 @@ export const Mdx = ({ code }: MdxProperties) => {
         SpotifyTopTracks,
         DiscordPresence,
         Mermaid,
+        Wakatime,
       }}
     />
   );
