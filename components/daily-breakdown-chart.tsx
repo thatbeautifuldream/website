@@ -1,0 +1,140 @@
+"use client";
+
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { Activity } from "lucide-react";
+
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import {
+    ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/components/ui/chart";
+
+type TWakatimeDay = {
+    range: {
+        text: string;
+        date: string;
+        timezone: string;
+    };
+    grand_total: {
+        text: string;
+        total_seconds: number;
+    };
+};
+
+type TDailyBreakdownChartProps = {
+    data: TWakatimeDay[];
+};
+
+const chartConfig = {
+    codingTime: {
+        label: "Coding Time",
+        color: "var(--chart-1)",
+    },
+} satisfies ChartConfig;
+
+export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
+    // Transform data for the chart
+    const chartData = data.map((day) => ({
+        date: new Date(day.range.date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric'
+        }),
+        codingTime: Math.round(day.grand_total.total_seconds / 3600 * 100) / 100, // Convert to hours
+        originalData: day,
+    }));
+
+    // Calculate total hours for display
+    const totalHours = chartData.reduce((sum, item) => sum + item.codingTime, 0);
+    const averageHours = totalHours / chartData.length;
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Activity className="h-4 w-4" />
+                    Daily Coding Activity
+                </CardTitle>
+                <CardDescription>
+                    Last {data.length} days • {totalHours.toFixed(1)}h total • {averageHours.toFixed(1)}h average
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <ChartContainer config={chartConfig}>
+                    <LineChart
+                        accessibilityLayer
+                        data={chartData}
+                        margin={{
+                            left: -28,
+                            right: 12,
+                            top: 12,
+                            bottom: 12,
+                        }}
+                    >
+                        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                        <XAxis
+                            dataKey="date"
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            tickFormatter={(value) => value}
+                        />
+                        <YAxis
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            tickFormatter={(value) => `${value}h`}
+                        />
+                        <ChartTooltip
+                            cursor={false}
+                            content={({ active, payload, label }) => {
+                                if (!active || !payload?.length) return null;
+
+                                const data = payload[0];
+                                const originalData = data.payload.originalData;
+
+                                return (
+                                    <div className="border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl">
+                                        <div className="font-medium">{label}</div>
+                                        <div className="grid gap-1.5">
+                                            <div className="flex items-center gap-2">
+                                                <div className="h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: "var(--chart-1)" }} />
+                                                <span className="text-muted-foreground">Coding Time</span>
+                                                <span className="text-foreground font-mono font-medium tabular-nums ml-auto">
+                                                    {data.value}h ({originalData.grand_total.text})
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }}
+                        />
+                        <Line
+                            dataKey="codingTime"
+                            type="monotone"
+                            stroke="var(--chart-1)"
+                            strokeWidth={2}
+                            dot={{
+                                fill: "var(--chart-1)",
+                                strokeWidth: 2,
+                                r: 4
+                            }}
+                            activeDot={{
+                                r: 6,
+                                stroke: "var(--background)",
+                                strokeWidth: 2
+                            }}
+                        />
+                    </LineChart>
+                </ChartContainer>
+            </CardContent>
+        </Card>
+    );
+} 
