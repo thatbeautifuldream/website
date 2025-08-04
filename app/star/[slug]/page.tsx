@@ -57,10 +57,10 @@ const Page: FC<PageProperties> = async ({ params }) => {
                         'flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors',
                         'hover:text-foreground'
                     )}
-                    href="/posts"
+                    href="/star"
                 >
                     <ArrowLeftToLineIcon size={12} />
-                    Posts
+                    Stars
                 </Link>
             </Section>
             <Section className="gap-1">
