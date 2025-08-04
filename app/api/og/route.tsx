@@ -33,17 +33,14 @@ const loadGoogleFont = async (font: string, text: string, weights: string) => {
 export const GET = async (request: NextRequest) => {
   const title = request.nextUrl.searchParams.get('title');
   const description = request.nextUrl.searchParams.get('description');
-
-  // Truncate title to fit 2 lines (approximately 50 characters for 72px font)
+  const hasOnlyTitle = title && !description;
   const truncatedTitle = title ? truncateText(title, 50) : '';
-
-  // Truncate description to fit 3 lines (approximately 180 characters for 38px font)
   const truncatedDescription = description
     ? truncateText(description, 180)
     : '';
 
   // Combine all text for more efficient font loading
-  const allText = `${truncatedTitle}${truncatedDescription}milindmishra.com`;
+  const allText = `${truncatedTitle}${truncatedDescription}milindmishra.comPersonalBlog&Portfolio`;
 
   return new ImageResponse(
     <div
@@ -53,22 +50,33 @@ export const GET = async (request: NextRequest) => {
       }}
       tw="flex flex-col justify-between w-full h-full p-16"
     >
-      <div tw="flex flex-col w-full max-w-[1000px]">
-        <h1
-          style={{ fontWeight: 800 }}
-          tw="text-[72px] leading-[76px] tracking-tighter m-0 text-[#cdd6f4] mb-8"
-        >
-          {truncatedTitle}
-        </h1>
-        {truncatedDescription && (
-          <p
-            style={{ fontWeight: 400 }}
-            tw="text-[38px] leading-[46px] tracking-tight text-[#a6adc8] m-0 max-w-[900px]"
+      {hasOnlyTitle ? (
+        <div tw="flex flex-col w-full max-w-[1000px]">
+          <h1
+            style={{ fontWeight: 800 }}
+            tw="text-[96px] leading-[100px] tracking-tighter m-0 text-[#cdd6f4]"
           >
-            {truncatedDescription}
-          </p>
-        )}
-      </div>
+            {truncatedTitle}
+          </h1>
+        </div>
+      ) : (
+        <div tw="flex flex-col w-full max-w-[1000px]">
+          <h1
+            style={{ fontWeight: 800 }}
+            tw="text-[72px] leading-[76px] tracking-tighter m-0 text-[#cdd6f4] mb-8"
+          >
+            {truncatedTitle}
+          </h1>
+          {truncatedDescription && (
+            <p
+              style={{ fontWeight: 400 }}
+              tw="text-[38px] leading-[46px] tracking-tight text-[#a6adc8] m-0 max-w-[900px]"
+            >
+              {truncatedDescription}
+            </p>
+          )}
+        </div>
+      )}
 
       <div tw="flex items-center justify-between w-full">
         <div tw="flex items-center px-8 py-4 bg-[#181825] rounded-full border border-[#313244]">
