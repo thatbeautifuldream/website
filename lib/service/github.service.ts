@@ -8,7 +8,7 @@ export type RepositoryContentResponse =
   RestEndpointMethodTypes["repos"]["getContent"]["response"]["data"];
 
 const octokit = new Octokit({
-  auth: "not so easy bro",
+  auth: "huehuehue",
 });
 
 const DEFAULT_PER_PAGE = 100;
