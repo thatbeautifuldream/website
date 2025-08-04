@@ -25,37 +25,39 @@ export const viewport: Viewport = {
   ],
 };
 
-const RootLayout = ({ children }: RootLayoutProps) => (
-  <html className="scroll-smooth" lang="en" suppressHydrationWarning>
-    <body
-      className={cn(
-        sans.variable,
-        mono.variable,
-        'bg-background font-sans text-foreground-light leading-relaxed antialiased'
-      )}
-    >
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        disableTransitionOnChange
-        enableSystem
+const RootLayout = ({ children }: RootLayoutProps) => {
+  return (
+    <html className="scroll-smooth" lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          sans.variable,
+          mono.variable,
+          'bg-background font-sans text-foreground-light leading-relaxed antialiased'
+        )}
       >
-        <QueryClientProviderWrapper>
-          <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-            <Navigation />
-            {children}
-            <Footer />
-          </div>
-          <Toaster />
-          <ThemeSwitcher />
-          <JsonLd />
-          <LayoutDebug />
-          <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
-          <Analytics />
-        </QueryClientProviderWrapper>
-      </ThemeProvider>
-    </body>
-  </html>
-);
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          disableTransitionOnChange
+          enableSystem
+        >
+          <QueryClientProviderWrapper>
+            <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+              <Navigation />
+              {children}
+              <Footer />
+            </div>
+            <Toaster />
+            <ThemeSwitcher />
+            <JsonLd />
+            <LayoutDebug />
+            <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
+            <Analytics />
+          </QueryClientProviderWrapper>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+};
 
 export default RootLayout;

@@ -189,6 +189,76 @@ const CodeSandbox = ({
   );
 };
 
+const table = (props: HTMLProps<HTMLTableElement>) => (
+  <div className="relative my-6 overflow-auto rounded-lg border border-border/50 shadow-sm">
+    <table
+      {...props}
+      className="w-full border-collapse text-sm"
+      style={{
+        borderSpacing: '0',
+        background: 'var(--color-fd-card, hsl(var(--card)))',
+        borderRadius: 'var(--radius-lg, 0.5rem)',
+        overflow: 'hidden',
+        minWidth: 'max-content',
+      }}
+    />
+  </div>
+);
+
+const thead = (props: HTMLProps<HTMLTableSectionElement>) => (
+  <thead
+    {...props}
+    className="border-b border-border/50 bg-muted/50 sticky top-0 z-10"
+  />
+);
+
+const tbody = (props: HTMLProps<HTMLTableSectionElement>) => (
+  <tbody {...props} />
+);
+
+const tfoot = (props: HTMLProps<HTMLTableSectionElement>) => (
+  <tfoot
+    {...props}
+    className="border-t border-border/50 bg-muted/30"
+  />
+);
+
+const tr = (props: HTMLProps<HTMLTableRowElement>) => (
+  <tr
+    {...props}
+    className="border-b border-border/30 last:border-b-0 hover:bg-muted/30 transition-colors duration-150"
+  />
+);
+
+const th = (props: HTMLProps<HTMLTableCellElement>) => (
+  <th
+    {...props}
+    className="text-left font-semibold text-foreground p-4 first:pl-6 last:pr-6 whitespace-nowrap"
+    style={{
+      textAlign: 'start',
+      padding: 'calc(var(--spacing, 0.75rem) * 2.5)',
+      borderInlineStart: '1px solid var(--color-fd-border, hsl(var(--border)))',
+      background: 'var(--color-fd-muted, hsl(var(--muted)))',
+      fontSize: '0.875rem',
+      lineHeight: '1.25rem',
+    }}
+  />
+);
+
+const td = (props: HTMLProps<HTMLTableCellElement>) => (
+  <td
+    {...props}
+    className="text-left text-muted-foreground p-4 first:pl-6 last:pr-6"
+    style={{
+      textAlign: 'start',
+      borderInlineStart: '1px solid var(--color-fd-border, hsl(var(--border)))',
+      padding: 'calc(var(--spacing, 0.75rem) * 2.5)',
+      fontSize: '0.875rem',
+      lineHeight: '1.25rem',
+    }}
+  />
+);
+
 export const Mdx = ({ code }: MdxProperties) => {
   return (
     <MDXContent
@@ -217,6 +287,13 @@ export const Mdx = ({ code }: MdxProperties) => {
         DiscordPresence,
         Mermaid,
         Wakatime,
+        table,
+        thead,
+        tbody,
+        tfoot,
+        tr,
+        th,
+        td,
       }}
     />
   );

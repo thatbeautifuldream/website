@@ -148,6 +148,32 @@ const gists = defineCollection({
   },
 });
 
+const star = defineCollection({
+  name: "star",
+  directory: "content",
+  include: "star/*.mdx",
+  schema: (z) => ({
+    title: z.string(),
+    description: z.string().optional(),
+    date: z.coerce.date(),
+    slug: z.string(),
+  }),
+  transform: async (page, context) => {
+    const body = await compileMDX(context, page, {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [[rehypeCode, rehypeCodeOptions], remarkHeading],
+    });
+
+    return {
+      ...page,
+      date: new Date(page.date),
+      body,
+      slug: page.slug || page._meta.path,
+      readingTime: readingTime(page.content).text,
+    };
+  },
+});
+
 export default defineConfig({
-  collections: [pages, blogs, posts, gists],
+  collections: [pages, blogs, posts, gists, star],
 });
