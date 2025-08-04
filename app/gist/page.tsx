@@ -24,7 +24,7 @@ const description = 'Code snippets and quick solutions.';
 export const metadata: Metadata = createMetadata({
     title,
     description,
-    ogText: 'My gists — Code snippets and quick solutions.',
+    image: `https://milindmishra.com/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
 });
 
 const Gists = () => (

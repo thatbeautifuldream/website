@@ -9,7 +9,7 @@ const description = 'Sign my guestbook and leave a message!';
 export const metadata: Metadata = createMetadata({
     title,
     description,
-    ogText: 'My guestbook — Sign and leave a message!',
+    image: `https://milindmishra.com/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
 });
 
 export default function GuestbookPage() {
