@@ -4,6 +4,9 @@ import { ImageZoom } from '@/components/image-zoom';
 import { Mdx } from '@/components/mdx';
 import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
+import Speech from "react-text-to-speech";
+import { SpeechTest } from '@/components/speech-test';
+
 
 const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
 
@@ -43,6 +46,7 @@ const HomePage = () => (
     <article>
       <Section delay={0.3}>
         <Mdx code={page.body} />
+        <SpeechTest />
       </Section>
     </article>
   </>

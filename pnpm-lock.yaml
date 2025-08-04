@@ -107,6 +107,9 @@ importers:
       react-player:
         specifier: ^2.16.0
         version: 2.16.0(react@19.1.0)
+      react-text-to-speech:
+        specifier: ^2.1.2
+        version: 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-tweet:
         specifier: ^3.2.2
         version: 3.2.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -3349,6 +3352,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-text-to-speech@2.1.2:
+    resolution: {integrity: sha512-RC/0tdIZm3sG18BKBgeMjbPhDpKtsTJqIkt4bnFCupPbM/ITB/833TJN3Bh+kFeaTOBh14HYgIRi3FL4H54X8Q==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-transition-group@4.4.5:
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
@@ -7215,6 +7224,11 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.1.8
+
+  react-text-to-speech@2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   react-transition-group@4.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
