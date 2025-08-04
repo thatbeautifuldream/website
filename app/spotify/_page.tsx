@@ -13,7 +13,7 @@ if (!page) {
 export const metadata: Metadata = createMetadata({
     title: page.title,
     description: page.description,
-    image: `/api/og?title=${page.title}&description=${page.description}`,
+    image: `/api/og?title=${encodeURIComponent(page.title)}&description=${encodeURIComponent(page.description)}`,
 });
 
 const SpotifyPage = () => (

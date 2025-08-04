@@ -9,7 +9,7 @@ const description = `Milind's todo list to keep track of tasks and stay organize
 export const metadata: Metadata = createMetadata({
     title,
     description,
-    ogText: `Milind's Todo List — Sign and leave a message!`,
+    image: `/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
 });
 
 export default function TodoListPage() {

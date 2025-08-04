@@ -25,6 +25,7 @@ export const metadata: Metadata = createMetadata({
   title,
   description,
   ogText: 'My blog — Learning Experiences.',
+  image: `https://milindmishra.com/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
 });
 
 const Posts = () => (
