@@ -30,7 +30,6 @@ export const generateMetadata = async ({
     return createMetadata({
         title: page.title,
         description: page.description || '',
-        image: page.cover,
     });
 };
 
@@ -76,32 +75,7 @@ const Page: FC<PageProperties> = async ({ params }) => {
                     </p>
                     <p>{page.readingTime}</p>
                 </div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                    {page.tags?.split(',').map((tag) => (
-                        <code
-                            className="whitespace-nowrap rounded-md bg-secondary px-2 py-1 text-xs"
-                            key={tag}
-                        >
-                            {tag}
-                        </code>
-                    ))}
-                </div>
-
             </Section>
-            {page.image ? (
-                <Section>
-                    {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
-                    <img
-                        alt={page.title}
-                        className="overflow-hidden rounded-lg border border-border/50"
-                        height={630}
-                        // priority
-                        // quality={100}
-                        src={page.image}
-                        width={1200}
-                    />
-                </Section>
-            ) : null}
             <article className="grid gap-3">
                 <Section delay={0.2}>
                     <Mdx code={page.body} />
