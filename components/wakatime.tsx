@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Activity } from 'lucide-react';
 import { Section } from '@/components/section';
 import { orpc } from '@/lib/orpc';
 import { DailyBreakdownChart } from '@/components/daily-breakdown-chart';
@@ -11,7 +10,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 });
 
 export function Wakatime() {
-    const wakatimeQuery = useQuery(orpc.wakatime.queryOptions({
+    const wakatimeQuery = useQuery(orpc.wakatime["coding-activity"].queryOptions({
         context: { cache: true },
     }));
 
