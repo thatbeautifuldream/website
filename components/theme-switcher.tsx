@@ -1,6 +1,6 @@
 'use client';
 
-import { Monitor, Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,6 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -20,11 +19,6 @@ export function ThemeSwitcher() {
   }
 
   const themes = [
-    {
-      key: 'system',
-      icon: Monitor,
-      label: 'System theme',
-    },
     {
       key: 'light',
       icon: Sun,
@@ -37,13 +31,16 @@ export function ThemeSwitcher() {
     },
   ];
 
+  const handleThemeChange = (themeKey: string) => {
+    setTheme(themeKey);
+  };
+
   return (
     <div
       className={cn(
-        'fixed right-5 bottom-4 flex h-7 max-w-7 overflow-hidden rounded-full p-0.5 ring-1 ring-border transition-all',
-        'hover:max-w-[100px]',
-        theme === 'system' && 'justify-start',
-        theme === 'light' && 'justify-center',
+        'fixed right-5 bottom-4 flex h-7 rounded-full p-0.5 ring-1 ring-border transition-all bg-secondary/80',
+        'max-w-[100px]',
+        theme === 'light' && 'justify-start',
         theme === 'dark' && 'justify-end'
       )}
     >
@@ -55,12 +52,12 @@ export function ThemeSwitcher() {
             aria-label={label}
             className="relative size-6 shrink-0 cursor-pointer rounded-full"
             key={key}
-            onClick={() => setTheme(key)}
+            onClick={() => handleThemeChange(key)}
             type="button"
           >
             {isActive && (
               <motion.div
-                className="absolute inset-0 rounded-full bg-secondary"
+                className="absolute inset-0 rounded-full bg-secondary border border-border/80"
                 layoutId="activeTheme"
                 transition={{ type: 'spring', duration: 0.5 }}
               />
