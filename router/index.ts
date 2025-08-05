@@ -1,8 +1,20 @@
 import { os } from "@orpc/server";
 import { helloWorld } from "./hello";
-import { wakatime } from "./wakatime";
+import {
+  wakatimeCodingActivity,
+  wakatimeLanguages,
+  wakatimeEditors,
+  wakatimeOperatingSystem,
+  wakatimeCategories,
+} from "./wakatime";
 
 export const router = os.router({
   hello: helloWorld,
-  wakatime: wakatime,
+  wakatime: {
+    "coding-activity": wakatimeCodingActivity,
+    languages: wakatimeLanguages,
+    editors: wakatimeEditors,
+    "operating-systems": wakatimeOperatingSystem,
+    categories: wakatimeCategories,
+  },
 });
