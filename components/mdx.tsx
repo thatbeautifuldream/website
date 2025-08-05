@@ -5,7 +5,8 @@ import type { HTMLProps, ReactNode } from 'react';
 import { Tweet } from 'react-tweet';
 import { Features } from './features';
 import { ImageZoom } from './image-zoom';
-import { Link } from './link';
+// import { Link } from './link';
+import { GlimpseLink } from './glimpse-link';
 import { Mermaid } from './mdx/mermaid';
 import { SpotifyNowPlaying } from './spotify-now-playing';
 import { SpotifyTopTracks } from './spotify-top-tracks';
@@ -14,6 +15,7 @@ import { Timeline } from './timeline';
 import { Video } from './video';
 import { YouTubeVideos } from './youtube-videos';
 import { Wakatime } from './wakatime';
+import { GlimpseServerLink } from './glimpse-server-link';
 
 type MdxProperties = {
   readonly code: string;
@@ -24,7 +26,9 @@ const a = (props: HTMLProps<HTMLAnchorElement>) => {
     throw new TypeError('href is required');
   }
 
-  return <Link {...props} />;
+  const { children, ...restProps } = props;
+
+  return <GlimpseServerLink href={props.href} {...restProps}>{children}</GlimpseServerLink>;
 };
 
 const img = (properties: HTMLProps<HTMLImageElement>) => {
