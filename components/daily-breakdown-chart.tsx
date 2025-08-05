@@ -1,7 +1,7 @@
 "use client";
 
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { Activity } from "lucide-react";
+import { Activity, TrendingUp, TrendingDown } from "lucide-react";
 
 import {
     Card,
@@ -16,6 +16,7 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Badge } from "./ui/badge";
 
 type TWakatimeDay = {
     range: {
@@ -59,12 +60,50 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
     const totalHours = chartData.reduce((sum, item) => sum + item.codingTime, 0);
     const averageHours = totalHours / chartData.length;
 
+    // Calculate percentage change between today and yesterday
+    const calculatePercentageChange = () => {
+        if (data.length < 2) return null;
+
+        const today = data[0]; // Most recent day
+        const yesterday = data[1]; // Second most recent day
+
+        const todaySeconds = today.grand_total.total_seconds;
+        const yesterdaySeconds = yesterday.grand_total.total_seconds;
+
+        if (yesterdaySeconds === 0) {
+            return todaySeconds > 0 ? { value: 100, isIncrease: true } : null;
+        }
+
+        const change = ((todaySeconds - yesterdaySeconds) / yesterdaySeconds) * 100;
+        return {
+            value: Math.abs(Math.round(change * 10) / 10), // Round to 1 decimal place
+            isIncrease: change > 0
+        };
+    };
+
+    const percentageChange = calculatePercentageChange();
+
     return (
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    <Activity className="h-4 w-4" />
                     Daily Coding Activity
+                    {percentageChange && (
+                        <Badge
+                            variant="outline"
+                            className={`ml-2 border-none ${percentageChange.isIncrease
+                                ? "text-success bg-success/10 border-success/20"
+                                : "text-destructive bg-destructive/10 border-destructive/20"
+                                }`}
+                        >
+                            {percentageChange.isIncrease ? (
+                                <TrendingUp className="h-4 w-4" />
+                            ) : (
+                                <TrendingDown className="h-4 w-4" />
+                            )}
+                            <span>{percentageChange.value}%</span>
+                        </Badge>
+                    )}
                 </CardTitle>
                 <CardDescription>
                     From the last {data.length} days
