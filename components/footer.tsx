@@ -1,10 +1,11 @@
 import { Link } from './link';
 import { Section } from './section';
+import { ResumeLink } from './resume-link';
 
 const routes = [
-  { href: '/presence', label: 'Presence' },
+  // { href: '/presence', label: 'Presence' },
   { href: '/wakatime', label: 'Wakatime' },
-  { href: '/guestbook', label: 'Guestbook' },
+  // { href: '/guestbook', label: 'Guestbook' },
 ];
 
 export const Footer = () => (
@@ -12,6 +13,8 @@ export const Footer = () => (
     <footer className="text-foreground-lighter text-sm leading-relaxed">
       <div className="flex flex-col space-y-2">
         <div className="flex flex-wrap items-center text-xs">
+          <ResumeLink />
+          <span className="text-foreground-muted mx-1">•</span>
           {routes.map((route, index) => (
             <div key={route.href} className="flex items-center">
               <Link
