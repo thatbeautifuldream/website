@@ -1,7 +1,7 @@
 "use client";
 
+import { TrendingDown, TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { Activity, TrendingUp, TrendingDown } from "lucide-react";
 
 import {
     Card,
@@ -13,8 +13,7 @@ import {
 import {
     ChartConfig,
     ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
+    ChartTooltip
 } from "@/components/ui/chart";
 import { Badge } from "./ui/badge";
 
@@ -41,47 +40,71 @@ const chartConfig = {
     },
 } satisfies ChartConfig;
 
+// Utility functions for calculations
+const convertSecondsToHours = (seconds: number): number => {
+    return Math.round(seconds / 3600 * 100) / 100;
+};
+
+const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+    });
+};
+
+const formatWeekday = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { weekday: 'short' });
+};
+
+const calculatePercentageChange = (data: TWakatimeDay[]) => {
+    if (data.length < 2) return null;
+
+    const today = data[data.length - 1]; // Last element (most recent day)
+    const yesterday = data[data.length - 2]; // Second to last element
+
+    const todaySeconds = today.grand_total.total_seconds;
+    const yesterdaySeconds = yesterday.grand_total.total_seconds;
+
+    // If both days have no coding time, don't show any change
+    if (todaySeconds === 0 && yesterdaySeconds === 0) {
+        return null;
+    }
+
+    // If yesterday had no coding time and today has some, show increase
+    if (yesterdaySeconds === 0 && todaySeconds > 0) {
+        return { value: 100, isIncrease: true };
+    }
+
+    // If today has no coding time and yesterday had some, show decrease
+    if (todaySeconds === 0 && yesterdaySeconds > 0) {
+        return { value: 100, isIncrease: false };
+    }
+
+    // Calculate percentage change
+    const change = ((todaySeconds - yesterdaySeconds) / yesterdaySeconds) * 100;
+    return {
+        value: Math.abs(Math.round(change * 10) / 10), // Round to 1 decimal place
+        isIncrease: change > 0
+    };
+};
+
 export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
     // Transform data for the chart
-    const chartData = data.map((day) => {
-        const date = new Date(day.range.date);
-        return {
-            date: date.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric'
-            }),
-            weekday: date.toLocaleDateString('en-US', { weekday: 'short' }),
-            codingTime: Math.round(day.grand_total.total_seconds / 3600 * 100) / 100, // Convert to hours
-            originalData: day,
-        };
-    });
+    const chartData = data.map((day) => ({
+        date: formatDate(day.range.date),
+        weekday: formatWeekday(day.range.date),
+        codingTime: convertSecondsToHours(day.grand_total.total_seconds),
+        originalData: day,
+    }));
 
-    // Calculate total hours for display
+    // Calculate statistics
     const totalHours = chartData.reduce((sum, item) => sum + item.codingTime, 0);
     const averageHours = totalHours / chartData.length;
 
-    // Calculate percentage change between today and yesterday
-    const calculatePercentageChange = () => {
-        if (data.length < 2) return null;
-
-        const today = data[0]; // Most recent day
-        const yesterday = data[1]; // Second most recent day
-
-        const todaySeconds = today.grand_total.total_seconds;
-        const yesterdaySeconds = yesterday.grand_total.total_seconds;
-
-        if (yesterdaySeconds === 0) {
-            return todaySeconds > 0 ? { value: 100, isIncrease: true } : null;
-        }
-
-        const change = ((todaySeconds - yesterdaySeconds) / yesterdaySeconds) * 100;
-        return {
-            value: Math.abs(Math.round(change * 10) / 10), // Round to 1 decimal place
-            isIncrease: change > 0
-        };
-    };
-
-    const percentageChange = calculatePercentageChange();
+    // Calculate percentage change
+    const percentageChange = calculatePercentageChange(data);
 
     return (
         <Card>
