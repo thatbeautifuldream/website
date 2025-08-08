@@ -3,6 +3,58 @@
 import { useQuery } from '@tanstack/react-query';
 import { Section } from '@/components/section';
 import { orpc } from '@/lib/orpc';
+import Image from 'next/image';
+import { CodeIcon } from 'lucide-react';
+import { languageSvgLinks } from '@/lib/data/language-svg-links';
+
+function LanguageSvgIcon({ name }: { name: string }) {
+    const match = languageSvgLinks.find((entry) => entry.title.toLowerCase() === name.toLowerCase());
+    const route = match?.route as string | { light: string; dark: string } | undefined;
+
+    if (!route) {
+        return (
+            <CodeIcon
+                className="opacity-80 text-foreground"
+                size={16}
+                aria-hidden="true"
+            />
+        );
+    }
+
+    if (typeof route === 'string') {
+        return (
+            <Image
+                src={route}
+                alt={`${name} logo`}
+                width={16}
+                height={16}
+                className="inline-block"
+                unoptimized
+            />
+        );
+    }
+
+    return (
+        <>
+            <Image
+                src={route.light}
+                alt={`${name} logo`}
+                width={16}
+                height={16}
+                className="inline-block dark:hidden"
+                unoptimized
+            />
+            <Image
+                src={route.dark}
+                alt={`${name} logo`}
+                width={16}
+                height={16}
+                className="hidden dark:inline-block"
+                unoptimized
+            />
+        </>
+    );
+}
 
 export function WakatimeLanguages() {
     const languagesQuery = useQuery(orpc.wakatime.languages.queryOptions({
@@ -84,10 +136,7 @@ export function WakatimeLanguages() {
                     <Section delay={0.35 + index * 0.06} key={language.name}>
                         <div className="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-accent/5">
                             <div className="flex items-center gap-3">
-                                <div
-                                    className="w-4 h-4 rounded-full"
-                                    style={{ backgroundColor: language.color }}
-                                />
+                                <LanguageSvgIcon name={language.name} />
                                 <span className="font-medium text-foreground">{language.name}</span>
                             </div>
                             <div className="flex items-center gap-2">
