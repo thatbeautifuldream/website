@@ -13,6 +13,7 @@ import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { cn } from '@/lib/utils';
+import { GrainyBackground } from '@/components/grainy-bg';
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -40,19 +41,22 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         disableTransitionOnChange
         enableSystem
       >
-        <QueryClientProviderWrapper>
-          <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-            <Navigation />
-            {children}
-            <Footer />
-          </div>
-          <Toaster />
-          <ThemeSwitcher />
-          <JsonLd />
-          <LayoutDebug />
-          <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
-          <Analytics />
-        </QueryClientProviderWrapper>
+        <GrainyBackground />
+        <div className="relative z-[1] min-h-[100dvh]">
+          <QueryClientProviderWrapper>
+            <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+              <Navigation />
+              {children}
+              <Footer />
+            </div>
+            <Toaster />
+            <ThemeSwitcher />
+            <JsonLd />
+            <LayoutDebug />
+            <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
+            <Analytics />
+          </QueryClientProviderWrapper>
+        </div>
       </ThemeProvider>
     </body>
   </html>
