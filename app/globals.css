@@ -43,6 +43,11 @@
   --chart-3: #40a02b; /* Green */
   --chart-4: #df8e1d; /* Yellow */
   --chart-5: #ea76cb; /* Pink */
+  --github-contrib-base: var(--chart-1);
+  --github-contrib-1: color-mix(in srgb, var(--github-contrib-base) 25%, transparent);
+  --github-contrib-2: color-mix(in srgb, var(--github-contrib-base) 45%, transparent);
+  --github-contrib-3: color-mix(in srgb, var(--github-contrib-base) 65%, transparent);
+  --github-contrib-4: color-mix(in srgb, var(--github-contrib-base) 85%, transparent);
   --sidebar: #e6e9ef; /* Mantle */
   --sidebar-foreground: #4c4f69; /* Text */
   --sidebar-primary: #1e66f5; /* Blue */
@@ -90,6 +95,12 @@
   --chart-3: #a6e3a1; /* Green */
   --chart-4: #f9e2af; /* Yellow */
   --chart-5: #f5c2e7; /* Pink */
+  /* GitHub contribution color scale (single hue, increasing opacity) */
+  --github-contrib-base: var(--chart-1);
+  --github-contrib-1: color-mix(in srgb, var(--github-contrib-base) 25%, transparent);
+  --github-contrib-2: color-mix(in srgb, var(--github-contrib-base) 45%, transparent);
+  --github-contrib-3: color-mix(in srgb, var(--github-contrib-base) 65%, transparent);
+  --github-contrib-4: color-mix(in srgb, var(--github-contrib-base) 85%, transparent);
   --sidebar: #181825; /* Mantle */
   --sidebar-foreground: #cdd6f4; /* Text */
   --sidebar-primary: #89b4fa; /* Blue */
