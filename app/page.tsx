@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { ImageZoom } from '@/components/image-zoom';
 import { Mdx } from '@/components/mdx';
 import { Section } from '@/components/section';
+import { GitHubContributions } from '@/components/github-contributions';
 import { createMetadata } from '@/lib/metadata';
 
 const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
@@ -19,7 +20,7 @@ export const metadata: Metadata = createMetadata({
 
 const HomePage = () => (
   <>
-    <Section className="flex items-center gap-4" delay={0.2}>
+    <Section className="flex items-center gap-4" delay={0.1}>
       <ImageZoom>
         {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
         <img
@@ -40,6 +41,18 @@ const HomePage = () => (
         </p>
       </div>
     </Section>
+
+    <Section delay={0.2}>
+      <GitHubContributions
+        className="mt-4"
+        username="thatbeautifuldream"
+        months={10}
+      />
+      {/* <p className="mt-2.5 text-foreground-lighter text-xs">
+        Psssst, can you tell when my deep work sprints were?
+      </p> */}
+    </Section>
+
     <article>
       <Section delay={0.3}>
         <Mdx code={page.body} />
