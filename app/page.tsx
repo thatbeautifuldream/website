@@ -18,6 +18,8 @@ export const metadata: Metadata = createMetadata({
   image: `/api/og?title=${page.title}&description=${page.description}`,
 });
 
+const GITHUB_AVATAR_URL = 'https://avatars.githubusercontent.com/u/28717686?v=4';
+
 const HomePage = () => (
   <>
     <Section className="flex items-center gap-4" delay={0.1}>
@@ -27,7 +29,7 @@ const HomePage = () => (
           alt=""
           className="size-10 rounded-full transition-all duration-300 hover:scale-110"
           height={40}
-          src={'https://avatars.githubusercontent.com/u/28717686?v=4'}
+          src={GITHUB_AVATAR_URL}
           width={40}
         />
       </ImageZoom>

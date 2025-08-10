@@ -42,21 +42,19 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         enableSystem
       >
         <GrainyBackground />
-        <div className="relative z-[1] min-h-[100dvh]">
-          <QueryClientProviderWrapper>
-            <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-              <Navigation />
-              {children}
-              <Footer />
-            </div>
-            <Toaster />
-            <ThemeSwitcher />
-            <JsonLd />
-            <LayoutDebug />
-            <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
-            <Analytics />
-          </QueryClientProviderWrapper>
-        </div>
+        <QueryClientProviderWrapper>
+          <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+            <Navigation />
+            {children}
+            <Footer />
+          </div>
+          <Toaster />
+          <ThemeSwitcher />
+          <JsonLd />
+          <LayoutDebug />
+          <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
+          <Analytics />
+        </QueryClientProviderWrapper>
       </ThemeProvider>
     </body>
   </html>
