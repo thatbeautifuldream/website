@@ -8,6 +8,7 @@ import {
   wakatimeCategories,
 } from "./wakatime";
 import * as guestbookHandlers from "./guestbook";
+import * as spotifyHandlers from "./spotify";
 
 export const router = os.router({
   hello: helloWorld,
@@ -23,5 +24,11 @@ export const router = os.router({
     create: guestbookHandlers.create,
     update: guestbookHandlers.update,
     remove: guestbookHandlers.remove,
+  },
+  spotify: {
+    "currently-playing": spotifyHandlers.currentlyPlaying,
+    "top-tracks": spotifyHandlers.topTracks,
+    "auth-url": spotifyHandlers.authUrl,
+    callback: spotifyHandlers.callback,
   },
 });

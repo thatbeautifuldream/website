@@ -1,12 +1,10 @@
 /** biome-ignore-all lint/performance/noImgElement: spotify album image */
 'use client';
 
-// import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
     AnnoyedIcon,
     ExternalLink,
-    // Loader2Icon,
-    // Music,
     TrendingUp,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -14,35 +12,8 @@ import { useState } from 'react';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Section } from './section';
+import { orpc } from '@/lib/orpc';
 
-// type TSpotifyTopTrack = {
-//     name: string;
-//     artists: {
-//         name: string;
-//         url: string;
-//     }[];
-//     album: {
-//         name: string;
-//         image?: string;
-//     };
-//     url: string;
-//     previewUrl?: string;
-//     duration: number;
-//     popularity: number;
-//     explicit: boolean;
-//     id: string;
-// };
-
-// type TSpotifyTopTracksResponse = {
-//     tracks: TSpotifyTopTrack[];
-//     total: number;
-// };
-
-// const fetchSpotifyTopTracks = async (): Promise<TSpotifyTopTracksResponse> => {
-//     const response = await fetch('/api/spotify/top-5');
-//     if (!response.ok) throw new Error('Failed to fetch Spotify top tracks');
-//     return response.json();
-// };
 
 const formatDuration = (ms: number): string => {
     const minutes = Math.floor(ms / 60_000);
@@ -50,138 +21,12 @@ const formatDuration = (ms: number): string => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 };
 
-const topTracksData = {
-    tracks: [
-        {
-            name: 'Dame Un Grrr',
-            artists: [
-                {
-                    name: 'Fantomel',
-                    url: 'https://open.spotify.com/artist/5KSiZki8gCESiSq0z35Ald',
-                },
-                {
-                    name: 'Kate Linn',
-                    url: 'https://open.spotify.com/artist/2b01rwtcqW5LyfVBMzIFQ4',
-                },
-            ],
-            album: {
-                name: 'Dame Un Grrr',
-                image:
-                    'https://i.scdn.co/image/ab67616d0000b2735e939b31aa485a3613d516f0',
-            },
-            url: 'https://open.spotify.com/track/7ih7pYSRZgWCTXuOmrnXjX',
-            previewUrl: null,
-            duration: 133_220,
-            popularity: 81,
-            explicit: false,
-            id: '7ih7pYSRZgWCTXuOmrnXjX',
-        },
-        {
-            name: 'Lose My Mind (feat. Doja Cat) [From F1® The Movie]',
-            artists: [
-                {
-                    name: 'Don Toliver',
-                    url: 'https://open.spotify.com/artist/4Gso3d4CscCijv0lmajZWs',
-                },
-                {
-                    name: 'Doja Cat',
-                    url: 'https://open.spotify.com/artist/5cj0lLjcoR7YOSnhnX0Po5',
-                },
-                {
-                    name: 'F1 The Album',
-                    url: 'https://open.spotify.com/artist/3aly4xJOy3LVznzvRIvFYC',
-                },
-            ],
-            album: {
-                name: 'Lose My Mind (feat. Doja Cat) [From F1® The Movie]',
-                image:
-                    'https://i.scdn.co/image/ab67616d0000b273bed9c7b9e33025a81d4d02e4',
-            },
-            url: 'https://open.spotify.com/track/02BcXEH1zJYbXSabPtNlKf',
-            previewUrl: null,
-            duration: 209_051,
-            popularity: 87,
-            explicit: false,
-            id: '02BcXEH1zJYbXSabPtNlKf',
-        },
-        {
-            name: 'Jhoom',
-            artists: [
-                {
-                    name: 'Ali Zafar',
-                    url: 'https://open.spotify.com/artist/3cKNppGLfcxdt9CtoHEZmQ',
-                },
-            ],
-            album: {
-                name: 'Jhoom',
-                image:
-                    'https://i.scdn.co/image/ab67616d0000b2733392b659e4df144331eb05c8',
-            },
-            url: 'https://open.spotify.com/track/1gAnghtUQIOKS6ZnyDPwut',
-            previewUrl: null,
-            duration: 389_213,
-            popularity: 54,
-            explicit: false,
-            id: '1gAnghtUQIOKS6ZnyDPwut',
-        },
-        {
-            name: 'No Love',
-            artists: [
-                {
-                    name: 'Shubh',
-                    url: 'https://open.spotify.com/artist/5r3wPya2PpeTTsXsGhQU8O',
-                },
-            ],
-            album: {
-                name: 'No Love',
-                image:
-                    'https://i.scdn.co/image/ab67616d0000b2732a46046339bd779f95a8cf8b',
-            },
-            url: 'https://open.spotify.com/track/08Isz2ETWSBhvIl8UpKYsp',
-            previewUrl: null,
-            duration: 170_387,
-            popularity: 76,
-            explicit: false,
-            id: '08Isz2ETWSBhvIl8UpKYsp',
-        },
-        {
-            name: 'Dancing With Your Ghost',
-            artists: [
-                {
-                    name: 'Sasha Alex Sloan',
-                    url: 'https://open.spotify.com/artist/4xnihxcoXWK3UqryOSnbw5',
-                },
-            ],
-            album: {
-                name: 'Dancing With Your Ghost',
-                image:
-                    'https://i.scdn.co/image/ab67616d0000b273141cf717cd3993690358a60c',
-            },
-            url: 'https://open.spotify.com/track/1TQXIltqoZ5XXyfCbAeSQQ',
-            previewUrl: null,
-            duration: 197_732,
-            popularity: 79,
-            explicit: false,
-            id: '1TQXIltqoZ5XXyfCbAeSQQ',
-        },
-    ],
-    total: 108,
-};
-
-const isLoading = false;
-const error = false;
-
 export const SpotifyTopTracks = () => {
-    // const {
-    //     data: topTracksData,
-    //     isLoading,
-    //     error,
-    // } = useQuery({
-    //     queryKey: ['spotify-top-tracks'],
-    //     queryFn: fetchSpotifyTopTracks,
-    //     staleTime: 30 * 60 * 1000,
-    //     refetchOnWindowFocus: false,
-    // });
+    const { data: topTracksData, isLoading, error } = useQuery({
+        ...orpc.spotify["top-tracks"].queryOptions(),
+        staleTime: 30 * 60 * 1000,
+        refetchOnWindowFocus: false,
+    });
 
     const [expanded, setExpanded] = useState(false);
 
