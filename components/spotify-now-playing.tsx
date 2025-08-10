@@ -1,108 +1,20 @@
 'use client';
 
-// import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { AnnoyedIcon, ExternalLink, Music } from 'lucide-react';
 import { motion } from 'motion/react';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Section } from './section';
-
-// type TSpotifyTrack = {
-//     name: string;
-//     artists: {
-//         name: string;
-//         url: string;
-//     }[];
-//     album: {
-//         name: string;
-//         image?: string;
-//     };
-//     url: string;
-//     previewUrl?: string;
-//     isPlaying: boolean;
-//     progress: number;
-//     type: 'track';
-// };
-
-// type TSpotifyEpisode = {
-//     name: string;
-//     description: string;
-//     show: {
-//         name: string;
-//         publisher: string;
-//         image?: string;
-//     };
-//     image?: string;
-//     url: string;
-//     duration: number;
-//     isPlaying: boolean;
-//     progress: number;
-//     type: 'episode';
-//     releaseDate: string;
-//     resumePoint?: {
-//         fully_played: boolean;
-//         resume_position_ms: number;
-//     };
-// };
-
-// type TSpotifyResponse = {
-//     isPlaying: boolean;
-//     track?: TSpotifyTrack | null;
-//     episode?: TSpotifyEpisode | null;
-//     currentlyPlayingType?: string;
-// };
-
-// const fetchSpotifyData = async (): Promise<TSpotifyResponse> => {
-//     const response = await fetch('/api/spotify');
-
-//     if (!response.ok) {
-//         throw new Error('Failed to fetch Spotify data');
-//     }
-
-//     return response.json();
-// };
-
-const spotifyData = {
-    "isPlaying": true,
-    "track": {
-        "name": "Just Keep Watching (From F1® The Movie)",
-        "artists": [
-            {
-                "name": "Tate McRae",
-                "url": "https://open.spotify.com/artist/45dkTj5sMRSjrmBSBeiHym"
-            },
-            {
-                "name": "F1 The Album",
-                "url": "https://open.spotify.com/artist/3aly4xJOy3LVznzvRIvFYC"
-            }
-        ],
-        "album": {
-            "name": "Just Keep Watching (From F1® The Movie)",
-            "image": "https://i.scdn.co/image/ab67616d0000b27396e4cfdd4c3aa8088685b262"
-        },
-        "url": "https://open.spotify.com/track/2yWlGEgEfPot0lv3OAjuG3",
-        "previewUrl": null,
-        "isPlaying": true,
-        "progress": 9755,
-        "type": "track"
-    }
-}
-
-const isLoading = false;
-const error = false;
+import { orpc } from '@/lib/orpc';
 
 export const SpotifyNowPlaying = () => {
-    // const {
-    //     data: spotifyData,
-    //     isLoading,
-    //     error,
-    // } = useQuery({
-    //     queryKey: ['spotify-now-playing'],
-    //     queryFn: fetchSpotifyData,
-    //     refetchInterval: 30_000, // Refetch every 30 seconds
-    //     refetchIntervalInBackground: true,
-    //     staleTime: 25_000, // Data is fresh for 25 seconds
-    // });
+    const { data: spotifyData, isLoading, error } = useQuery({
+        ...orpc.spotify["currently-playing"].queryOptions(),
+        refetchInterval: 30_000,
+        refetchIntervalInBackground: true,
+        staleTime: 25_000,
+    });
 
     if (isLoading) {
         return null;
@@ -146,7 +58,6 @@ export const SpotifyNowPlaying = () => {
                 <div className="flex items-center gap-3 p-3">
                     {track.album.image && (
                         <ImageZoom>
-                            {/** biome-ignore lint/performance/noImgElement: spotify album image */}
                             <motion.img
                                 alt={`${track.album.name} cover`}
                                 className="size-16 rounded-md object-cover"
