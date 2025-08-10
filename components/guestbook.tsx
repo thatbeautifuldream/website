@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2Icon, TrendingUp } from 'lucide-react';
+import { orpc } from "@/lib/orpc";
+import type { TGuestbook } from "@/db/schema";
 
 type TGuestbookEntry = {
     id: string;
@@ -79,49 +81,44 @@ export function Guestbook() {
     const [message, setMessage] = useState('');
     const shouldReduceMotion = useReducedMotion();
 
-    // Fetch guestbook entries
+    // Fetch guestbook entries using orpc
     const {
-        data: entries = [],
+        data: guestbookData,
         isLoading,
         error,
-    } = useQuery({
-        queryKey: QUERY_KEYS.guestbook,
-        queryFn: fetchGuestbookEntries,
-    });
+    } = useQuery(orpc.guestbook.list.queryOptions({ input: { limit: 10, offset: 0 } }));
+    const entries: TGuestbook[] = guestbookData?.data ?? [];
 
-    // Create entry mutation
+    // Create entry mutation using orpc
     const createEntryMutation = useMutation({
-        mutationFn: createGuestbookEntry,
-        onSuccess: (newEntry) => {
-            // Optimistically update the cache
-            queryClient.setQueryData<TGuestbookEntry[]>(
-                QUERY_KEYS.guestbook,
-                (oldData) => {
-                    return oldData ? [newEntry, ...oldData] : [newEntry];
+        ...orpc.guestbook.create.mutationOptions(),
+        onSuccess: (newEntry: TGuestbook) => {
+            queryClient.setQueryData(
+                orpc.guestbook.list.queryKey({ input: { limit: 10, offset: 0 } }),
+                (oldData: any) => {
+                    if (!oldData) return { data: [newEntry], pagination: { limit: 10, offset: 0, total: 1 } };
+                    return {
+                        ...oldData,
+                        data: [newEntry, ...oldData.data],
+                        pagination: {
+                            ...oldData.pagination,
+                            total: oldData.pagination.total + 1,
+                        },
+                    };
                 }
             );
-
-            // Reset form
             setName('');
             setMessage('');
             setShowForm(false);
-        },
-        onError: () => {
-            // Error is handled by the mutation error state
         },
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
         if (!(name.trim() && message.trim())) {
             return;
         }
-
-        createEntryMutation.mutate({
-            name: name.trim(),
-            message: message.trim(),
-        });
+        createEntryMutation.mutate({ name: name.trim(), message: message.trim() });
     };
 
     if (isLoading) {
@@ -145,6 +142,13 @@ export function Guestbook() {
             </Section>
         );
     }
+
+    // Map entries to TGuestbookEntry with string dates for rendering
+    const entriesForDisplay: TGuestbookEntry[] = entries.map((entry) => ({
+        ...entry,
+        createdAt: typeof entry.createdAt === 'string' ? entry.createdAt : entry.createdAt.toISOString(),
+        updatedAt: typeof entry.updatedAt === 'string' ? entry.updatedAt : entry.updatedAt.toISOString(),
+    }));
 
     return (
         <div className="space-y-8">
@@ -270,15 +274,15 @@ export function Guestbook() {
             </Section>
 
             {/* Guestbook Entries */}
-            {entries.length > 0 && (
+            {entriesForDisplay.length > 0 && (
                 <Section delay={0.4}>
                     <div className="space-y-4">
                         <h2 className="font-normal text-foreground-lighter text-sm">
-                            Messages ({entries.length})
+                            Messages ({entriesForDisplay.length})
                         </h2>
 
                         <div className="space-y-4">
-                            {entries.map((entry, index) => (
+                            {entriesForDisplay.map((entry: TGuestbookEntry, index: number) => (
                                 <GuestbookEntry
                                     delay={0.6 + index * 0.1}
                                     entry={entry}

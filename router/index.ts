@@ -7,6 +7,7 @@ import {
   wakatimeOperatingSystem,
   wakatimeCategories,
 } from "./wakatime";
+import * as guestbookHandlers from "./guestbook";
 
 export const router = os.router({
   hello: helloWorld,
@@ -16,5 +17,11 @@ export const router = os.router({
     editors: wakatimeEditors,
     "operating-systems": wakatimeOperatingSystem,
     categories: wakatimeCategories,
+  },
+  guestbook: {
+    list: guestbookHandlers.list,
+    create: guestbookHandlers.create,
+    update: guestbookHandlers.update,
+    remove: guestbookHandlers.remove,
   },
 });
