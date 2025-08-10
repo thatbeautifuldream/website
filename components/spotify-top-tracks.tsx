@@ -91,13 +91,13 @@ export const SpotifyTopTracks = () => {
                             layoutId={`album-cover-${track.id}`}
                             whileHover={{ scale: 1.05 }}
                         >
-                            <img
+                            {track.album.image && <img
                                 alt={`${track.album.name} cover`}
                                 className="size-16 rounded-md border border-border object-cover"
                                 height={64}
                                 src={track.album.image}
                                 width={64}
-                            />
+                            />}
                             <motion.div
                                 className="-right-2 -bottom-2 absolute flex size-6 items-center justify-center rounded-full border border-border/20 bg-background/90 shadow-lg backdrop-blur-sm"
                                 layoutId={`album-rank-${track.id}`}
@@ -201,7 +201,7 @@ export const SpotifyTopTracks = () => {
                                     <div className="text-foreground-lighter text-xs">
                                         <div>on {track.album.name}</div>
                                         <div className="mt-0.5 flex items-center gap-2">
-                                            <span>{formatDuration(track.duration)}</span>
+                                            {track.progress && <span>{formatDuration(track.progress)}</span>}
                                             <span>•</span>
                                             <span>{track.popularity}% popularity</span>
                                         </div>
