@@ -13,7 +13,7 @@ import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { cn } from '@/lib/utils';
-import { GrainyTexture } from '@/components/grainy-texture';
+import { AppGrainyBackground } from '@/components/app-grainy-background';
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -41,7 +41,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         disableTransitionOnChange
         enableSystem
       >
-        <GrainyTexture />
+        <AppGrainyBackground />
         <QueryClientProviderWrapper>
           <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
             <Navigation />
