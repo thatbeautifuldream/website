@@ -1,6 +1,6 @@
 import { getPayload } from "payload";
 import configPromise from "../payload.config";
-import type { Post, Media, User } from "../payload-types";
+import type { Post, User } from "../payload-types";
 
 // Initialize Payload client
 export const getPayloadClient = async () => {
@@ -44,32 +44,13 @@ export const payloadClient = {
     const payload = await getPayloadClient();
     return await payload.create({
       collection: "posts",
-      data,
-    });
-  },
-
-  // Upload media
-  async uploadMedia(file: File, alt?: string, caption?: string) {
-    const payload = await getPayloadClient();
-    return await payload.create({
-      collection: "media",
       data: {
-        alt,
-        caption,
-      },
-      file,
-    });
-  },
-
-  // Get media by ID
-  async getMediaById(id: number) {
-    const payload = await getPayloadClient();
-    return await payload.findByID({
-      collection: "media",
-      id,
+        ...data,
+        status: "published",
+      } as Post,
     });
   },
 };
 
 // Export types for use in components
-export type { Post, Media, User };
+export type { Post, User };

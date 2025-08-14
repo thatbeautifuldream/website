@@ -13,10 +13,6 @@ export async function getPublishedPosts(limit = 10, page = 1) {
       limit,
       page,
       sort: "-publishedAt",
-      populate: {
-        author: true,
-        featuredImage: true,
-      },
     });
 
     return {
@@ -47,10 +43,6 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
         publishedAt: { less_than_equal: new Date().toISOString() },
       },
       limit: 1,
-      populate: {
-        author: true,
-        featuredImage: true,
-      },
     });
 
     return result.docs[0] || null;
@@ -85,10 +77,6 @@ export async function getRelatedPosts(
       },
       limit,
       sort: "-publishedAt",
-      populate: {
-        author: true,
-        featuredImage: true,
-      },
     });
 
     return result.docs;
