@@ -14,6 +14,7 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
     PAYLOAD_DATABASE_URL: z.string().min(1),
     SERVER_URL: z.string().min(1),
+    UPLOADTHING_TOKEN: z.string().min(1),
   },
   client: {},
   runtimeEnv: {
@@ -28,5 +29,6 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     PAYLOAD_DATABASE_URL: process.env.PAYLOAD_DATABASE_URL,
     SERVER_URL: process.env.SERVER_URL,
+    UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
   },
 });
