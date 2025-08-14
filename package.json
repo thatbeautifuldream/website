@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"content-collections watch\" \"cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack\"",
-    "build": "content-collections build && cross-env NODE_OPTIONS=--no-deprecation next build --turbopack",
+    "build": "content-collections build && cross-env NODE_OPTIONS=--no-deprecation next build",
+    "build:preview": "content-collections build && cross-env NODE_OPTIONS=--no-deprecation next build --turbopack",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "devsafe": "rm -rf .next && concurrently \"content-collections watch\" \"cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack\"",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",

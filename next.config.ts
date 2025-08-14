@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/useAwait: it's a redirect and is written acc to nextjs docs */
 import { withContentCollections } from "@content-collections/next";
 import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
