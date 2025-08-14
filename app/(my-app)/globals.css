@@ -200,14 +200,6 @@
     font-family: var(--font-family-mono);
   }
 
-  .font-zenbones {
-    font-family: var(--font-family-zenbones);
-  }
-
-  .font-bricolage {
-    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  }
-
   h1,
   h2,
   h3,
