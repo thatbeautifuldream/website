@@ -30,7 +30,7 @@ export const Footer = () => (
           ))}
         </div>
         <p>
-          &copy; {new Date().getFullYear()} Milind Mishra. My little corner on the internet.
+          &copy; {new Date().getFullYear()} Milind Mishra. Welcome to my internet playground of thoughts and tangents.
         </p>
         <p className="text-xs">
           View the{' '}
