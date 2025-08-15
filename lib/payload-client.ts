@@ -1,6 +1,8 @@
 import { getPayload } from "payload";
 import configPromise from "../payload.config";
-import type { Post, User } from "../payload-types";
+import type { Post } from "../payload-types";
+
+export type { Post, User } from "../payload-types";
 
 // Initialize Payload client
 export const getPayloadClient = async () => {
@@ -51,6 +53,3 @@ export const payloadClient = {
     });
   },
 };
-
-// Export types for use in components
-export type { Post, User };
