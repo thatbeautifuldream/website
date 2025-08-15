@@ -30,7 +30,7 @@ export const generateMetadata = async ({
     return createMetadata({
         title: page.title,
         description: page.description || '',
-        image: `/api/og?title=${encodeURIComponent(page.title)}}`,
+        image: `/og?title=${encodeURIComponent(page.title)}}`,
     });
 };
 

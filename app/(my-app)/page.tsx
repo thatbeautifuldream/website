@@ -1,9 +1,9 @@
 import { allPages } from 'content-collections';
 import type { Metadata } from 'next';
+import { GitHubContributions } from '@/components/github-contributions';
 import { ImageZoom } from '@/components/image-zoom';
 import { Mdx } from '@/components/mdx';
 import { Section } from '@/components/section';
-import { GitHubContributions } from '@/components/github-contributions';
 import { createMetadata } from '@/lib/metadata';
 
 const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
@@ -15,10 +15,11 @@ if (!page) {
 export const metadata: Metadata = createMetadata({
   title: page.title,
   description: page.description,
-  image: `/api/og?title=${page.title}&description=${page.description}`,
+  image: `/og?title=${page.title}&description=${page.description}`,
 });
 
-const GITHUB_AVATAR_URL = 'https://avatars.githubusercontent.com/u/28717686?v=4';
+const GITHUB_AVATAR_URL =
+  'https://avatars.githubusercontent.com/u/28717686?v=4';
 
 const HomePage = () => (
   <>
@@ -47,8 +48,8 @@ const HomePage = () => (
     <Section delay={0.2}>
       <GitHubContributions
         className="mt-4"
-        username="thatbeautifuldream"
         months={10}
+        username="thatbeautifuldream"
       />
       {/* <p className="mt-2.5 text-foreground-lighter text-xs">
         Psssst, can you tell when my deep work sprints were?

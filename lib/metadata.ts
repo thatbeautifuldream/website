@@ -47,7 +47,7 @@ export const createMetadata = ({
       locale: "en_US",
       images: [
         {
-          url: image ?? `/api/og?title=${encodeURIComponent(ogText ?? "")}`,
+          url: image ?? `/og?title=${encodeURIComponent(ogText ?? "")}`,
           width: 1200,
           height: 630,
         },
@@ -62,7 +62,7 @@ export const createMetadata = ({
       creator: twitterHandle,
       images: [
         {
-          url: image ?? `/api/og?title=${encodeURIComponent(ogText ?? "")}`,
+          url: image ?? `/og?title=${encodeURIComponent(ogText ?? "")}`,
           width: 1200,
           height: 630,
         },
