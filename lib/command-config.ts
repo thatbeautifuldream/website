@@ -1,3 +1,4 @@
+import Fuse, { type IFuseOptions } from "fuse.js";
 import { social } from "./social";
 
 export type TCommandAction = {
@@ -313,20 +314,40 @@ export const getAllActions = (
   return config.categories.flatMap((category) => category.actions);
 };
 
+const fuseOptions: IFuseOptions<TCommandAction> = {
+  keys: [
+    {
+      name: "label",
+      weight: 0.4,
+    },
+    {
+      name: "description",
+      weight: 0.3,
+    },
+    {
+      name: "keywords",
+      weight: 0.3,
+    },
+  ],
+  threshold: 0.4,
+  distance: 100,
+  minMatchCharLength: 1,
+  includeScore: true,
+  ignoreLocation: true,
+  findAllMatches: true,
+  shouldSort: true,
+};
+
 export const searchActions = (
   actions: TCommandAction[],
   query: string
 ): TCommandAction[] => {
-  const lowerQuery = query.toLowerCase();
-  return actions.filter((action) => {
-    const searchText = [
-      action.label,
-      action.description,
-      ...(action.keywords || []),
-    ]
-      .join(" ")
-      .toLowerCase();
+  if (!query.trim()) {
+    return actions;
+  }
 
-    return searchText.includes(lowerQuery);
-  });
+  const fuse = new Fuse(actions, fuseOptions);
+  const results = fuse.search(query);
+
+  return results.map((result) => result.item);
 };

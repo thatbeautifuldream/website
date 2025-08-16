@@ -46,7 +46,7 @@ export const Navigation = () => {
   return (
     <Section delay={0.05}>
       <nav className="flex items-center justify-between text-xs">
-        <Link href="/">
+        <Link aria-label="Home" href="/">
           <Sign className="size-12" color="currentColor" />
         </Link>
         <div className="flex items-center gap-2">
@@ -77,6 +77,7 @@ export const Navigation = () => {
                     {(isActive || isHovered) && (
                       <motion.span
                         animate={{ opacity: 1 }}
+                        aria-label={`Navigate to ${label}`}
                         className="absolute inset-0 rounded-lg border bg-secondary"
                         initial={{ opacity: 0 }}
                         layoutId="nav-pill"

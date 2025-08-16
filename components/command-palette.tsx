@@ -102,11 +102,20 @@ export const CommandPalette = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-secondary/50 backdrop-blur-lg">
-      <div className="fixed top-[50%] left-[50%] w-full max-w-lg translate-x-[-50%] translate-y-[-50%]">
-        <Command className="mx-4 rounded-lg border bg-background shadow-lg">
-          <div className="flex items-center border-b px-3">
-            <SearchIcon className="h-4 w-4 shrink-0 opacity-50" />
+      <div
+        aria-label="Command palette"
+        aria-modal="true"
+        className="fixed top-[20%] left-[50%] w-full max-w-lg translate-x-[-50%]"
+        role="dialog"
+      >
+        <Command className="mx-4 flex flex-col rounded-lg border bg-background shadow-lg">
+          <div className="flex shrink-0 items-center border-b px-3">
+            <SearchIcon
+              aria-hidden="true"
+              className="h-4 w-4 shrink-0 opacity-50"
+            />
             <Command.Input
+              aria-label="Search commands"
               className="flex h-12 w-full rounded-md bg-transparent py-3 pl-2 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               onValueChange={setSearch}
               placeholder="Type a command or search..."
@@ -155,7 +164,7 @@ export const CommandPalette = ({
             )}
           </Command.List>
 
-          <div className="flex items-center justify-between border-t p-2 text-muted-foreground text-xs">
+          <div className="flex shrink-0 items-center justify-between border-t p-2 text-muted-foreground text-xs">
             <span className="flex items-center gap-1">
               Press
               <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-medium font-mono text-[9px] text-muted-foreground opacity-100">
