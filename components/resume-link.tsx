@@ -1,25 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { ResumeDrawer } from './resume-drawer';
+import { ResumeDialog } from './resume-dialog';
 
 export const ResumeLink = () => {
-    const [isResumeOpen, setIsResumeOpen] = useState(false);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-    return (
-        <>
-            <div className="flex items-center">
-                <button
-                    onClick={() => setIsResumeOpen(true)}
-                    className="hover:text-foreground transition-colors cursor-pointer"
-                >
-                    Resume
-                </button>
-            </div>
-            <ResumeDrawer
-                isOpen={isResumeOpen}
-                onClose={() => setIsResumeOpen(false)}
-            />
-        </>
-    );
-}; 
+  return (
+    <>
+      <div className="flex items-center">
+        <button
+          className="cursor-pointer transition-colors hover:text-foreground"
+          onClick={() => setIsResumeOpen(true)}
+          type="button"
+        >
+          Resume
+        </button>
+      </div>
+      <ResumeDialog
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
+    </>
+  );
+};

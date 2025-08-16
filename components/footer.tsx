@@ -1,6 +1,6 @@
 import { Link } from './link';
-import { Section } from './section';
 import { ResumeLink } from './resume-link';
+import { Section } from './section';
 
 const routes = [
   // { href: '/presence', label: 'Presence' },
@@ -14,23 +14,24 @@ export const Footer = () => (
       <div className="flex flex-col space-y-2">
         <div className="flex flex-wrap items-center text-xs">
           <ResumeLink />
-          <span className="text-foreground-muted mx-1">•</span>
+          <span className="mx-1 text-foreground-muted">•</span>
           {routes.map((route, index) => (
-            <div key={route.href} className="flex items-center">
+            <div className="flex items-center" key={route.href}>
               <Link
+                className="transition-colors hover:text-foreground"
                 href={route.href}
-                className="hover:text-foreground transition-colors"
               >
                 {route.label}
               </Link>
               {index < routes.length - 1 && (
-                <span className="text-foreground-muted mx-1">•</span>
+                <span className="mx-1 text-foreground-muted">•</span>
               )}
             </div>
           ))}
         </div>
         <p>
-          &copy; {new Date().getFullYear()} Milind Mishra. Welcome to my internet playground of thoughts and tangents.
+          &copy; {new Date().getFullYear()} Milind Mishra. Welcome to my
+          internet playground of thoughts and tangents.
         </p>
         <p className="text-xs">
           View the{' '}
