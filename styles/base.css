@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/nursery/noUnknownAtRule: for tailwind */
+/** biome-ignore-all lint/style/noDescendingSpecificity: for code blocks */
 @layer base {
   *,
   ::after,
