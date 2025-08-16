@@ -168,6 +168,10 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
                 const firstPayload = payload[0];
                 const originalData = firstPayload?.payload.originalData;
 
+                if (!originalData) {
+                  return null;
+                }
+
                 return (
                   <div className="grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl">
                     <div className="font-medium">{originalData.range.text}</div>
