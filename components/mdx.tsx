@@ -3,17 +3,17 @@ import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import Image from 'next/image';
 import type { HTMLProps, ReactNode } from 'react';
 import { Tweet } from 'react-tweet';
+import { DiscordPresence } from './discord-presence';
 import { Features } from './features';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Mermaid } from './mdx/mermaid';
 import { SpotifyNowPlaying } from './spotify-now-playing';
 import { SpotifyTopTracks } from './spotify-top-tracks';
-import { DiscordPresence } from './discord-presence';
 import { Timeline } from './timeline';
 import { Video } from './video';
+import { Wakatime } from './wakatime/wakatime';
 import { YouTubeVideos } from './youtube-videos';
-import { Wakatime } from './wakatime';
 
 type MdxProperties = {
   readonly code: string;
@@ -104,9 +104,7 @@ const pre = ({ ref: _ref, ...props }: HTMLProps<HTMLPreElement>) => {
 
   return (
     <CodeBlock {...props}>
-      <Pre style={{ fontFamily: 'var(--font-mono)' }}>
-        {props.children}
-      </Pre>
+      <Pre style={{ fontFamily: 'var(--font-mono)' }}>{props.children}</Pre>
     </CodeBlock>
   );
 };

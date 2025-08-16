@@ -62,23 +62,24 @@ export const Navigation = () => {
             {links.map(({ href, label, active }, index) => {
               const isActive = active(pathname);
               const isHovered = hoveredIndex === index;
+              const isActiveOrHovered = isActive || isHovered;
 
               return (
                 <li key={href}>
                   <Link
                     className={cn(
                       'relative rounded-lg border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
-                      isActive || (isHovered && 'text-foreground')
+                      isActive && 'text-foreground'
                     )}
                     href={href}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
-                    {(isActive || isHovered) && (
+                    {isActiveOrHovered && (
                       <motion.span
                         animate={{ opacity: 1 }}
                         aria-label={`Navigate to ${label}`}
-                        className="absolute inset-0 rounded-lg border bg-secondary"
+                        className="absolute inset-0 rounded-lg border bg-card"
                         initial={{ opacity: 0 }}
                         layoutId="nav-pill"
                         transition={{

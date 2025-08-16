@@ -10,7 +10,7 @@ import {
 
 import { Section } from '@/components/section';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { WakatimeCategories } from './wakatime-categories';
 import { WakatimeCodingActivity } from './wakatime-coding-activity';
 import { WakatimeEditors } from './wakatime-editors';

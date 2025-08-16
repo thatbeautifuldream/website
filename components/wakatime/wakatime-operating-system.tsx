@@ -3,6 +3,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { Section } from '@/components/section';
 import { orpc } from '@/lib/orpc';
+import {
+  type TWakatimeStatsCard,
+  WakatimeStatsCard,
+} from './wakatime-stats-card';
 
 export function WakatimeOperatingSystem() {
   const operatingSystemQuery = useQuery(
@@ -56,42 +60,33 @@ export function WakatimeOperatingSystem() {
   const totalPercent = data.reduce((sum, os) => sum + os.percent, 0);
   const topOS = data[0];
 
+  const statCards: TWakatimeStatsCard[] = [
+    {
+      title: 'Primary OS',
+      value: topOS.name,
+      description: `${topOS.percent.toFixed(1)}%`,
+      delay: 0.1,
+    },
+    {
+      title: 'OS Used',
+      value: data.length.toString(),
+      description: 'Different operating systems',
+      delay: 0.2,
+    },
+    {
+      title: 'Coverage',
+      value: `${totalPercent.toFixed(1)}%`,
+      description: 'Of tracked time',
+      delay: 0.3,
+    },
+  ];
+
   return (
     <div className="flex flex-col space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <Section delay={0.1}>
-          <div className="flex flex-col space-y-2 rounded-lg border bg-secondary p-4 shadow-sm">
-            <h3 className="font-medium text-foreground text-sm">Primary OS</h3>
-            <div className="flex items-center gap-2">
-              <p className="font-semibold text-2xl text-foreground">
-                {topOS.name}
-              </p>
-            </div>
-            <p className="text-foreground-lighter text-sm">
-              {topOS.percent.toFixed(1)}%
-            </p>
-          </div>
-        </Section>
-        <Section delay={0.2}>
-          <div className="flex flex-col space-y-2 rounded-lg border bg-secondary p-4 shadow-sm">
-            <h3 className="font-medium text-foreground text-sm">OS Used</h3>
-            <p className="font-semibold text-2xl text-foreground">
-              {data.length}
-            </p>
-            <p className="text-foreground-lighter text-sm">
-              Different operating systems
-            </p>
-          </div>
-        </Section>
-        <Section delay={0.3}>
-          <div className="flex flex-col space-y-2 rounded-lg border bg-secondary p-4 shadow-sm">
-            <h3 className="font-medium text-foreground text-sm">Coverage</h3>
-            <p className="font-semibold text-2xl text-foreground">
-              {totalPercent.toFixed(1)}%
-            </p>
-            <p className="text-foreground-lighter text-sm">Of tracked time</p>
-          </div>
-        </Section>
+        {statCards.map((card) => (
+          <WakatimeStatsCard key={card.title} {...card} />
+        ))}
       </div>
       <div className="space-y-2">
         {data.map((os, index) => (

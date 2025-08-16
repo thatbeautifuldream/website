@@ -101,7 +101,7 @@ export const CommandPalette = ({
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-secondary/50 backdrop-blur-lg">
+    <div className="fixed inset-0 z-50 bg-primary-foreground/50 backdrop-blur-lg">
       <div
         aria-label="Command palette"
         aria-modal="true"
