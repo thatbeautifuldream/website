@@ -22,8 +22,8 @@ type RootLayoutProps = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#eff1f5' },
-    { media: '(prefers-color-scheme: dark)', color: '#1e1e2e' },
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
 };
 
@@ -42,7 +42,6 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         disableTransitionOnChange
         enableSystem
       >
-        {/* <AppGrainyBackground /> */}
         <QueryClientProviderWrapper>
           <CommandPaletteProvider>
             <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
