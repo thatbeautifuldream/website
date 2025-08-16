@@ -6,6 +6,7 @@ import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
+import { CommandPaletteProvider } from '@/components/command-palette-provider';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
@@ -13,6 +14,7 @@ import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { cn } from '@/lib/utils';
+
 // import { AppGrainyBackground } from '@/components/app-grainy-background';
 
 type RootLayoutProps = {
@@ -43,11 +45,13 @@ const RootLayout = ({ children }: RootLayoutProps) => (
       >
         {/* <AppGrainyBackground /> */}
         <QueryClientProviderWrapper>
-          <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-            <Navigation />
-            {children}
-            <Footer />
-          </div>
+          <CommandPaletteProvider>
+            <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+              <Navigation />
+              {children}
+              <Footer />
+            </div>
+          </CommandPaletteProvider>
           <Toaster />
           <ThemeSwitcher />
           <JsonLd />
