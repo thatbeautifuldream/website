@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/nursery/noImportantStyles: for svg toolbelt */
 /** biome-ignore-all lint/nursery/noUnknownAtRule: for tailwind */
 @import "tailwindcss";
-@import "fumadocs-ui/css/catppuccin.css";
+@import "fumadocs-ui/css/black.css";
 @import "fumadocs-ui/css/preset.css";
 @import "./base.css";
 
