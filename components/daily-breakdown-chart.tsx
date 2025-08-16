@@ -196,7 +196,7 @@ export function DailyBreakdownChart({ data }: TDailyBreakdownChartProps) {
               filter="url(#rainbow-line-glow)"
               stroke="var(--chart-1)"
               strokeWidth={2}
-              type="bump"
+              type="monotone"
             />
             <defs>
               <filter
