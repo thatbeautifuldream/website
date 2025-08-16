@@ -6,6 +6,10 @@ import Image from 'next/image';
 import { Section } from '@/components/section';
 import { languageSvgLinks } from '@/lib/data/language-svg-links';
 import { orpc } from '@/lib/orpc';
+import {
+  type TWakatimeStatsCard,
+  WakatimeStatsCard,
+} from './wakatime-stats-card';
 
 function LanguageSvgIcon({ name }: { name: string }) {
   const match = languageSvgLinks.find(
@@ -115,46 +119,33 @@ export function WakatimeLanguages() {
   const totalPercent = data.reduce((sum, lang) => sum + lang.percent, 0);
   const topLanguage = data[0];
 
+  const statCards: TWakatimeStatsCard[] = [
+    {
+      title: 'Top Language',
+      value: topLanguage.name,
+      description: `${topLanguage.percent.toFixed(1)}%`,
+      delay: 0.1,
+    },
+    {
+      title: 'Languages Used',
+      value: data.length.toString(),
+      description: 'Different languages',
+      delay: 0.2,
+    },
+    {
+      title: 'Coverage',
+      value: `${totalPercent.toFixed(1)}%`,
+      description: 'Of tracked time',
+      delay: 0.3,
+    },
+  ];
+
   return (
     <div className="flex flex-col space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <Section delay={0.1}>
-          <div className="flex flex-col space-y-2 rounded-lg border bg-secondary p-4 shadow-sm">
-            <h3 className="font-medium text-foreground text-sm">
-              Top Language
-            </h3>
-            <div className="flex items-center gap-2">
-              <p className="font-semibold text-2xl text-foreground">
-                {topLanguage.name}
-              </p>
-            </div>
-            <p className="text-foreground-lighter text-sm">
-              {topLanguage.percent.toFixed(1)}%
-            </p>
-          </div>
-        </Section>
-        <Section delay={0.2}>
-          <div className="flex flex-col space-y-2 rounded-lg border bg-secondary p-4 shadow-sm">
-            <h3 className="font-medium text-foreground text-sm">
-              Languages Used
-            </h3>
-            <p className="font-semibold text-2xl text-foreground">
-              {data.length}
-            </p>
-            <p className="text-foreground-lighter text-sm">
-              Different languages
-            </p>
-          </div>
-        </Section>
-        <Section delay={0.3}>
-          <div className="flex flex-col space-y-2 rounded-lg border bg-secondary p-4 shadow-sm">
-            <h3 className="font-medium text-foreground text-sm">Coverage</h3>
-            <p className="font-semibold text-2xl text-foreground">
-              {totalPercent.toFixed(1)}%
-            </p>
-            <p className="text-foreground-lighter text-sm">Of tracked time</p>
-          </div>
-        </Section>
+        {statCards.map((card) => (
+          <WakatimeStatsCard key={card.title} {...card} />
+        ))}
       </div>
       <div className="space-y-2">
         {data.map((language, index) => (

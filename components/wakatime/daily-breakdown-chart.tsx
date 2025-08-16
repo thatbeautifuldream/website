@@ -15,7 +15,7 @@ import {
   ChartContainer,
   ChartTooltip,
 } from '@/components/ui/chart';
-import { Badge } from './ui/badge';
+import { Badge } from '../ui/badge';
 
 type TWakatimeDay = {
   range: {
