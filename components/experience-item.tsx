@@ -49,8 +49,9 @@ export const ExperienceItem = ({
         {/* Timeline line */}
         <div className="flex flex-col items-center">
           <div
-            className={`flex h-8 w-8 items-center justify-center rounded-full border-2 bg-background ${current ? 'animate-pulse border-green-500' : 'border-border'
-              }`}
+            className={`flex h-8 w-8 items-center justify-center rounded-full border-2 bg-background ${
+              current ? 'animate-pulse border-green-500' : 'border-border'
+            }`}
           >
             <motion.div layoutId={`favicon-${company}-${startDate}`}>
               <Image
@@ -72,8 +73,8 @@ export const ExperienceItem = ({
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
               <motion.h3
                 className="font-medium text-foreground transition-colors hover:text-foreground-light"
-                layoutId={`company-${company}-${startDate}`}
                 layout="position"
+                layoutId={`company-${company}-${startDate}`}
               >
                 {company}
               </motion.h3>
@@ -135,8 +136,8 @@ export const ExperienceItem = ({
             <div className="flex flex-col gap-1">
               <motion.h2
                 className="font-medium text-foreground"
-                layoutId={`company-${company}-${startDate}`}
                 layout="position"
+                layoutId={`company-${company}-${startDate}`}
               >
                 {company}
               </motion.h2>
