@@ -1,5 +1,3 @@
-import { mono, sans } from '@/lib/fonts';
-import './globals.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import type { Viewport } from 'next';
@@ -13,9 +11,10 @@ import { LayoutDebug } from '@/components/layout-debug';
 import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
+import { mono, sans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
-// import { AppGrainyBackground } from '@/components/app-grainy-background';
+import '@/styles/globals.css';
 
 type RootLayoutProps = {
   children: ReactNode;
