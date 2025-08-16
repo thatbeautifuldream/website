@@ -9,6 +9,10 @@
     @apply min-w-0;
   }
 
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
+
   /* Hide scrollbars across the project to prevent layout shift */
   * {
     scrollbar-width: none; /* Firefox */
