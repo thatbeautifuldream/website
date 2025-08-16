@@ -1,18 +1,26 @@
 'use client';
 
-import { Command } from 'cmdk';
-import { ExternalLinkIcon, SearchIcon } from 'lucide-react';
+import { ExternalLinkIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { Section } from '@/components/section';
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from '@/components/ui/command';
 import {
   createCommandConfig,
   getAllActions,
   searchActions,
   type TCommandAction,
 } from '@/lib/command-config';
-import { cn } from '@/lib/utils';
 
 type TCommandPaletteProps = {
   open: boolean;
@@ -26,7 +34,6 @@ export const CommandPalette = ({
   const router = useRouter();
   const { setTheme } = useTheme();
   const [search, setSearch] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const config = createCommandConfig(setTheme);
   const allActions = getAllActions(config);
@@ -74,14 +81,6 @@ export const CommandPalette = ({
   }, [open, onOpenChange]);
 
   useEffect(() => {
-    if (open && inputRef.current) {
-      const timer = setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
-
-      return () => clearTimeout(timer);
-    }
-
     if (!open) {
       setSearch('');
     }
@@ -96,149 +95,104 @@ export const CommandPalette = ({
     }))
     .filter((category) => category.actions.length > 0);
 
-  if (!open) {
-    return null;
-  }
+  let delayCounter = 0.01;
+  const getNextDelay = () => {
+    delayCounter += 0.01;
+    return delayCounter;
+  };
 
   return (
-    <div className="fixed inset-0 z-50 bg-primary-foreground/50 backdrop-blur-lg">
-      <div
-        aria-label="Command palette"
-        aria-modal="true"
-        className="fixed top-[20%] left-[50%] w-full max-w-lg translate-x-[-50%]"
-        role="dialog"
+    <Section delay={getNextDelay()}>
+      <CommandDialog
+        anchorTop={true}
+        className="max-w-lg"
+        description="Search for a command to run..."
+        onOpenChange={onOpenChange}
+        open={open}
+        showCloseButton={false}
+        title="Command Palette"
       >
-        <Command className="mx-4 flex flex-col rounded-lg border bg-background shadow-lg">
-          <div className="flex shrink-0 items-center border-b px-3">
-            <SearchIcon
-              aria-hidden="true"
-              className="h-4 w-4 shrink-0 opacity-50"
-            />
-            <Command.Input
-              aria-label="Search commands"
-              className="flex h-12 w-full rounded-md bg-transparent py-3 pl-2 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-              onValueChange={setSearch}
-              placeholder="Type a command or search..."
-              ref={inputRef}
-              value={search}
-            />
-            <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100 sm:flex">
-              <span className="text-xs">ESC</span>
-            </kbd>
-          </div>
+        <Section delay={getNextDelay()}>
+          <CommandInput
+            onValueChange={setSearch}
+            placeholder="Type a command or search..."
+            value={search}
+          />
+        </Section>
 
-          <Command.List className="max-h-[400px] overflow-y-auto overflow-x-hidden p-2">
-            <Command.Empty className="py-6 text-center text-muted-foreground text-sm">
-              No commands found.
-            </Command.Empty>
+        <Section delay={getNextDelay()}>
+          <CommandList className="max-h-[400px]">
+            <CommandEmpty>No commands found.</CommandEmpty>
 
             {search ? (
-              <Command.Group
-                className="[&_[cmdk-group-heading]]:text-muted-foreground"
-                heading="Search Results"
-              >
-                {filteredActions.slice(0, 10).map((action) => (
-                  <CommandItem
-                    action={action}
-                    key={action.id}
-                    onSelect={() => executeAction(action)}
-                  />
-                ))}
-              </Command.Group>
+              <Section delay={getNextDelay()}>
+                <CommandGroup heading="Search Results">
+                  {filteredActions.slice(0, 10).map((action) => (
+                    <Section delay={getNextDelay()} key={action.id}>
+                      <CommandPaletteItem
+                        action={action}
+                        onSelect={() => executeAction(action)}
+                      />
+                    </Section>
+                  ))}
+                </CommandGroup>
+              </Section>
             ) : (
               groupedActions.map((category) => (
-                <Command.Group
-                  className="[&_[cmdk-group-heading]]:text-muted-foreground"
-                  heading={category.label}
-                  key={category.id}
-                >
-                  {category.actions.map((action) => (
-                    <CommandItem
-                      action={action}
-                      key={action.id}
-                      onSelect={() => executeAction(action)}
-                    />
-                  ))}
-                </Command.Group>
+                <Section delay={getNextDelay()} key={category.id}>
+                  <CommandGroup heading={category.label}>
+                    {category.actions.map((action) => (
+                      <Section delay={getNextDelay()} key={action.id}>
+                        <CommandPaletteItem
+                          action={action}
+                          onSelect={() => executeAction(action)}
+                        />
+                      </Section>
+                    ))}
+                  </CommandGroup>
+                </Section>
               ))
             )}
-          </Command.List>
-
-          <div className="flex shrink-0 items-center justify-between border-t p-2 text-muted-foreground text-xs">
-            <span className="flex items-center gap-1">
-              Press
-              <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-medium font-mono text-[9px] text-muted-foreground opacity-100">
-                ↵
-              </kbd>
-              to select
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-medium font-mono text-[9px] text-muted-foreground opacity-100">
-                ↑
-              </kbd>
-              <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-medium font-mono text-[9px] text-muted-foreground opacity-100">
-                ↓
-              </kbd>
-              to navigate
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-medium font-mono text-[9px] text-muted-foreground opacity-100">
-                ⌘ K
-              </kbd>
-              to open
-            </span>
-          </div>
-        </Command>
-      </div>
-    </div>
+          </CommandList>
+        </Section>
+      </CommandDialog>
+    </Section>
   );
 };
 
-type TCommandItemProps = {
+type TCommandPaletteItemProps = {
   action: TCommandAction;
   onSelect: () => void;
 };
 
-const CommandItem = ({ action, onSelect }: TCommandItemProps) => {
+const CommandPaletteItem = ({ action, onSelect }: TCommandPaletteItemProps) => {
   return (
-    <Command.Item
-      className={cn(
-        'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
-        'data-[selected=true]:bg-secondary data-[selected=true]:text-secondary-foreground',
-        'hover:bg-secondary/50 hover:text-secondary-foreground'
-      )}
-      key={action.id}
+    <CommandItem
+      className="flex items-center gap-2"
       onSelect={onSelect}
       value={action.label}
     >
-      <div className="flex min-w-0 flex-1 items-center gap-2">
-        <div className="flex min-w-0 flex-1 flex-col">
-          <div className="flex items-center gap-2">
-            <span className="truncate">{action.label}</span>
-            {action.external && (
-              <ExternalLinkIcon className="h-3 w-3 shrink-0 opacity-50" />
-            )}
-          </div>
-          {action.description && (
-            <span className="truncate text-muted-foreground text-xs">
-              {action.description}
-            </span>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex items-center gap-2">
+          <span className="truncate">{action.label}</span>
+          {action.external && (
+            <ExternalLinkIcon className="h-3 w-3 shrink-0 opacity-50" />
           )}
         </div>
+        {action.description && (
+          <span className="truncate text-muted-foreground text-xs">
+            {action.description}
+          </span>
+        )}
       </div>
 
       {action.shortcut && (
-        <div className="ml-2 flex gap-1">
+        <div className="ml-auto flex gap-1">
           {action.shortcut.map((key) => (
-            <kbd
-              className="pointer-events-none inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-medium font-mono text-[9px] text-muted-foreground opacity-100"
-              key={key}
-            >
-              {key}
-            </kbd>
+            <CommandShortcut key={key}>{key}</CommandShortcut>
           ))}
         </div>
       )}
-    </Command.Item>
+    </CommandItem>
   );
 };

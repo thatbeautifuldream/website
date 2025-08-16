@@ -49,52 +49,70 @@ export const Navigation = () => {
         <Link aria-label="Home" href="/">
           <Sign className="size-12" color="currentColor" />
         </Link>
-        <div className="flex items-center gap-2">
-          <button
-            className="flex items-center justify-center rounded-lg border-none p-2 transition-colors hover:bg-secondary/50"
-            onClick={toggle}
-            title="Search commands (⌘K)"
-            type="button"
-          >
-            <SearchIcon className="h-4 w-4 text-foreground-lighter transition-colors hover:text-foreground" />
-          </button>
-          <ul className="flex items-center gap-1 rounded-xl bg-secondary/30 p-1">
-            {links.map(({ href, label, active }, index) => {
-              const isActive = active(pathname);
-              const isHovered = hoveredIndex === index;
-              const isActiveOrHovered = isActive || isHovered;
+        <ul className="flex items-center gap-1 rounded-xl border bg-muted/80 p-1 transition-colors duration-200">
+          {links.map(({ href, label, active }, index) => {
+            const isActive = active(pathname);
+            const isHovered = hoveredIndex === index;
+            const isActiveOrHovered = isActive || isHovered;
 
-              return (
-                <li key={href}>
-                  <Link
-                    className={cn(
-                      'relative rounded-lg border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
-                      isActive && 'text-foreground'
-                    )}
-                    href={href}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                  >
-                    {isActiveOrHovered && (
-                      <motion.span
-                        animate={{ opacity: 1 }}
-                        aria-label={`Navigate to ${label}`}
-                        className="absolute inset-0 rounded-lg border bg-card"
-                        initial={{ opacity: 0 }}
-                        layoutId="nav-pill"
-                        transition={{
-                          duration: 0.2,
-                          ease: 'easeInOut',
-                        }}
-                      />
-                    )}
-                    <span className="relative z-10">{label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+            return (
+              <li key={href}>
+                <Link
+                  className={cn(
+                    'relative rounded-lg border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
+                    isActive && 'text-foreground'
+                  )}
+                  href={href}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  {isActiveOrHovered && (
+                    <motion.span
+                      animate={{ opacity: 1 }}
+                      aria-label={`Navigate to ${label}`}
+                      className="absolute inset-0 rounded-lg border bg-card"
+                      initial={{ opacity: 0 }}
+                      layoutId="nav-pill"
+                      transition={{
+                        duration: 0.2,
+                        ease: 'easeInOut',
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">{label}</span>
+                </Link>
+              </li>
+            );
+          })}
+          <li>
+            <button
+              className={cn(
+                'relative flex items-center justify-center rounded-lg border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
+                hoveredIndex === links.length && 'text-foreground'
+              )}
+              onClick={toggle}
+              onMouseEnter={() => setHoveredIndex(links.length)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              title="Search commands (⌘K)"
+              type="button"
+            >
+              {hoveredIndex === links.length && (
+                <motion.span
+                  animate={{ opacity: 1 }}
+                  aria-label="Open search"
+                  className="absolute inset-0 rounded-lg border bg-card"
+                  initial={{ opacity: 0 }}
+                  layoutId="nav-pill"
+                  transition={{
+                    duration: 0.2,
+                    ease: 'easeInOut',
+                  }}
+                />
+              )}
+              <SearchIcon className="relative z-10 h-4 w-4" />
+            </button>
+          </li>
+        </ul>
       </nav>
     </Section>
   );
