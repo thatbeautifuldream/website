@@ -15,6 +15,7 @@ import { mono, sans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
+import PaperShaderBG from '@/components/paper-shader-bg';
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -50,6 +51,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
               <Footer />
             </div>
           </CommandPaletteProvider>
+          <PaperShaderBG />
           <Toaster />
           <ThemeSwitcher />
           <JsonLd />
