@@ -31,6 +31,10 @@ export const Media: CollectionConfig = {
     adminThumbnail: "thumbnail",
     mimeTypes: ["image/*"],
   },
+  admin: {
+    useAsTitle: "filename",
+    group: "Media",
+  },
   fields: [
     {
       name: "alt",

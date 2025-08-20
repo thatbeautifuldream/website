@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     posts: Post;
     media: Media;
+    files: File;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +80,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    files: FilesSelect<false> | FilesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -249,6 +251,41 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "files".
+ */
+export interface File {
+  id: number;
+  /**
+   * Optional title for the file
+   */
+  title?: string | null;
+  /**
+   * Optional description of the file
+   */
+  description?: string | null;
+  /**
+   * Categorize the file type
+   */
+  category?: ('document' | 'archive' | 'video' | 'audio' | 'image' | 'other') | null;
+  /**
+   * Add tags for better organization
+   */
+  tags?: string[] | null;
+  _key?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -265,6 +302,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'files';
+        value: number | File;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -413,6 +454,28 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "files_select".
+ */
+export interface FilesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  tags?: T;
+  _key?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
