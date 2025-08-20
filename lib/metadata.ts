@@ -68,6 +68,20 @@ export const createMetadata = ({
         },
       ],
     },
+    icons: {
+      icon: [
+        {
+          media: "(prefers-color-scheme: light)",
+          url: "/images/icon.png",
+          href: "/images/icon.png",
+        },
+        {
+          media: "(prefers-color-scheme: dark)",
+          url: "/images/icon.png",
+          href: "/images/icon.png",
+        },
+      ],
+    },
   };
 
   const metadata: Metadata = merge(defaultMetadata, properties);
