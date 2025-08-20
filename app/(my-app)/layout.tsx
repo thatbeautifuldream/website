@@ -1,5 +1,6 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
+import { LayoutGroup } from 'motion/react';
 import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
@@ -46,11 +47,13 @@ const RootLayout = ({ children }: RootLayoutProps) => (
       >
         <QueryClientProviderWrapper>
           <CommandPaletteProvider>
-            <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-              <Navigation />
-              {children}
-              <Footer />
-            </div>
+            <LayoutGroup>
+              <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+                <Navigation />
+                {children}
+                <Footer />
+              </div>
+            </LayoutGroup>
           </CommandPaletteProvider>
           <PaperShaderBG />
           <Toaster />
