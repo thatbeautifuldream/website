@@ -36,11 +36,36 @@
 
   /* Font utility classes */
   .font-sans {
-    font-family: var(--font-family-sans);
+    font-family: var(--font-sans);
   }
 
   .font-mono {
-    font-family: var(--font-family-mono);
+    font-family: var(--font-mono);
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  /* Specific font utility classes */
+  .font-proxima-vara {
+    font-family: var(--font-proxima-vara);
+  }
+
+  .font-fk-grotesk {
+    font-family: var(--font-fk-grotesk);
+  }
+
+  .font-fk-grotesk-neue {
+    font-family: var(--font-fk-grotesk-neue);
+  }
+
+  .font-pp-editorial-new {
+    font-family: var(--font-pp-editorial-new);
+  }
+
+  .font-berkeley-mono {
+    font-family: var(--font-berkeley-mono);
   }
 
   h1,
