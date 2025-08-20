@@ -1,9 +1,9 @@
-import sharp from "sharp";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { buildConfig } from "payload";
-import { env } from "./lib/env";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { uploadthingStorage } from "@payloadcms/storage-uploadthing";
+import { buildConfig } from "payload";
+import sharp from "sharp";
+import { env } from "./lib/env";
 
 import { collections } from "./payload-collections";
 
@@ -24,6 +24,7 @@ export default buildConfig({
     uploadthingStorage({
       collections: {
         media: true,
+        files: true,
       },
       options: {
         token: env.UPLOADTHING_TOKEN,
@@ -32,4 +33,9 @@ export default buildConfig({
       clientUploads: true,
     }),
   ],
+  upload: {
+    limits: {
+      fileSize: 1024 * 1024 * 50, // 50MB
+    },
+  },
 });
