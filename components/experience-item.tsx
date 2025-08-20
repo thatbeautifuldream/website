@@ -1,6 +1,6 @@
 'use client';
 
-import { CalendarIcon, MapPinIcon, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { calculateDuration, formatDate } from '@/lib/experience';
@@ -17,7 +17,6 @@ type ExperienceItemProps = {
   url: string;
   summary: string;
   highlights: string[];
-  current?: boolean;
   isExpanded?: boolean;
   onClose?: () => void;
 };
@@ -31,7 +30,6 @@ export const ExperienceItem = ({
   url,
   summary,
   highlights,
-  current = false,
   isExpanded = false,
   onClose,
 }: ExperienceItemProps) => {
@@ -39,65 +37,62 @@ export const ExperienceItem = ({
   const formattedStartDate = formatDate(startDate);
   const formattedEndDate = endDate ? formatDate(endDate) : 'Present';
 
-  // Get favicon from Google
   const faviconSrc = getFavicon(url);
 
-  // Compact view for timeline
   if (!isExpanded) {
     return (
-      <div className="group relative flex gap-2 rounded-lg p-4 transition-all hover:bg-accent/5">
-        {/* Timeline line */}
-        <div className="flex flex-col items-center">
-          <div
-            className={`flex h-8 w-8 items-center justify-center rounded-full border-2 bg-background ${
-              current ? 'animate-pulse border-green-500' : 'border-border'
-            }`}
-          >
-            <motion.div layoutId={`favicon-${company}-${startDate}`}>
-              <Image
-                alt=""
-                className="rounded-sm"
-                height={16}
-                src={faviconSrc}
-                unoptimized
-                width={16}
-              />
-            </motion.div>
-          </div>
-          <div className="w-px grow bg-border" />
-        </div>
+      <div className="group relative flex gap-4 rounded-lg p-4 transition-colors hover:bg-primary-foreground/10">
+        <motion.div
+          layout="position"
+          layoutId={`favicon-${company}-${startDate}`}
+        >
+          <Image
+            alt=""
+            className="rounded-lg"
+            height={48}
+            src={faviconSrc}
+            unoptimized
+            width={48}
+          />
+        </motion.div>
 
-        {/* Content */}
         <div className="flex-1 space-y-2">
           <div className="flex flex-col">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
               <motion.h3
-                className="font-medium text-foreground transition-colors hover:text-foreground-light"
+                className="font-medium text-foreground"
                 layout="position"
                 layoutId={`company-${company}-${startDate}`}
               >
                 {company}
               </motion.h3>
               <motion.div
-                className="flex items-center gap-2 text-foreground-lighter text-sm"
+                className="text-foreground-lighter text-sm"
                 layoutId={`dates-${company}-${startDate}`}
               >
-                <CalendarIcon size={12} />
                 <span>
-                  {formattedStartDate} - {formattedEndDate}
+                  {formattedStartDate} - {formattedEndDate} ~ {duration}
                 </span>
-                <span>•</span>
-                <span>{duration}</span>
               </motion.div>
             </div>
 
-            <motion.div
-              className="font-medium text-foreground text-sm"
-              layout="position"
-              layoutId={`position-${company}-${startDate}`}
-            >
-              {position}
-            </motion.div>
+            <div className="flex items-center justify-between">
+              <motion.div
+                className="font-medium text-foreground text-sm"
+                layout="position"
+                layoutId={`position-${company}-${startDate}`}
+              >
+                {position}
+              </motion.div>
+
+              <motion.div
+                className="text-foreground-lighter text-sm"
+                layout="position"
+                layoutId={`location-${company}-${startDate}`}
+              >
+                <span>{location}</span>
+              </motion.div>
+            </div>
           </div>
 
           <motion.p
@@ -116,14 +111,15 @@ export const ExperienceItem = ({
     );
   }
 
-  // Expanded view for modal
   return (
     <div className="space-y-4 p-6">
-      {/* Header with close button */}
       <Section delay={0}>
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2">
-            <motion.div layoutId={`favicon-${company}-${startDate}`}>
+          <div className="flex items-center gap-4">
+            <motion.div
+              layout="position"
+              layoutId={`favicon-${company}-${startDate}`}
+            >
               <Image
                 alt=""
                 className="rounded-lg"
@@ -163,24 +159,25 @@ export const ExperienceItem = ({
         </div>
       </Section>
 
-      {/* Details */}
       <div className="space-y-4">
         <Section delay={0.05}>
           <div className="flex flex-col gap-4 text-sm sm:flex-row sm:items-center">
             <motion.div
-              className="flex items-center gap-2 text-foreground-lighter"
+              className="text-foreground-lighter"
               layoutId={`dates-${company}-${startDate}`}
             >
-              <CalendarIcon size={16} />
               <span>
-                {formattedStartDate} - {formattedEndDate} • {duration}
+                {formattedStartDate} - {formattedEndDate} ~ {duration}
               </span>
             </motion.div>
 
-            <div className="flex items-center gap-2 text-foreground-lighter">
-              <MapPinIcon size={16} />
+            <motion.div
+              className="text-foreground-lighter"
+              layout="position"
+              layoutId={`location-${company}-${startDate}`}
+            >
               <span>{location}</span>
-            </div>
+            </motion.div>
           </div>
         </Section>
 
@@ -195,7 +192,6 @@ export const ExperienceItem = ({
           </motion.div>
         </Section>
 
-        {/* Highlights section */}
         {highlights.length > 0 && (
           <Section className="space-y-3" delay={0.15}>
             <div className="flex items-center justify-between">
@@ -221,7 +217,6 @@ export const ExperienceItem = ({
           </Section>
         )}
 
-        {/* Company link */}
         <Section delay={0.25 + highlights.length * 0.03}>
           <div className="border-border border-t pt-4">
             <Link

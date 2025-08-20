@@ -161,17 +161,17 @@ export const calculateDuration = (
   const diffMonths = Math.floor(diffDays / 30);
 
   if (diffMonths < 1) {
-    return "< 1 month";
+    return "< 1 m";
   }
   if (diffMonths < 12) {
-    return `${diffMonths} ${diffMonths === 1 ? "month" : "months"}`;
+    return `${diffMonths} ${diffMonths === 1 ? "m" : "m"}`;
   }
   const years = Math.floor(diffMonths / 12);
   const months = diffMonths % 12;
   if (months === 0) {
-    return `${years} ${years === 1 ? "year" : "years"}`;
+    return `${years} ${years === 1 ? "y" : "y"}`;
   }
-  return `${years} ${years === 1 ? "year" : "years"}, ${months} ${
-    months === 1 ? "month" : "months"
+  return `${years} ${years === 1 ? "y" : "y"}, ${months} ${
+    months === 1 ? "m" : "m"
   }`;
 };

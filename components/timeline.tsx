@@ -32,23 +32,10 @@ export const Timeline = () => {
 
   return (
     <>
-      {/* Overlay */}
       <AnimatePresence>
         {activeExperience ? (
           <motion.div
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-40 bg-background/20"
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-          />
-        ) : null}
-      </AnimatePresence>
-
-      {/* Expanded Experience Modal */}
-      <AnimatePresence>
-        {activeExperience ? (
-          <motion.div
-            className='fixed top-8 z-50 mx-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-border bg-background shadow-lg'
+            className="fixed top-8 z-50 mx-auto max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-border bg-background shadow-lg"
             layoutId={`experience-${activeExperience.company}-${activeExperience.startDate}`}
             ref={ref}
             style={{ borderRadius: 12 }}
@@ -62,13 +49,9 @@ export const Timeline = () => {
         ) : null}
       </AnimatePresence>
 
-      {/* Timeline List */}
       <div className="relative space-y-2">
         {experience.slice(0, 3).map((exp, index) => (
-          <Section
-            delay={index * 0.1}
-            key={`${exp.company}-${exp.startDate}`}
-          >
+          <Section delay={index * 0.1} key={`${exp.company}-${exp.startDate}`}>
             <motion.div
               className="cursor-pointer"
               layoutId={`experience-${exp.company}-${exp.startDate}`}
