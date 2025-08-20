@@ -9,7 +9,7 @@ const routes = [
 ];
 
 export const Footer = () => (
-  <Section delay={0.1}>
+  <Section delay={0.1} layout layoutId="footer">
     <footer className="text-foreground-lighter text-sm leading-relaxed">
       <div className="flex flex-col space-y-2">
         <div className="flex flex-wrap items-center text-xs">
@@ -31,7 +31,7 @@ export const Footer = () => (
         </div>
         <p>
           &copy; {new Date().getFullYear()} Milind Mishra. Welcome to my
-          internet playground of thoughts and tangents.
+          internet scratchpad.
         </p>
         <p className="text-xs">
           View the{' '}
