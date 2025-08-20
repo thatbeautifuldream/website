@@ -11,7 +11,7 @@ import { LayoutDebug } from '@/components/layout-debug';
 import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
-import { mono, sans } from '@/lib/fonts';
+import { mono, sans, serif } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
@@ -32,8 +32,9 @@ const RootLayout = ({ children }: RootLayoutProps) => (
   <html className="scroll-smooth" lang="en" suppressHydrationWarning>
     <body
       className={cn(
-        sans.variable,
-        mono.variable,
+        sans.fkGroteskNeue.variable,
+        mono.berkeleyMono.variable,
+        serif.ppEditorialNew.variable,
         'bg-background font-sans text-foreground-light leading-relaxed antialiased'
       )}
     >
