@@ -1,6 +1,5 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
-import { LayoutGroup } from 'motion/react';
 import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
@@ -9,6 +8,7 @@ import { CommandPaletteProvider } from '@/components/command-palette-provider';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
+import { LayoutWrapper } from '@/components/layout-wrapper';
 import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
@@ -29,43 +29,43 @@ export const viewport: Viewport = {
   ],
 };
 
-const RootLayout = ({ children }: RootLayoutProps) => (
-  <html className="scroll-smooth" lang="en" suppressHydrationWarning>
-    <body
-      className={cn(
-        sans.fkGroteskNeue.variable,
-        mono.berkeleyMono.variable,
-        serif.ppEditorialNew.variable,
-        'bg-background font-sans text-foreground-light leading-relaxed antialiased'
-      )}
-    >
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        disableTransitionOnChange
-        enableSystem
+export default function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <html className="scroll-smooth" lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          sans.fkGroteskNeue.variable,
+          mono.berkeleyMono.variable,
+          serif.ppEditorialNew.variable,
+          'bg-background font-sans text-foreground-light leading-relaxed antialiased'
+        )}
       >
-        <QueryClientProviderWrapper>
-          <CommandPaletteProvider>
-            <LayoutGroup>
-              <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-                <Navigation />
-                {children}
-                <Footer />
-              </div>
-            </LayoutGroup>
-          </CommandPaletteProvider>
-          <PaperShaderBG />
-          <Toaster />
-          <ThemeSwitcher />
-          <JsonLd />
-          <LayoutDebug />
-          <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
-          <Analytics />
-        </QueryClientProviderWrapper>
-      </ThemeProvider>
-    </body>
-  </html>
-);
-
-export default RootLayout;
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          disableTransitionOnChange
+          enableSystem
+        >
+          <QueryClientProviderWrapper>
+            <CommandPaletteProvider>
+              <LayoutWrapper>
+                <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+                  <Navigation />
+                  {children}
+                  <Footer />
+                </div>
+              </LayoutWrapper>
+            </CommandPaletteProvider>
+            <PaperShaderBG />
+            <Toaster />
+            <ThemeSwitcher />
+            <JsonLd />
+            <LayoutDebug />
+            <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
+            <Analytics />
+          </QueryClientProviderWrapper>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
