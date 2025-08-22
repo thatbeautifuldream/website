@@ -4,6 +4,7 @@ import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
+import ClarityInit from '@/components/clarity-init';
 import { CommandPaletteProvider } from '@/components/command-palette-provider';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <ThemeSwitcher />
             <JsonLd />
             <LayoutDebug />
+            <ClarityInit />
             <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
             <Analytics />
           </QueryClientProviderWrapper>

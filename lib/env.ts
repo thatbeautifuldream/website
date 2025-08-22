@@ -16,7 +16,9 @@ export const env = createEnv({
     SERVER_URL: z.string().min(1),
     UPLOADTHING_TOKEN: z.string().min(1),
   },
-  client: {},
+  client: {
+    NEXT_PUBLIC_CLARITY_ID: z.string().min(1),
+  },
   runtimeEnv: {
     VERCEL_PROJECT_PRODUCTION_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL,
     DATABASE_URL: process.env.DATABASE_URL,
@@ -30,5 +32,6 @@ export const env = createEnv({
     PAYLOAD_DATABASE_URL: process.env.PAYLOAD_DATABASE_URL,
     SERVER_URL: process.env.SERVER_URL,
     UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
+    NEXT_PUBLIC_CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID,
   },
 });
