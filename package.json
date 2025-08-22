@@ -22,6 +22,7 @@
     "blogs:fetch": "tsx lib/scripts/blogs.ts"
   },
   "dependencies": {
+    "@microsoft/clarity": "^1.0.0",
     "@neondatabase/serverless": "^1.0.1",
     "@next/env": "^15.3.5",
     "@next/third-parties": "^15.3.5",
