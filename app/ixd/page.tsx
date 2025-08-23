@@ -18,9 +18,7 @@ const AboutPage = () => (
   <>
     <Section className="gap-0 text-center" delay={0}>
       <h1 className="font-light font-serif text-4xl">{page.title}</h1>
-      <p className="text-foreground-lighter">
-        {page.description.split('|')[0]}
-      </p>
+      <p className="text-foreground-lighter">{page.description}</p>
     </Section>
     <article>
       <Section delay={1}>
