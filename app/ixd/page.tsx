@@ -4,8 +4,8 @@ import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
 
 const page = {
-  title: 'Interaction Design',
-  description: `Peerlist's Interaction Design Challenge Submissions | Milind's Submission for the week long interaction design challenge from Peerlist`,
+  title: 'Interaction Design Challenge',
+  description: `Milind's Submission for the Peerlist's week long interaction design challenge`,
 };
 
 export const metadata: Metadata = createMetadata({
