@@ -199,9 +199,9 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-fk-grotesk-neue);
-  --font-mono: var(--font-berkeley-mono);
-  --font-serif: var(--font-pp-editorial-new);
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-geist);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
