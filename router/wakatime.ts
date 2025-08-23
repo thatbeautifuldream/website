@@ -91,7 +91,7 @@ export const CategoriesResponseSchema = z.object({
 });
 export type TCategoriesResponse = z.infer<typeof CategoriesResponseSchema>;
 
-export const wakatimeCodingActivity = os
+export const getWakatimeCodingActivity = os
   .output(CodingActivityResponseSchema)
   .handler(async () => {
     try {
@@ -123,7 +123,7 @@ export const wakatimeCodingActivity = os
     }
   });
 
-export const wakatimeLanguages = os
+export const getWakatimeLanguages = os
   .output(LanguagesResponseSchema)
   .handler(async () => {
     try {
@@ -158,7 +158,7 @@ export const wakatimeLanguages = os
     }
   });
 
-export const wakatimeEditors = os
+export const getWakatimeEditors = os
   .output(EditorsResponseSchema)
   .handler(async () => {
     try {
@@ -193,7 +193,7 @@ export const wakatimeEditors = os
     }
   });
 
-export const wakatimeOperatingSystem = os
+export const getWakatimeOperatingSystem = os
   .output(OperatingSystemResponseSchema)
   .handler(async () => {
     try {
@@ -228,7 +228,7 @@ export const wakatimeOperatingSystem = os
     }
   });
 
-export const wakatimeCategories = os
+export const getWakatimeCategories = os
   .output(CategoriesResponseSchema)
   .handler(async () => {
     try {

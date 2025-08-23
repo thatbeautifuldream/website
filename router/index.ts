@@ -1,34 +1,44 @@
 import { os } from "@orpc/server";
+import {
+  createGuestbookEntry,
+  deleteGuestbookEntry,
+  listGuestbookEntries,
+  updateGuestbookEntry,
+} from "./guestbook";
 import { helloWorld } from "./hello";
 import {
-  wakatimeCodingActivity,
-  wakatimeLanguages,
-  wakatimeEditors,
-  wakatimeOperatingSystem,
-  wakatimeCategories,
+  generateSpotifyAuthUrl,
+  getCurrentlyPlayingTrack,
+  getUserTopTracks,
+  handleSpotifyCallback,
+} from "./spotify";
+import {
+  getWakatimeCategories,
+  getWakatimeCodingActivity,
+  getWakatimeEditors,
+  getWakatimeLanguages,
+  getWakatimeOperatingSystem,
 } from "./wakatime";
-import * as guestbookHandlers from "./guestbook";
-import * as spotifyHandlers from "./spotify";
 
 export const router = os.router({
   hello: helloWorld,
   wakatime: {
-    "coding-activity": wakatimeCodingActivity,
-    languages: wakatimeLanguages,
-    editors: wakatimeEditors,
-    "operating-systems": wakatimeOperatingSystem,
-    categories: wakatimeCategories,
+    "coding-activity": getWakatimeCodingActivity,
+    languages: getWakatimeLanguages,
+    editors: getWakatimeEditors,
+    "operating-systems": getWakatimeOperatingSystem,
+    categories: getWakatimeCategories,
   },
   guestbook: {
-    list: guestbookHandlers.list,
-    create: guestbookHandlers.create,
-    update: guestbookHandlers.update,
-    remove: guestbookHandlers.remove,
+    list: listGuestbookEntries,
+    create: createGuestbookEntry,
+    update: updateGuestbookEntry,
+    remove: deleteGuestbookEntry,
   },
   spotify: {
-    "currently-playing": spotifyHandlers.currentlyPlaying,
-    "top-tracks": spotifyHandlers.topTracks,
-    "auth-url": spotifyHandlers.authUrl,
-    callback: spotifyHandlers.callback,
+    "currently-playing": getCurrentlyPlayingTrack,
+    "top-tracks": getUserTopTracks,
+    "auth-url": generateSpotifyAuthUrl,
+    callback: handleSpotifyCallback,
   },
 });

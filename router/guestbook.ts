@@ -1,16 +1,16 @@
 import { os } from "@orpc/server";
-import { eq, desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
+import { z } from "zod";
 import { db } from "@/db/drizzle";
 import {
   guestbook,
-  selectGuestbookSchema,
-  insertGuestbookSchema,
-  updateGuestbookSchema,
   guestbookParamsSchema,
+  insertGuestbookSchema,
+  selectGuestbookSchema,
+  updateGuestbookSchema,
 } from "@/db/schema";
-import { z } from "zod";
 
-export const list = os
+export const listGuestbookEntries = os
   .input(
     z.object({
       limit: z.number().min(1).max(100).default(10),
@@ -45,7 +45,7 @@ export const list = os
     };
   });
 
-export const create = os
+export const createGuestbookEntry = os
   .input(insertGuestbookSchema)
   .output(selectGuestbookSchema)
   .handler(async ({ input }) => {
@@ -53,7 +53,7 @@ export const create = os
     return newEntry;
   });
 
-export const update = os
+export const updateGuestbookEntry = os
   .input(
     z.object({
       id: z.string().uuid(),
@@ -68,11 +68,13 @@ export const update = os
       .set(data)
       .where(eq(guestbook.id, id))
       .returning();
-    if (!updatedEntry) throw new Error("Guestbook entry not found");
+    if (!updatedEntry) {
+      throw new Error("Guestbook entry not found");
+    }
     return updatedEntry;
   });
 
-export const remove = os
+export const deleteGuestbookEntry = os
   .input(guestbookParamsSchema)
   .output(selectGuestbookSchema)
   .handler(async ({ input }) => {
@@ -81,6 +83,8 @@ export const remove = os
       .delete(guestbook)
       .where(eq(guestbook.id, id))
       .returning();
-    if (!deletedEntry) throw new Error("Guestbook entry not found");
+    if (!deletedEntry) {
+      throw new Error("Guestbook entry not found");
+    }
     return deletedEntry;
   });

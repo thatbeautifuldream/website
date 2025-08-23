@@ -62,7 +62,7 @@ async function getAccessToken(): Promise<string> {
 }
 
 // --- currentlyPlaying ---
-export const currentlyPlaying = os
+export const getCurrentlyPlayingTrack = os
   .output(
     z.object({
       isPlaying: z.boolean(),
@@ -142,7 +142,7 @@ export const currentlyPlaying = os
   });
 
 // --- topTracks ---
-export const topTracks = os
+export const getUserTopTracks = os
   .output(
     z.object({
       tracks: z.array(
@@ -193,26 +193,28 @@ export const topTracks = os
   });
 
 // --- authUrl ---
-export const authUrl = os.output(z.object({ url: z.string() })).handler(() => {
-  const scopes = [
-    "user-read-currently-playing",
-    "user-read-playback-state",
-    "user-top-read",
-  ].join(" ");
-  const redirectUri = `https://${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`;
-  const params = new URLSearchParams({
-    response_type: "code",
-    client_id: env.SPOTIFY_CLIENT_ID,
-    scope: scopes,
-    redirect_uri: redirectUri,
-    state: "some-random-state-value",
+export const generateSpotifyAuthUrl = os
+  .output(z.object({ url: z.string() }))
+  .handler(() => {
+    const scopes = [
+      "user-read-currently-playing",
+      "user-read-playback-state",
+      "user-top-read",
+    ].join(" ");
+    const redirectUri = `https://${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`;
+    const params = new URLSearchParams({
+      response_type: "code",
+      client_id: env.SPOTIFY_CLIENT_ID,
+      scope: scopes,
+      redirect_uri: redirectUri,
+      state: "some-random-state-value",
+    });
+    const url = `https://accounts.spotify.com/authorize?${params.toString()}`;
+    return { url };
   });
-  const url = `https://accounts.spotify.com/authorize?${params.toString()}`;
-  return { url };
-});
 
 // --- callback ---
-export const callback = os
+export const handleSpotifyCallback = os
   .input(z.object({ code: z.string() }))
   .output(
     z.object({
