@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 
 export const geist = Geist({
   subsets: ["latin"],
@@ -10,13 +10,14 @@ export const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-export const instrumentSans = Instrument_Sans({
+export const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-instrument-sans",
+  weight: ["400"],
+  variable: "--font-instrument-serif",
 });
 
 export const sans = {
-  instrumentSans,
+  geist,
 };
 
 export const mono = {
@@ -24,5 +25,5 @@ export const mono = {
 };
 
 export const serif = {
-  geist,
+  instrumentSerif,
 };
