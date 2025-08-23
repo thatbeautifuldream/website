@@ -1,22 +1,21 @@
 import { os } from "@orpc/server";
-import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
-import { db } from "@/db/drizzle";
 import {
-  guestbook,
   guestbookParamsSchema,
   insertGuestbookSchema,
   selectGuestbookSchema,
   updateGuestbookSchema,
-} from "@/db/schema";
+} from "../../db/schema";
+import {
+  createGuestbookEntryInDb,
+  deleteGuestbookEntryInDb,
+  fetchGuestbookEntries,
+  updateGuestbookEntryInDb,
+} from "./helpers";
+import { ListGuestbookInputSchema } from "./types";
 
 export const listGuestbookEntries = os
-  .input(
-    z.object({
-      limit: z.number().min(1).max(100).default(10),
-      offset: z.number().min(0).default(0),
-    })
-  )
+  .input(ListGuestbookInputSchema)
   .output(
     z.object({
       data: z.array(selectGuestbookSchema),
@@ -28,18 +27,13 @@ export const listGuestbookEntries = os
     })
   )
   .handler(async ({ input }) => {
-    const { limit, offset } = input;
-    const entries = await db
-      .select()
-      .from(guestbook)
-      .orderBy(desc(guestbook.createdAt))
-      .limit(limit)
-      .offset(offset);
+    const entries = await fetchGuestbookEntries(input);
+
     return {
       data: entries,
       pagination: {
-        limit,
-        offset,
+        limit: input.limit,
+        offset: input.offset,
         total: entries.length,
       },
     };
@@ -49,8 +43,7 @@ export const createGuestbookEntry = os
   .input(insertGuestbookSchema)
   .output(selectGuestbookSchema)
   .handler(async ({ input }) => {
-    const [newEntry] = await db.insert(guestbook).values(input).returning();
-    return newEntry;
+    return await createGuestbookEntryInDb(input);
   });
 
 export const updateGuestbookEntry = os
@@ -63,15 +56,7 @@ export const updateGuestbookEntry = os
   .output(selectGuestbookSchema)
   .handler(async ({ input }) => {
     const { id, data } = input;
-    const [updatedEntry] = await db
-      .update(guestbook)
-      .set(data)
-      .where(eq(guestbook.id, id))
-      .returning();
-    if (!updatedEntry) {
-      throw new Error("Guestbook entry not found");
-    }
-    return updatedEntry;
+    return await updateGuestbookEntryInDb(id, data);
   });
 
 export const deleteGuestbookEntry = os
@@ -79,12 +64,5 @@ export const deleteGuestbookEntry = os
   .output(selectGuestbookSchema)
   .handler(async ({ input }) => {
     const { id } = input;
-    const [deletedEntry] = await db
-      .delete(guestbook)
-      .where(eq(guestbook.id, id))
-      .returning();
-    if (!deletedEntry) {
-      throw new Error("Guestbook entry not found");
-    }
-    return deletedEntry;
+    return await deleteGuestbookEntryInDb(id);
   });
