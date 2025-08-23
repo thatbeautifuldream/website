@@ -1,28 +1,31 @@
 import { os } from "@orpc/server";
-import { getProjectLiveInsights } from "./clarity";
+import { getProjectLiveInsights } from "./clarity/procedures";
 import {
   createGuestbookEntry,
   deleteGuestbookEntry,
   listGuestbookEntries,
   updateGuestbookEntry,
-} from "./guestbook";
-import { helloWorld } from "./hello";
+} from "./guestbook/procedures";
+import { detailedHealthCheck, healthCheck } from "./health/procedures";
 import {
   generateSpotifyAuthUrl,
   getCurrentlyPlayingTrack,
   getUserTopTracks,
   handleSpotifyCallback,
-} from "./spotify";
+} from "./spotify/procedures";
 import {
   getWakatimeCategories,
   getWakatimeCodingActivity,
   getWakatimeEditors,
   getWakatimeLanguages,
   getWakatimeOperatingSystem,
-} from "./wakatime";
+} from "./wakatime/procedures";
 
 export const router = os.router({
-  hello: helloWorld,
+  health: {
+    check: healthCheck,
+    detailed: detailedHealthCheck,
+  },
   clarity: {
     "project-live-insights": getProjectLiveInsights,
   },
