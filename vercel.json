@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/cron/clarity-insights",
-      "schedule": "0 9 * * 1"
-    }
-  ]
-}
