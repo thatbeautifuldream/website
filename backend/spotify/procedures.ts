@@ -1,4 +1,5 @@
 import { os } from "@orpc/server";
+import { StatusCodes } from "http-status-codes";
 import {
   buildSpotifyAuthUrl,
   exchangeCodeForTokens,
@@ -25,7 +26,7 @@ export const getCurrentlyPlayingTrack = os
       }
     );
 
-    if (response.status === 204) {
+    if (response.status === StatusCodes.NO_CONTENT) {
       return { isPlaying: false, track: null };
     }
 

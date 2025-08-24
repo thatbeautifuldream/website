@@ -18,27 +18,65 @@ jobs:
         run: |
           echo "Starting weekly Clarity data sync..."
 
-          # Make request to clarity endpoint for 7 days of data
-          response=$(curl -s -w "%{http_code}" \
-            -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.API_AUTH_TOKEN }}" \
-            -d '{"numOfDays": 7}' \
-            "https://milindmishra.com/rpc/clarity/project-live-insights")
+          # Function to make the request with retries
+          make_request() {
+            local max_retries=3
+            local retry_count=0
+            local wait_time=30
 
-          # Extract HTTP status code (last 3 characters)
-          http_code="${response: -3}"
-          response_body="${response%???}"
+            while [ $retry_count -lt $max_retries ]; do
+              echo "Attempt $((retry_count + 1)) of $max_retries..."
+              
+              # Make request to clarity endpoint for 7 days of data
+              response=$(curl -s -w "%{http_code}" \
+                -X POST \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer ${{ secrets.API_AUTH_TOKEN }}" \
+                -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+                -H "Accept: application/json, text/plain, */*" \
+                -H "Accept-Language: en-US,en;q=0.9" \
+                -H "Accept-Encoding: gzip, deflate, br" \
+                -H "Connection: keep-alive" \
+                -H "Cache-Control: no-cache" \
+                -H "Pragma: no-cache" \
+                -H "Sec-Fetch-Dest: empty" \
+                -H "Sec-Fetch-Mode: cors" \
+                -H "Sec-Fetch-Site: same-origin" \
+                -d '{"numOfDays": 7}' \
+                "https://milindmishra.com/rpc/clarity/project-live-insights")
 
-          echo "HTTP Status Code: $http_code"
+              # Extract HTTP status code (last 3 characters)
+              http_code="${response: -3}"
+              response_body="${response%???}"
 
-          if [ "$http_code" -eq 200 ]; then
-            echo "✅ Weekly Clarity data sync successful"
-            echo "📊 Synced 7 days of analytics data"
-            echo "Response preview: ${response_body:0:200}..."
-          else
-            echo "❌ Weekly Clarity data sync failed"
-            echo "Response: $response_body"
+              echo "HTTP Status Code: $http_code"
+
+              if [ "$http_code" -eq 200 ]; then
+                echo "✅ Weekly Clarity data sync successful"
+                echo "📊 Synced 7 days of analytics data"
+                echo "Response preview: ${response_body:0:200}..."
+                return 0
+              elif [ "$http_code" -eq 403 ] || [ "$http_code" -eq 429 ]; then
+                echo "⚠️  Request blocked (status: $http_code), retrying in ${wait_time}s..."
+                retry_count=$((retry_count + 1))
+                if [ $retry_count -lt $max_retries ]; then
+                  sleep $wait_time
+                  wait_time=$((wait_time * 2)) # Exponential backoff
+                fi
+              else
+                echo "❌ Weekly Clarity data sync failed with status: $http_code"
+                echo "Response: $response_body"
+                return 1
+              fi
+            done
+
+            echo "❌ All retry attempts failed"
+            echo "Final response: $response_body"
+            return 1
+          }
+
+          # Execute the request with retries
+          if ! make_request; then
             exit 1
           fi
 
