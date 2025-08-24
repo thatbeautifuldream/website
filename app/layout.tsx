@@ -10,6 +10,7 @@ import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { LayoutWrapper } from '@/components/layout-wrapper';
+import { MeshGradientBG } from '@/components/mesh-gradient-bg';
 import { Navigation } from '@/components/navigation';
 import { QueryClientProviderWrapper } from '@/components/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
@@ -17,7 +18,6 @@ import { mono, sans, serif } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
-import PaperShaderBG from '@/components/paper-shader-bg';
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -57,7 +57,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 </div>
               </LayoutWrapper>
             </CommandPaletteProvider>
-            <PaperShaderBG />
+            <MeshGradientBG />
             <Toaster />
             <ThemeSwitcher />
             <JsonLd />
