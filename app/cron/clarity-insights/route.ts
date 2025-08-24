@@ -10,6 +10,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Verify the user agent is from Vercel cron
+    const userAgent = request.headers.get("user-agent");
+    if (userAgent !== "vercel-cron/1.0") {
+      return NextResponse.json({ error: "Forbidden Request" }, { status: 403 });
+    }
+
     // Call the clarity insights endpoint with default parameters
     const baseUrl = request.nextUrl.origin;
     const response = await fetch(
