@@ -13,10 +13,10 @@ export const DimensionSchema = z.enum([
 ]);
 
 export const ProjectLiveInsightsInputSchema = z.object({
-  numOfDays: z.union([z.literal(1), z.literal(2), z.literal(3)]),
-  dimension1: DimensionSchema.optional(),
-  dimension2: DimensionSchema.optional(),
-  dimension3: DimensionSchema.optional(),
+  numOfDays: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(3),
+  dimension1: DimensionSchema.optional().default("Browser"),
+  dimension2: DimensionSchema.optional().default("Device"),
+  dimension3: DimensionSchema.optional().default("Country/Region"),
 });
 
 // Metric data structure based on API documentation

@@ -16,8 +16,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Forbidden Request" }, { status: 403 });
     }
 
-    // Call the clarity insights endpoint with default parameters
-    const baseUrl = request.nextUrl.origin;
+    const baseUrl = "https://milindmishra.com";
     const response = await fetch(
       `${baseUrl}/rpc/clarity/project-live-insights`,
       {
@@ -27,7 +26,7 @@ export async function GET(request: NextRequest) {
           Authorization: `Bearer ${env.API_AUTH_TOKEN}`,
         },
         body: JSON.stringify({
-          numOfDays: 7,
+          numOfDays: 3,
           dimension1: "Browser",
           dimension2: "Device",
           dimension3: "Country/Region",
