@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import { PeerlistEmbed } from '@/components/peerlist-embed';
 import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
+import { DailyChallengeSubmissions } from './_components/daily-challenge-submissions';
+import { submissions } from './_components/submissions';
 
 const page = {
   title: 'Interaction Design Challenge',
@@ -14,18 +15,16 @@ export const metadata: Metadata = createMetadata({
   image: `/og?title=${encodeURIComponent(page.title)}&description=${encodeURIComponent(page.description)}`,
 });
 
-const AboutPage = () => (
+const InteractionDesignChallengePage = () => (
   <>
     <Section className="gap-0 text-center" delay={0}>
       <h1 className="font-light font-serif text-4xl">{page.title}</h1>
       <p className="text-foreground-lighter">{page.description}</p>
     </Section>
     <article>
-      <Section delay={1}>
-        <PeerlistEmbed postId="ACTHEOG6L6JEPLP7839NNORRMN8LLG" />
-      </Section>
+      <DailyChallengeSubmissions submissions={submissions} />
     </article>
   </>
 );
 
-export default AboutPage;
+export default InteractionDesignChallengePage;
