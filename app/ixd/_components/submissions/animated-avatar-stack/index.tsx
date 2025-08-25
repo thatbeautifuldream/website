@@ -1,5 +1,6 @@
 'use client';
 
+import { useControls } from 'leva';
 import { motion } from 'motion/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -7,41 +8,47 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-
-const avatarData = [
-  {
-    src: 'https://dqy38fnwh4fqs.cloudfront.net/UHA9BO68BL6LRNA2R9MD686DLDGE/ha9bo68bl6lrna2r9md686dldge-profile.webp',
-    fallback: 'YB',
-    name: 'Yogini Bende',
-  },
-  {
-    src: 'https://dqy38fnwh4fqs.cloudfront.net/UHDNK79BK6LA89DCMPRQGEGQOGGO/hdnk79bk6la89dcmprqgegqoggo-9038-profile.webp',
-    fallback: 'AB',
-    name: 'Akash Bhadange',
-  },
-  {
-    src: 'https://dqy38fnwh4fqs.cloudfront.net/UHBAOB6BGGNQPGECB6RAQMJRNA9P/hbaob6bggnqpgecb6raqmjrna9p-5809-profile.webp',
-    fallback: 'JK',
-    name: 'Jay Kadam',
-  },
-  {
-    src: 'https://dqy38fnwh4fqs.cloudfront.net/UH9O6OKP8QDKOQE18KQBMGQBBBLD/h9o6okp8qdkoqe18kqbmgqbbbld-profile.webp',
-    fallback: 'AS',
-    name: 'Ajinkya Shinde',
-  },
-];
+import { avatarData } from './data';
 
 export function AnimatedAvatarStack() {
+  const { items, size, border } = useControls({
+    items: {
+      value: 4,
+      min: 1,
+      max: 8,
+      step: 1,
+    },
+    size: {
+      value: 55,
+      min: 20,
+      max: 80,
+      step: 1,
+    },
+    border: {
+      value: 2,
+      min: 0,
+      max: 10,
+      step: 1,
+    },
+  });
+
+  const displayAvatars = avatarData.slice(0, items);
+
   return (
     <div className="-space-x-2 isolate flex items-center">
-      {avatarData.map((avatar, index) => (
-        <Tooltip key={avatar.fallback}>
+      {displayAvatars.map((avatar, index) => (
+        <Tooltip key={`${avatar.fallback}-${index}`}>
           <TooltipTrigger asChild>
             <motion.div
+              animate={{ scale: 1, opacity: 1, y: 0 }}
               className="relative overflow-hidden rounded-full"
-              initial={{ scale: 1, y: 0 }}
+              initial={{ scale: 0, opacity: 0, y: 20 }}
               style={{
-                zIndex: avatarData.length - index,
+                zIndex: displayAvatars.length - index,
+                width: `${size}px`,
+                height: `${size}px`,
+                border:
+                  border > 0 ? `${border}px solid var(--primary)` : 'none',
               }}
               whileHover={{
                 scale: 1.1,
@@ -54,7 +61,13 @@ export function AnimatedAvatarStack() {
                 },
               }}
             >
-              <Avatar className="size-10 shadow-sm">
+              <Avatar
+                className="shadow-sm"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
                 <AvatarImage src={avatar.src} />
                 <AvatarFallback>{avatar.fallback}</AvatarFallback>
               </Avatar>
