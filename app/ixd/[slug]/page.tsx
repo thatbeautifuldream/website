@@ -58,7 +58,7 @@ const SubmissionPage = async ({ params }: TProps) => {
           Submissions
         </Link>
       </Section>
-      <Section className="gap-0 text-center" delay={0}>
+      <Section className="gap-0 text-center" delay={0.01}>
         <h1 className="font-light font-serif text-4xl">{submission.title}</h1>
         <p className="mt-2 text-foreground-lighter text-sm">
           {new Date(submission.date).toLocaleDateString('en-US', {
@@ -68,9 +68,11 @@ const SubmissionPage = async ({ params }: TProps) => {
           })}
         </p>
       </Section>
-      <article className="flex w-full items-center justify-center">
-        {submission.component}
-      </article>
+      <Section delay={0.02}>
+        <article className="flex w-full items-center justify-center">
+          {submission.component}
+        </article>
+      </Section>
     </>
   );
 };

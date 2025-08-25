@@ -6,7 +6,7 @@ import { submissions } from './_components/submissions';
 
 const page = {
   title: 'Interaction Design Challenge',
-  description: `Milind's Submission for the Peerlist's week long interaction design challenge`,
+  description: `Milind's submissions for the Peerlist's week long IxD challenge`,
 };
 
 export const metadata: Metadata = createMetadata({
