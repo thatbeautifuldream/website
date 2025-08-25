@@ -1,7 +1,10 @@
+import { ArrowLeftToLineIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Link } from '@/components/link';
 import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
+import { cn } from '@/lib/utils';
 import { submissions } from '../_components/submissions';
 
 type TProps = {
@@ -40,6 +43,21 @@ const SubmissionPage = async ({ params }: TProps) => {
 
   return (
     <>
+      <Section
+        className="-ml-28 absolute mt-1 hidden select-none lg:block"
+        delay={0.6}
+      >
+        <Link
+          className={cn(
+            'flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors',
+            'hover:text-foreground'
+          )}
+          href="/ixd"
+        >
+          <ArrowLeftToLineIcon size={12} />
+          Submissions
+        </Link>
+      </Section>
       <Section className="gap-0 text-center" delay={0}>
         <h1 className="font-light font-serif text-4xl">{submission.title}</h1>
         <p className="mt-2 text-foreground-lighter text-sm">
@@ -50,7 +68,9 @@ const SubmissionPage = async ({ params }: TProps) => {
           })}
         </p>
       </Section>
-      <article className="w-full">{submission.component}</article>
+      <article className="flex w-full items-center justify-center">
+        {submission.component}
+      </article>
     </>
   );
 };
