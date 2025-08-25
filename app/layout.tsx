@@ -5,19 +5,20 @@ import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import ClarityInit from '@/components/clarity-init';
-import { CommandPaletteProvider } from '@/components/command-palette-provider';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 import { MeshGradientBG } from '@/components/mesh-gradient-bg';
 import { Navigation } from '@/components/navigation';
-import { QueryClientProviderWrapper } from '@/components/query-client-provider';
+import { CommandPaletteProvider } from '@/components/providers/command-palette-provider';
+import { QueryClientProviderWrapper } from '@/components/providers/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { mono, sans, serif } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
+import { LevaProvider } from '@/components/providers/leva-provider';
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <ClarityInit />
             <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
             <Analytics />
+            <LevaProvider />
           </QueryClientProviderWrapper>
         </ThemeProvider>
       </body>
