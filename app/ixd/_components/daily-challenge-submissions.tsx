@@ -21,8 +21,13 @@ export function DailyChallengeSubmissions({
           key={submission.id}
         >
           <div className="relative h-auto max-h-[340px] overflow-hidden rounded-[12px] border border-border p-2">
+            <div className="absolute top-4 left-4 z-10">
+              <Badge className="px-1.5 text-[10px]" variant="secondary">
+                {submission.title}
+              </Badge>
+            </div>
             <div className="absolute top-4 right-4 z-10">
-              <Badge className="h-5 px-1.5 text-[10px]" variant="secondary">
+              <Badge className="px-1.5 text-[10px]" variant="secondary">
                 Day {index + 1}/7
               </Badge>
             </div>
