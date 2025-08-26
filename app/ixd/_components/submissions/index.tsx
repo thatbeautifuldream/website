@@ -1,4 +1,5 @@
 import { AnimatedAvatarStack } from './animated-avatar-stack';
+import { InteractiveOtpInput } from './interactive-otp-input';
 
 export type TSubmission = {
   id: string;
@@ -17,5 +18,13 @@ export const submissions: TSubmission[] = [
     component: <AnimatedAvatarStack />,
     externalLink: 'https://peerlist.io',
     date: '2025-08-25',
+  },
+  {
+    id: '2',
+    title: 'Interactive OTP Input',
+    slug: 'interactive-otp-input',
+    component: <InteractiveOtpInput />,
+    externalLink: 'https://peerlist.io',
+    date: '2025-08-26',
   },
 ];
