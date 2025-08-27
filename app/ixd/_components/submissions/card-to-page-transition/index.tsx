@@ -1,7 +1,7 @@
-/** biome-ignore-all lint/performance/noImgElement: <explanation> */
+/** biome-ignore-all lint/performance/noImgElement: its ok */
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
@@ -102,7 +102,10 @@ function ActiveCard({
   setActiveCard: (c: TCard | null) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref, () => setActiveCard(null));
+  // Fix: use correct type for useOnClickOutside (HTMLElement, not HTMLDivElement | null)
+  useOnClickOutside(ref as React.RefObject<HTMLElement>, () =>
+    setActiveCard(null)
+  );
 
   return (
     <motion.div
