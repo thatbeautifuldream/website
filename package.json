@@ -84,6 +84,7 @@
     "svg-pan-zoom": "^3.6.2",
     "tailwind-merge": "^3.3.1",
     "use-lanyard": "^1.7.0",
+    "use-sound": "^5.0.0",
     "usehooks-ts": "^3.1.1",
     "vaul": "^1.1.2",
     "zustand": "^5.0.6"
