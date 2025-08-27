@@ -1,4 +1,5 @@
 import { AnimatedAvatarStack } from './animated-avatar-stack';
+import { CardToPageTransition } from './card-to-page-transition';
 import { InteractiveOtpInput } from './interactive-otp-input';
 
 export type TSubmission = {
@@ -26,5 +27,13 @@ export const submissions: TSubmission[] = [
     component: <InteractiveOtpInput />,
     externalLink: 'https://peerlist.io',
     date: '2025-08-26',
+  },
+  {
+    id: '3',
+    title: 'Card to Page Transition',
+    slug: 'card-to-page-transition',
+    component: <CardToPageTransition />,
+    externalLink: 'https://peerlist.io',
+    date: '2025-08-27',
   },
 ];
