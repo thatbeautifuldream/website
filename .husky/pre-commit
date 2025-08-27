@@ -12,6 +12,13 @@ if ! pnpm dlx ultracite format; then
   echo "Formatting issues found. Please format your code before committing."
   exit 1
 fi
+
+# Check if build passes
+echo "Running build check..."
+if ! pnpm build; then
+  echo "Build failed. Please fix build errors before committing."
+  exit 1
+fi
  
 echo "Pre-commit checks passed."
 exit 0
