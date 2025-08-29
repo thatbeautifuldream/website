@@ -2,6 +2,7 @@ import { AnimatedAvatarStack } from './animated-avatar-stack';
 import { CardToPageTransition } from './card-to-page-transition';
 import { InteractiveFolder } from './interactive-folder';
 import { InteractiveOtpInput } from './interactive-otp-input';
+import { ProgressiveInputStack } from './progressive-input-stack';
 
 export type TSubmission = {
   id: string;
@@ -44,5 +45,13 @@ export const submissions: TSubmission[] = [
     component: <InteractiveFolder />,
     externalLink: 'https://peerlist.io',
     date: '2025-08-28',
+  },
+  {
+    id: '5',
+    title: 'Progressive Input Stack',
+    slug: 'progressive-input-stack',
+    component: <ProgressiveInputStack />,
+    externalLink: 'https://peerlist.io',
+    date: '2025-08-29',
   },
 ];
