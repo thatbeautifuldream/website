@@ -3,6 +3,7 @@ import { CardToPageTransition } from './card-to-page-transition';
 import { InteractiveFolder } from './interactive-folder';
 import { InteractiveOtpInput } from './interactive-otp-input';
 import { ProgressiveInputStack } from './progressive-input-stack';
+import { WarpOverlay } from './warp-overlay';
 
 export type TSubmission = {
   id: string;
@@ -53,5 +54,13 @@ export const submissions: TSubmission[] = [
     component: <ProgressiveInputStack />,
     externalLink: 'https://peerlist.io',
     date: '2025-08-29',
+  },
+  {
+    id: '6',
+    title: 'Warp Overlay',
+    slug: 'warp-overlay',
+    component: <WarpOverlay />,
+    externalLink: 'https://peerlist.io',
+    date: '2025-08-30',
   },
 ];
