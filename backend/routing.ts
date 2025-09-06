@@ -1,5 +1,6 @@
 import { os } from "@orpc/server";
 import { getProjectLiveInsights } from "./clarity/procedures";
+import { getContributions } from "./github/procedures";
 import {
   createGuestbookEntry,
   deleteGuestbookEntry,
@@ -28,6 +29,9 @@ export const router = os.router({
   },
   clarity: {
     "project-live-insights": getProjectLiveInsights,
+  },
+  github: {
+    contributions: getContributions,
   },
   wakatime: {
     "coding-activity": getWakatimeCodingActivity,
