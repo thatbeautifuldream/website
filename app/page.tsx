@@ -1,15 +1,16 @@
-import { allPages } from 'content-collections';
-import type { Metadata } from 'next';
-import { GitHubContributions } from '@/components/github-contributions';
-import { ImageZoom } from '@/components/image-zoom';
-import { Mdx } from '@/components/mdx';
-import { Section } from '@/components/section';
-import { createMetadata } from '@/lib/metadata';
+import { allPages } from "content-collections";
+import type { Metadata } from "next";
+import { GitHubContributions } from "@/components/github-contributions";
+import { ImageZoom } from "@/components/image-zoom";
+import { Mdx } from "@/components/mdx";
+import { Section } from "@/components/section";
+import { createMetadata } from "@/lib/metadata";
+import { GitHubContributionGraph } from "@/components/github-contribution-graph";
 
-const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
+const page = allPages.find((p) => p._meta.fileName === "home.mdx");
 
 if (!page) {
-  throw new Error('Home page not found');
+  throw new Error("Home page not found");
 }
 
 export const metadata: Metadata = createMetadata({
@@ -19,7 +20,7 @@ export const metadata: Metadata = createMetadata({
 });
 
 const GITHUB_AVATAR_URL =
-  'https://avatars.githubusercontent.com/u/28717686?v=4';
+  "https://avatars.githubusercontent.com/u/28717686?v=4";
 
 const HomePage = () => (
   <>
@@ -39,18 +40,19 @@ const HomePage = () => (
           Milind Mishra
         </p>
         <p className="text-foreground-lighter text-sm leading-normal">
-          Product Engineer, currently at{' '}
+          Product Engineer, currently at{" "}
           <a href="https://getmerlin.in/chat">Merlin AI</a>.
         </p>
       </div>
     </Section>
 
     <Section delay={0.2}>
-      <GitHubContributions
+      {/* <GitHubContributions
         className="mt-4"
         months={10}
         username="thatbeautifuldream"
-      />
+      /> */}
+      <GitHubContributionGraph />
       {/* <p className="mt-2.5 text-foreground-lighter text-xs">
         Psssst, can you tell when my deep work sprints were?
       </p> */}

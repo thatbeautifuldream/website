@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
 import { LevaProvider } from '@/components/providers/leva-provider';
-
+``
 type RootLayoutProps = {
   children: ReactNode;
 };
