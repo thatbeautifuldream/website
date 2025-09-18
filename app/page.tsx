@@ -14,7 +14,7 @@ if (!page) {
 export const metadata: Metadata = createMetadata({
   title: page.title,
   description: page.description,
-  image: `/og?title=${page.title}&description=${page.description}`,
+  image: `/images/opengraph-image.png`,
 });
 
 const GITHUB_AVATAR_URL =
