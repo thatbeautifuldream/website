@@ -1,11 +1,9 @@
-import { allPages } from "content-collections";
-import type { Metadata } from "next";
-import { GitHubContributions } from "@/components/github-contributions";
 import { ImageZoom } from "@/components/image-zoom";
 import { Mdx } from "@/components/mdx";
 import { Section } from "@/components/section";
 import { createMetadata } from "@/lib/metadata";
-import { GitHubContributionGraph } from "@/components/github-contribution-graph";
+import { allPages } from "content-collections";
+import type { Metadata } from "next";
 
 const page = allPages.find((p) => p._meta.fileName === "home.mdx");
 
