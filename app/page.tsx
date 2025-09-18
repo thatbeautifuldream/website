@@ -52,10 +52,17 @@ const HomePage = () => (
         months={10}
         username="thatbeautifuldream"
       /> */}
-      <GitHubContributionGraph />
+      {/* <GitHubContributionGraph /> */}
       {/* <p className="mt-2.5 text-foreground-lighter text-xs">
         Psssst, can you tell when my deep work sprints were?
       </p> */}
+      <ImageZoom>
+        {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
+        <img
+          alt=""
+          src="/images/banner.png"
+        />
+      </ImageZoom>
     </Section>
 
     <article>
