@@ -9,7 +9,7 @@ import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { LayoutWrapper } from '@/components/layout-wrapper';
-import { MeshGradientBG } from '@/components/mesh-gradient-bg';
+import { Background } from '@/components/background';
 import { Navigation } from '@/components/navigation';
 import { CommandPaletteProvider } from '@/components/providers/command-palette-provider';
 import { QueryClientProviderWrapper } from '@/components/providers/query-client-provider';
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 </div>
               </LayoutWrapper>
             </CommandPaletteProvider>
-            <MeshGradientBG />
+            <Background />
             <Toaster />
             <ThemeSwitcher />
             <JsonLd />
