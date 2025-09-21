@@ -1,6 +1,6 @@
 'use client';
 
-import { GrainGradient } from '@paper-design/shaders-react';
+import { MeshGradient } from '@paper-design/shaders-react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
@@ -9,7 +9,7 @@ const GRADIENT_COLORS = {
   light: ['#fce7f3', '#fed7aa', '#fef08a', '#dbeafe', '#bfdbfe'],
 };
 
-export function Background({ style = {}, ...props }) {
+export function MeshGradientBG({ style = {}, ...props }) {
   const { resolvedTheme } = useTheme();
   const [colors, setColors] = useState<string[] | null>(null);
 
@@ -22,18 +22,10 @@ export function Background({ style = {}, ...props }) {
   }
 
   return (
-    <GrainGradient
+    <MeshGradient
       colors={colors}
-      colorBack={resolvedTheme === 'dark' ? '#000000' : '#ffffff'}
-      softness={0.5}
-      intensity={0.5}
-      noise={0.25}
-      shape="corners"
-      offsetX={1}
-      offsetY={-1}
-      scale={3.52}
-      rotation={0}
-      speed={1}
+      distortion={0.6}
+      speed={0.15}
       style={{
         position: 'fixed',
         inset: 0,
@@ -42,6 +34,7 @@ export function Background({ style = {}, ...props }) {
         zIndex: -1,
         ...style,
       }}
+      swirl={0.6}
       {...props}
     />
   );
