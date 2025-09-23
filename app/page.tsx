@@ -58,7 +58,7 @@ const HomePage = () => (
         {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
         <img
           alt=""
-          src="/images/banner.png"
+          src="/images/banner.webp"
         />
       </ImageZoom>
     </Section>
