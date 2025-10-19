@@ -1,3 +1,4 @@
+import { Banner } from "@/components/banner";
 import { ImageZoom } from "@/components/image-zoom";
 import { Mdx } from "@/components/mdx";
 import { Section } from "@/components/section";
@@ -45,22 +46,7 @@ const HomePage = () => (
     </Section>
 
     <Section delay={0.2}>
-      {/* <GitHubContributions
-        className="mt-4"
-        months={10}
-        username="thatbeautifuldream"
-      /> */}
-      {/* <GitHubContributionGraph /> */}
-      {/* <p className="mt-2.5 text-foreground-lighter text-xs">
-        Psssst, can you tell when my deep work sprints were?
-      </p> */}
-      <ImageZoom>
-        {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
-        <img
-          alt=""
-          src="/images/banner.webp"
-        />
-      </ImageZoom>
+      <Banner />
     </Section>
 
     <article>
