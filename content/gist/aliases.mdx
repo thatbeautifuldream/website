@@ -18,6 +18,8 @@ alias pnd="pnpm run dev"
 alias pnb="pnpm run build"
 alias pns="pnpm run start"
 
+alias cloc-next="cloc . --exclude-dir=node_modules,.next,public --not-match-f='(next.config.js|package.json|package-lock.json|tsconfig.json|README.md)'"
+
 # ai commit messages
 aicmt() {
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
