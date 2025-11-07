@@ -6,11 +6,6 @@ import type { NextConfig } from "next";
 const redirectsConfig = async () => {
   return [
     {
-      source: "/t",
-      destination: "https://thine-com-git-feat-thine-layout-merlin-ai.vercel.app",
-      permanent: true,
-    },
-    {
       source: "/resume",
       destination: "https://resume.milind.app",
       permanent: true,
