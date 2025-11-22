@@ -57,11 +57,7 @@ const redirectsConfig = async () => {
   ];
 };
 
-const nextConfig: NextConfig = {
-  experimental: {
-    reactCompiler: false,
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default withContentCollections({
   ...nextConfig,
