@@ -1,6 +1,6 @@
 import { os } from "@orpc/server";
 import { getCachedContributions } from "./helpers";
-import { 
+import {
   ContributionsResponseSchema,
   GitHubContributionsInputSchema,
 } from "./types";

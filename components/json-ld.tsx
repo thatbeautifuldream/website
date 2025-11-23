@@ -3,7 +3,7 @@ import { env } from '@/lib/env';
 import { social } from '@/lib/social';
 
 const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-const baseUrl = `${protocol}://${env.VERCEL_PROJECT_PRODUCTION_URL}`;
+const baseUrl = `${protocol}://${env.SERVER_URL}`;
 
 const person: WithContext<Person> = {
   '@context': 'https://schema.org',

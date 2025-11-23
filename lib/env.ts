@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    VERCEL_PROJECT_PRODUCTION_URL: z.string().min(1),
     DATABASE_URL: z.string().min(1),
     PAYLOAD_SECRET: z.string().min(1),
     IP_SALT: z.string().optional(),
@@ -22,7 +21,6 @@ export const env = createEnv({
     NEXT_PUBLIC_CLARITY_ID: z.string().min(1),
   },
   runtimeEnv: {
-    VERCEL_PROJECT_PRODUCTION_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
     IP_SALT: process.env.IP_SALT,
