@@ -49,7 +49,7 @@ export const createGuestbookEntry = os
 export const updateGuestbookEntry = os
   .input(
     z.object({
-      id: z.string().uuid(),
+      id: z.uuid(),
       data: updateGuestbookSchema,
     })
   )
