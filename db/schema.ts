@@ -39,7 +39,7 @@ export const selectGuestbookSchema = createSelectSchema(guestbook);
 export const insertGuestbookSchema = createInsertSchema(guestbook);
 export const updateGuestbookSchema = createUpdateSchema(guestbook);
 export const guestbookParamsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
 });
 
 export const selectClarityRequestsSchema = createSelectSchema(clarityRequests);

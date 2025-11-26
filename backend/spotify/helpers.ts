@@ -30,7 +30,7 @@ export function buildSpotifyAuthUrl(): string {
     "user-top-read",
   ].join(" ");
 
-  const redirectUri = `https://${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`;
+  const redirectUri = `https://${env.SERVER_URL}/api/spotify/callback`;
 
   const params = new URLSearchParams({
     response_type: "code",
@@ -44,7 +44,7 @@ export function buildSpotifyAuthUrl(): string {
 }
 
 export async function exchangeCodeForTokens(code: string) {
-  const redirectUri = `https://${env.VERCEL_PROJECT_PRODUCTION_URL}/api/spotify/callback`;
+  const redirectUri = `https://${env.SERVER_URL}/api/spotify/callback`;
 
   const response = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
@@ -64,8 +64,7 @@ export async function exchangeCodeForTokens(code: string) {
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(
-      `Failed to exchange code for tokens: ${
-        response.status
+      `Failed to exchange code for tokens: ${response.status
       } - ${JSON.stringify(errorData)}`
     );
   }

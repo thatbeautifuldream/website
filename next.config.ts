@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/suspicious/useAwait: it's a redirect and is written acc to nextjs docs */
 import { withContentCollections } from "@content-collections/next";
-import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
 const redirectsConfig = async () => {
@@ -58,16 +57,9 @@ const redirectsConfig = async () => {
   ];
 };
 
-const nextConfig: NextConfig = {
-  experimental: {
-    reactCompiler: false,
-  },
-  redirects: redirectsConfig,
-};
+const nextConfig: NextConfig = {};
 
-export default withPayload(
-  withContentCollections({
-    ...nextConfig,
-    redirects: redirectsConfig,
-  })
-);
+export default withContentCollections({
+  ...nextConfig,
+  redirects: redirectsConfig,
+});

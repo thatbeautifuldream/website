@@ -6,7 +6,7 @@ export const ListGuestbookInputSchema = z.object({
 });
 
 export const UpdateGuestbookInputSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   data: z.object({}).passthrough(), // Will be replaced by actual updateGuestbookSchema
 });
 
