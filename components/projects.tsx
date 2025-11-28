@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
@@ -26,6 +27,20 @@ type TProjectGridProps = {
   children?: ReactNode;
 };
 
+const getVideoMimeType = (videoUrl: string): string => {
+  const extension = videoUrl.split('.').pop()?.toLowerCase();
+  switch (extension) {
+    case 'webm':
+      return 'video/webm';
+    case 'mp4':
+      return 'video/mp4';
+    case 'ogg':
+      return 'video/ogg';
+    default:
+      return 'video/mp4';
+  }
+};
+
 export const ProjectCard = ({ project, children }: TProjectCardProps) => {
   let projectContent: ReactNode;
 
@@ -40,17 +55,17 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
           playsInline
           poster={project.image}
         >
-          <source src={project.video} type="video/mp4" />
+          <source src={project.video} type={getVideoMimeType(project.video)} />
         </video>
       </ViewTransition>
     );
   } else if (project.image) {
     projectContent = (
       <ViewTransition name={`project-image-${project.slug}`}>
-        {/* biome-ignore lint/performance/noImgElement: works */}
-        <img
+        <Image
           alt={project.title}
           className="size-full object-cover object-top"
+          fill
           src={project.image}
         />
       </ViewTransition>

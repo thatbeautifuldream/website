@@ -61,6 +61,14 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.milind.app",
+      },
+    ],
+  },
 };
 
 export default withContentCollections({

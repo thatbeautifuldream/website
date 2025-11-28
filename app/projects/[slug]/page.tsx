@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowLeftToLineIcon, GithubIcon } from 'lucide-react';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { use, ViewTransition } from 'react';
 import { Link } from '@/components/link';
@@ -12,6 +13,20 @@ type PageProperties = {
   readonly params: Promise<{
     slug: string;
   }>;
+};
+
+const getVideoMimeType = (videoUrl: string): string => {
+  const extension = videoUrl.split('.').pop()?.toLowerCase();
+  switch (extension) {
+    case 'webm':
+      return 'video/webm';
+    case 'mp4':
+      return 'video/mp4';
+    case 'ogg':
+      return 'video/ogg';
+    default:
+      return 'video/mp4';
+  }
 };
 
 export default function Page({ params }: PageProperties) {
@@ -83,6 +98,7 @@ export default function Page({ params }: PageProperties) {
                   viewBox="0 0 24 24"
                   width="16"
                 >
+                  <title>External link</title>
                   <path d="M7 17L17 7" />
                   <path d="M7 7h10v10" />
                 </svg>
@@ -123,13 +139,15 @@ export default function Page({ params }: PageProperties) {
                 playsInline
                 poster={project.image}
               >
-                <source src={project.video} type="video/mp4" />
+                <source src={project.video} type={getVideoMimeType(project.video)} />
               </video>
             ) : (
-              <img
+              <Image
                 alt={project.title}
                 className="w-full overflow-hidden rounded-lg border border-border/50"
-                src={project.image}
+                height={600}
+                src={project.image!}
+                width={800}
               />
             )}
           </ViewTransition>
