@@ -7,7 +7,8 @@ export const PROJECTS: TProject[] = [
     description:
       "Web app generating personalized and visual learning roadmaps powered by Next.js, React, Canvas, and LLMs. Used by thousands of learners and engineers to break down any tech domain.",
     externalUrl: "https://airoadmapgenerator.com",
-    image: "https://www.airoadmapgenerator.com/opengraph-image.png",
+    image:
+      "https://raw.githubusercontent.com/thatbeautifuldream/cdn/refs/heads/main/images/projects/ai-roadmap-generator.webp",
     githubUrl: "https://github.com/thatbeautifuldream/ai-roadmap-generator",
     date: new Date("2024-08-01"),
     tags: ["React", "Next.js", "TypeScript", "Canvas", "LLMs"],
@@ -19,7 +20,7 @@ export const PROJECTS: TProject[] = [
       "Interactive tool for tree/grid visualization of complex JSON, built for dev teams to debug and understand frontend/backend data structures.",
     externalUrl: "https://jsonvisualiser.com",
     image:
-      "https://dqy38fnwh4fqs.cloudfront.net/scroll/UHDNGKG7BMJ8PKPFNLPRDDRNOAG7-1753640125899",
+      "https://raw.githubusercontent.com/thatbeautifuldream/cdn/refs/heads/main/images/projects/json-visualiser.webp",
     githubUrl: "https://github.com/thatbeautifuldream/json-visualizer",
     date: new Date("2024-08-01"),
     tags: ["React", "TypeScript", "D3.js"],
