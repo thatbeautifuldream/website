@@ -57,7 +57,19 @@ const redirectsConfig = async () => {
   ];
 };
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  experimental: {
+    viewTransition: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.milind.app",
+      },
+    ],
+  },
+};
 
 export default withContentCollections({
   ...nextConfig,

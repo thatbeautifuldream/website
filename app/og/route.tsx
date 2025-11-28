@@ -101,31 +101,19 @@ export const GET = async (request: NextRequest) => {
       fonts: [
         {
           name: 'Geist',
-          data: await loadGoogleFont(
-            'Geist',
-            allText,
-            '400;700;800'
-          ),
+          data: await loadGoogleFont('Geist', allText, '400;700;800'),
           style: 'normal',
           weight: 400,
         },
         {
           name: 'Geist',
-          data: await loadGoogleFont(
-            'Geist',
-            allText,
-            '400;700;800'
-          ),
+          data: await loadGoogleFont('Geist', allText, '400;700;800'),
           style: 'normal',
           weight: 700,
         },
         {
           name: 'Geist',
-          data: await loadGoogleFont(
-            'Geist',
-            allText,
-            '400;700;800'
-          ),
+          data: await loadGoogleFont('Geist', allText, '400;700;800'),
           style: 'normal',
           weight: 800,
         },
