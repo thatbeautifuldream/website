@@ -57,7 +57,11 @@ const redirectsConfig = async () => {
   ];
 };
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  experimental: {
+    viewTransition: true,
+  },
+};
 
 export default withContentCollections({
   ...nextConfig,
