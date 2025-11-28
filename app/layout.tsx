@@ -4,22 +4,22 @@ import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
+import { Background } from '@/components/background';
 import ClarityInit from '@/components/clarity-init';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { LayoutWrapper } from '@/components/layout-wrapper';
-import { Background } from '@/components/background';
 import { Navigation } from '@/components/navigation';
 import { CommandPaletteProvider } from '@/components/providers/command-palette-provider';
+import { LevaProvider } from '@/components/providers/leva-provider';
 import { QueryClientProviderWrapper } from '@/components/providers/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { mono, sans, serif } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
-import { LevaProvider } from '@/components/providers/leva-provider';
-``
+
 type RootLayoutProps = {
   children: ReactNode;
 };
@@ -33,14 +33,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html className="scroll-smooth" lang="en" suppressHydrationWarning>
+    <html
+      className={cn(
+        sans.geist.variable,
+        mono.geistMono.variable,
+        serif.instrumentSerif.variable
+      )}
+      lang="en"
+      suppressHydrationWarning
+    >
       <body
-        className={cn(
-          sans.geist.variable,
-          mono.geistMono.variable,
-          serif.instrumentSerif.variable,
-          'bg-background font-sans text-foreground-light leading-relaxed antialiased'
-        )}
+        className={cn('bg-background font-sans leading-relaxed antialiased')}
       >
         <ThemeProvider
           attribute="class"
