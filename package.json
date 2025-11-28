@@ -4,12 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"content-collections watch\" \"cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack\"",
+    "dev": "concurrently \"content-collections watch\" \"cross-env NODE_OPTIONS=--no-deprecation next dev\"",
     "build": "content-collections build && cross-env NODE_OPTIONS=--no-deprecation next build",
-    "build:preview": "content-collections build && cross-env NODE_OPTIONS=--no-deprecation next build --turbopack",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "dev-safe": "rm -rf .next && concurrently \"content-collections watch\" \"cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack\"",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
