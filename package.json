@@ -100,11 +100,5 @@
     "typescript": "^5.9.3",
     "ultracite": "5.0.26",
     "zod": "^4.1.12"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3"
-    }
   }
 }
