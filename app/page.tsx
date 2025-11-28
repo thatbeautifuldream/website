@@ -1,25 +1,24 @@
-import { Banner } from "@/components/banner";
-import { ImageZoom } from "@/components/image-zoom";
-import { Mdx } from "@/components/mdx";
-import { Section } from "@/components/section";
-import { createMetadata } from "@/lib/metadata";
-import { allPages } from "content-collections";
-import type { Metadata } from "next";
+import { allPages } from 'content-collections';
+import type { Metadata } from 'next';
+import { ImageZoom } from '@/components/image-zoom';
+import { Mdx } from '@/components/mdx';
+import { Section } from '@/components/section';
+import { createMetadata } from '@/lib/metadata';
 
-const page = allPages.find((p) => p._meta.fileName === "home.mdx");
+const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
 
 if (!page) {
-  throw new Error("Home page not found");
+  throw new Error('Home page not found');
 }
 
 export const metadata: Metadata = createMetadata({
   title: page.title,
   description: page.description,
-  image: `/images/opengraph-image.png`,
+  image: '/images/opengraph-image.png',
 });
 
 const GITHUB_AVATAR_URL =
-  "https://avatars.githubusercontent.com/u/28717686?v=4";
+  'https://avatars.githubusercontent.com/u/28717686?v=4';
 
 const HomePage = () => (
   <>
@@ -39,14 +38,10 @@ const HomePage = () => (
           Milind Mishra
         </p>
         <p className="text-foreground-lighter text-sm leading-normal">
-          Product Engineer, currently at{" "}
+          Product Engineer, currently at{' '}
           <a href="https://getmerlin.in/chat">Merlin AI</a>.
         </p>
       </div>
-    </Section>
-
-    <Section delay={0.2}>
-      <Banner />
     </Section>
 
     <article>

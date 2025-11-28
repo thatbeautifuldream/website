@@ -4,7 +4,6 @@ import { SearchIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import useSound from 'use-sound';
 import { Link } from '@/components/link';
 import { cn } from '@/lib/utils';
 import { useCommandPalette } from './providers/command-palette-provider';
@@ -44,12 +43,10 @@ export const Navigation = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const { toggle } = useCommandPalette();
 
-  const [play] = useSound('/sounds/message-pop.mp3');
-
   return (
     <Section delay={0.05}>
       <nav className="flex items-center justify-between text-xs">
-        <Link aria-label="Home" href="/" onClick={() => play()}>
+        <Link aria-label="Home" href="/">
           <Sign className="size-12" color="currentColor" />
         </Link>
         <ul className="flex items-center gap-1 rounded-xl border bg-muted/80 p-1 transition-colors duration-200">
@@ -66,7 +63,6 @@ export const Navigation = () => {
                     isActive && 'text-foreground'
                   )}
                   href={href}
-                  onClick={() => play()}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
