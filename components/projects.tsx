@@ -1,7 +1,9 @@
+'use client';
+
 import type { ReactNode } from 'react';
+import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
 
-// Types
 export type TProject = {
   slug: string;
   title: string;
@@ -9,6 +11,9 @@ export type TProject = {
   image?: string;
   video?: string;
   externalUrl?: string;
+  githubUrl?: string;
+  date?: Date;
+  tags?: string[];
 };
 
 type TProjectCardProps = {
@@ -21,42 +26,44 @@ type TProjectGridProps = {
   children?: ReactNode;
 };
 
-// ProjectCard Component
 export const ProjectCard = ({ project, children }: TProjectCardProps) => {
-  const href = project.externalUrl || `/${project.slug}`;
-  const isExternal = Boolean(project.externalUrl);
-
   let projectContent: ReactNode;
 
   if (project.video) {
     projectContent = (
-      <video
-        autoPlay
-        className="size-full object-cover object-top"
-        loop
-        muted
-        playsInline
-        poster={project.image}
-      >
-        <source src={project.video} type="video/mp4" />
-      </video>
+      <ViewTransition name={`project-image-${project.slug}`}>
+        <video
+          autoPlay
+          className="size-full object-cover object-top"
+          loop
+          muted
+          playsInline
+          poster={project.image}
+        >
+          <source src={project.video} type="video/mp4" />
+        </video>
+      </ViewTransition>
     );
   } else if (project.image) {
     projectContent = (
-      // biome-ignore lint/performance/noImgElement: works
-      <img
-        alt={project.title}
-        className="size-full object-cover object-top"
-        src={project.image}
-      />
+      <ViewTransition name={`project-image-${project.slug}`}>
+        {/* biome-ignore lint/performance/noImgElement: works */}
+        <img
+          alt={project.title}
+          className="size-full object-cover object-top"
+          src={project.image}
+        />
+      </ViewTransition>
     );
   } else {
     projectContent = (
-      <div className="flex size-full items-center justify-center bg-linear-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900">
-        <span className="font-medium text-lg text-neutral-400">
-          {project.title}
-        </span>
-      </div>
+      <ViewTransition name={`project-image-${project.slug}`}>
+        <div className="flex size-full items-center justify-center bg-linear-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900">
+          <span className="font-medium text-lg text-neutral-400">
+            {project.title}
+          </span>
+        </div>
+      </ViewTransition>
     );
   }
 
@@ -64,11 +71,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
     <Link
       aria-label={project.title}
       className="group relative block outline-none transition-transform duration-200 ease-out hover:scale-[1.025] focus-visible:outline active:scale-100"
-      href={href}
-      {...(isExternal && {
-        rel: 'external',
-        target: '_blank',
-      })}
+      href={`/projects/${project.slug}`}
     >
       <div className="relative aspect-16/10 w-full overflow-clip rounded-2xl transition-shadow duration-200 ease-out group-hover:shadow-2xl group-active:shadow-none dark:shadow-none">
         {children || (
@@ -82,7 +85,6 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
   );
 };
 
-// ProjectGrid Component
 export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
   if (children) {
     return (

@@ -4,6 +4,7 @@ import { ImageZoom } from '@/components/image-zoom';
 import { Mdx } from '@/components/mdx';
 import { ProjectGrid } from '@/components/projects';
 import { Section } from '@/components/section';
+import { PROJECTS } from '@/lib/data/projects';
 import { createMetadata } from '@/lib/metadata';
 
 const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
@@ -20,26 +21,6 @@ export const metadata: Metadata = createMetadata({
 
 const GITHUB_AVATAR_URL =
   'https://avatars.githubusercontent.com/u/28717686?v=4';
-
-const PROJECTS = [
-  {
-    slug: 'ai-roadmap-generator',
-    title: 'AI Roadmap Generator',
-    description:
-      'Web app generating personalized and visual learning roadmaps powered by Next.js, React, Canvas, and LLMs. Used by thousands of learners and engineers to break down any tech domain.',
-    externalUrl: 'https://airoadmapgenerator.com',
-    image: 'https://www.airoadmapgenerator.com/opengraph-image.png',
-  },
-  {
-    slug: 'json-visualizer',
-    title: 'JSON Visualizer',
-    description:
-      'Interactive tool for tree/grid visualization of complex JSON, built for dev teams to debug and understand frontend/backend data structures.',
-    externalUrl: 'https://jsonvisualiser.com',
-    image:
-      'https://dqy38fnwh4fqs.cloudfront.net/scroll/UHDNGKG7BMJ8PKPFNLPRDDRNOAG7-1753640125899',
-  },
-];
 
 const HomePage = () => (
   <>
