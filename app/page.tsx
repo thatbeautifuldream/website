@@ -1,7 +1,6 @@
 import { allPages } from 'content-collections';
 import type { Metadata } from 'next';
 import { ImageZoom } from '@/components/image-zoom';
-import { Mdx } from '@/components/mdx';
 import { ProjectGrid } from '@/components/projects';
 import { Section } from '@/components/section';
 import { PROJECTS } from '@/lib/data/projects';
@@ -50,11 +49,11 @@ const HomePage = () => (
       <ProjectGrid projects={PROJECTS} />
     </Section>
 
-    <article>
+    {/* <article>
       <Section delay={0.5}>
         <Mdx code={page.body} />
       </Section>
-    </article>
+    </article> */}
   </>
 );
 
