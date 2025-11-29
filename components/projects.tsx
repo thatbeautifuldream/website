@@ -42,7 +42,14 @@ const getVideoMimeType = (videoUrl: string): string => {
   }
 };
 
+// Generate a deterministic rotation based on slug
+const getStripRotation = (slug: string): number => {
+  const hash = slug.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return -3 + (hash % 7); // Random rotation between -3 and 3 degrees
+};
+
 export const ProjectCard = ({ project, children }: TProjectCardProps) => {
+  const stripRotation = getStripRotation(project.slug);
   let projectContent: ReactNode;
 
   if (project.video) {
@@ -101,30 +108,46 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
             <div className="absolute inset-0 rounded-lg ring-1 ring-black/10 ring-inset dark:ring-white/10" />
             <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6">
               <ViewTransition name={`project-title-${project.slug}`}>
-                <h2
-                  className="font-bold text-lg text-white md:text-2xl"
-                  style={{
-                    textShadow:
-                      '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9)',
-                  }}
-                >
-                  {project.title}
-                </h2>
+                <div className="inline-block">
+                  <div
+                    className="inline-block bg-black/80 px-3 py-1.5 md:px-4 md:py-2"
+                    style={{
+                      transform: `rotate(${stripRotation}deg)`,
+                    }}
+                  >
+                    <h2
+                      className="font-bold text-lg text-white md:text-2xl"
+                      style={{
+                        transform: `rotate(${-stripRotation}deg)`,
+                      }}
+                    >
+                      {project.title}
+                    </h2>
+                  </div>
+                </div>
               </ViewTransition>
               {project.date && (
                 <ViewTransition name={`project-date-${project.slug}`}>
-                  <p
-                    className="mt-0.5 text-[0.625rem] text-white md:mt-1 md:text-xs"
-                    style={{
-                      textShadow:
-                        '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9)',
-                    }}
-                  >
-                    {new Intl.DateTimeFormat('en-US', {
-                      month: 'long',
-                      year: 'numeric',
-                    }).format(project.date)}
-                  </p>
+                  <div className="mt-1.5 inline-block md:mt-2">
+                    <div
+                      className="inline-block bg-black/80 px-2 py-0.5 md:px-3 md:py-1"
+                      style={{
+                        transform: `rotate(${stripRotation}deg)`,
+                      }}
+                    >
+                      <p
+                        className="text-[0.625rem] text-white md:text-xs"
+                        style={{
+                          transform: `rotate(${-stripRotation}deg)`,
+                        }}
+                      >
+                        {new Intl.DateTimeFormat('en-US', {
+                          month: 'long',
+                          year: 'numeric',
+                        }).format(project.date)}
+                      </p>
+                    </div>
+                  </div>
                 </ViewTransition>
               )}
             </div>
