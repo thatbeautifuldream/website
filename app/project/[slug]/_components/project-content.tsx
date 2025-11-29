@@ -4,7 +4,7 @@ import { ArrowLeftToLineIcon, GithubIcon } from 'lucide-react';
 import Image from 'next/image';
 import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
-import type { TProject } from '@/components/projects';
+import { getStripRotation, type TProject } from '@/components/projects';
 import { Section } from '@/components/section';
 import { cn } from '@/lib/utils';
 
@@ -27,6 +27,8 @@ const getVideoMimeType = (videoUrl: string): string => {
 };
 
 export function ProjectContent({ project }: TProjectContentProperties) {
+  const stripRotation = getStripRotation(project.slug);
+
   return (
     <>
       <Section
@@ -47,19 +49,34 @@ export function ProjectContent({ project }: TProjectContentProperties) {
       <Section className="gap-1">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <ViewTransition name={`project-title-${project.slug}`}>
-              <h1>{project.title}</h1>
+            <ViewTransition name={`project-header-${project.slug}`}>
+              <div className="inline-block">
+                <div
+                  className="inline-block bg-black/85 px-3 py-2 md:px-5 md:py-3 dark:bg-white/90"
+                  style={{
+                    transform: `rotate(${stripRotation}deg)`,
+                  }}
+                >
+                  <div
+                    style={{
+                      transform: `rotate(${-stripRotation}deg)`,
+                    }}
+                  >
+                    <h1 className="font-bold text-2xl text-white leading-tight md:text-3xl dark:text-black">
+                      {project.title}
+                    </h1>
+                    {project.date && (
+                      <p className="mt-0.5 text-white/90 text-xs dark:text-black/80">
+                        {new Intl.DateTimeFormat('en-US', {
+                          month: 'long',
+                          year: 'numeric',
+                        }).format(project.date)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </ViewTransition>
-            {project.date && (
-              <ViewTransition name={`project-date-${project.slug}`}>
-                <p className="text-foreground-lighter text-xs">
-                  {new Intl.DateTimeFormat('en-US', {
-                    month: 'long',
-                    year: 'numeric',
-                  }).format(project.date)}
-                </p>
-              </ViewTransition>
-            )}
           </div>
           <div className="flex items-center gap-3">
             {project.githubUrl && (
@@ -72,26 +89,38 @@ export function ProjectContent({ project }: TProjectContentProperties) {
               </Link>
             )}
             {project.externalUrl && (
-              <Link
-                className="flex cursor-pointer items-center gap-2 rounded-full bg-foreground px-4 py-2 text-background text-sm transition-opacity hover:opacity-80"
-                href={project.externalUrl}
-              >
-                Visit
-                <svg
-                  fill="none"
-                  height="16"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="16"
+              <div className="inline-block">
+                <div
+                  className="inline-block bg-black/85 px-4 py-2 transition-opacity hover:opacity-80 dark:bg-white/90"
+                  style={{
+                    transform: `rotate(${stripRotation}deg)`,
+                  }}
                 >
-                  <title>External link</title>
-                  <path d="M7 17L17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
-              </Link>
+                  <Link
+                    className="flex cursor-pointer items-center gap-2 text-sm text-white dark:text-black"
+                    href={project.externalUrl}
+                    style={{
+                      transform: `rotate(${-stripRotation}deg)`,
+                    }}
+                  >
+                    Visit
+                    <svg
+                      fill="none"
+                      height="16"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      width="16"
+                    >
+                      <title>External link</title>
+                      <path d="M7 17L17 7" />
+                      <path d="M7 7h10v10" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             )}
           </div>
         </div>
