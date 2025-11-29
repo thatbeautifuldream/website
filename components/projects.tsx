@@ -99,10 +99,10 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
           <>
             {projectContent}
             <div className="absolute inset-0 rounded-lg ring-1 ring-black/10 ring-inset dark:ring-white/10" />
-            <div className="absolute right-0 bottom-0 left-0 p-6">
+            <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6">
               <ViewTransition name={`project-title-${project.slug}`}>
                 <h2
-                  className="font-bold text-2xl text-white"
+                  className="font-bold text-lg text-white md:text-2xl"
                   style={{
                     textShadow:
                       '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9)',
@@ -114,7 +114,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
               {project.date && (
                 <ViewTransition name={`project-date-${project.slug}`}>
                   <p
-                    className="mt-1 text-white text-xs"
+                    className="mt-0.5 text-[0.625rem] text-white md:mt-1 md:text-xs"
                     style={{
                       textShadow:
                         '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9)',
