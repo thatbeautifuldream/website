@@ -2,7 +2,7 @@ import type { TProject } from "@/components/projects";
 
 export const PROJECTS: TProject[] = [
   {
-    slug: "thine",
+    slug: "thine-landing",
     title: "Thine Landing Page",
     description:
       "Thine is your thoughtful companion that listens between the lines, responds with deep understanding of your life, and gently nudges you toward the life you're building.Thine is your thoughtful companion that listens between the lines, responds with deep understanding of your life, and gently nudges you toward the life you're building.",

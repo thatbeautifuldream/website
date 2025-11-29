@@ -66,7 +66,9 @@ const Page: FC<PageProperties> = async ({ params }) => {
       </Section>
       <Section className="gap-1">
         <h1>{page.title}</h1>
-        {page.description && <p className="text-foreground-lighter text-sm">{page.description}</p>}
+        {page.description && (
+          <p className="text-foreground-lighter text-sm">{page.description}</p>
+        )}
         <div className="flex justify-between text-foreground-lighter text-xs">
           <p>
             Published on{' '}
@@ -86,7 +88,6 @@ const Page: FC<PageProperties> = async ({ params }) => {
             </code>
           ))}
         </div>
-
       </Section>
       {page.image ? (
         <Section>
@@ -107,7 +108,6 @@ const Page: FC<PageProperties> = async ({ params }) => {
           <Mdx code={page.body} />
         </Section>
       </article>
-
     </>
   );
 };

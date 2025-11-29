@@ -24,7 +24,7 @@ export const generateMetadata = async ({
   return createMetadata({
     title: project.title,
     description: project.description || '',
-    image: `/og?title=${encodeURIComponent(project.title)}`,
+    image: `/og?title=${encodeURIComponent(`${project.title}&description=${project.description}`)}`,
   });
 };
 
