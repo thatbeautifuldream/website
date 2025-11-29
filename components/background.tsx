@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const GRADIENT_COLORS = {
   dark: ['#000000', '#0d0d0d', '#1a1a1a', '#262626'],
-  light: ['#fce7f3', '#fed7aa', '#fef08a', '#dbeafe', '#bfdbfe'],
+  light: ['#ffffff', '#f5f5f5', '#e5e5e5', '#d4d4d4'],
 };
 
 export function Background({ style = {}, ...props }) {
@@ -23,16 +23,16 @@ export function Background({ style = {}, ...props }) {
 
   return (
     <GrainGradient
-      colors={colors}
       colorBack={resolvedTheme === 'dark' ? '#000000' : '#ffffff'}
-      softness={0.5}
+      colors={colors}
       intensity={0.5}
       noise={0.25}
-      shape="corners"
       offsetX={1}
       offsetY={-1}
-      scale={3.52}
       rotation={0}
+      scale={3.52}
+      shape="corners"
+      softness={0.5}
       speed={1}
       style={{
         position: 'fixed',
