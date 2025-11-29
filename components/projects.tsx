@@ -87,7 +87,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
     <Link
       aria-label={project.title}
       className="group relative block outline-none transition-transform duration-200 ease-out hover:scale-[1.025] focus-visible:outline active:scale-100"
-      href={`/projects/${project.slug}`}
+      href={`/project/${project.slug}`}
     >
       <div
         className={cn(
