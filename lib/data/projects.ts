@@ -2,6 +2,26 @@ import type { TProject } from "@/components/projects";
 
 export const PROJECTS: TProject[] = [
   {
+    slug: "thine",
+    title: "Thine Landing Page",
+    description:
+      "Thine is your thoughtful companion that listens between the lines, responds with deep understanding of your life, and gently nudges you toward the life you're building.Thine is your thoughtful companion that listens between the lines, responds with deep understanding of your life, and gently nudges you toward the life you're building.",
+    externalUrl: "https://www.thine.com",
+    video: "https://cdn.milind.app/media/projects/thine.webm",
+    date: new Date("2025-11-01"),
+    tags: ["Tanstack Start", "Tailwind CSS", "Framer Motion", "CSS Animation"],
+  },
+  {
+    slug: "merlin-projects",
+    title: "Merlin Projects",
+    description:
+      "Projects is an AI-powered knowledge base that streamlines how you collect, organize, and get insights from all kinds of content—web links, notes, PDFs, and more—building a personal library for efficient knowledge management.",
+    externalUrl: "https://www.getmerlin.in/chat/projects",
+    video: "https://cdn.milind.app/media/projects/merlin-projects.webm",
+    date: new Date("2025-08-01"),
+    tags: ["Next.js", "React Query", "LLMs", "RAG"],
+  },
+  {
     slug: "ai-roadmap-generator",
     title: "AI Roadmap Generator",
     description:
