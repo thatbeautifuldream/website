@@ -49,7 +49,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
       <ViewTransition name={`project-image-${project.slug}`}>
         <video
           autoPlay
-          className="w-full rounded-lg"
+          className="size-full object-cover object-top"
           loop
           muted
           playsInline
@@ -86,13 +86,13 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
     <Link
       aria-label={project.title}
       className="group relative block outline-none transition-transform duration-200 ease-out hover:scale-[1.025] focus-visible:outline active:scale-100"
-      href={`/project/${project.slug}`}
+      href={`/projects/${project.slug}`}
     >
-      <div className={`relative w-full overflow-clip rounded-lg transition-shadow duration-200 ease-out group-hover:shadow-2xl group-active:shadow-none dark:shadow-none ${project.video ? '' : 'aspect-16/10'}`}>
+      <div className="relative aspect-16/10 w-full overflow-clip rounded-2xl transition-shadow duration-200 ease-out group-hover:shadow-2xl group-active:shadow-none dark:shadow-none">
         {children || (
           <>
             {projectContent}
-            <div className="absolute inset-0 rounded-lg ring-1 ring-black/10 ring-inset dark:ring-white/10" />
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-black/10 ring-inset dark:ring-white/10" />
           </>
         )}
       </div>
@@ -102,7 +102,9 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
 
 export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
   if (children) {
-    return <div className="grid gap-6">{children}</div>;
+    return (
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{children}</div>
+    );
   }
 
   if (!projects || projects.length === 0) {
@@ -110,7 +112,7 @@ export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       {projects.map((project) => (
         <ProjectCard key={project.slug} project={project} />
       ))}
