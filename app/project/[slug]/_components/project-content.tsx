@@ -51,12 +51,14 @@ export function ProjectContent({ project }: TProjectContentProperties) {
               <h1>{project.title}</h1>
             </ViewTransition>
             {project.date && (
-              <p className="text-foreground-lighter text-xs">
-                {new Intl.DateTimeFormat('en-US', {
-                  month: 'long',
-                  year: 'numeric',
-                }).format(project.date)}
-              </p>
+              <ViewTransition name={`project-date-${project.slug}`}>
+                <p className="text-foreground-lighter text-xs">
+                  {new Intl.DateTimeFormat('en-US', {
+                    month: 'long',
+                    year: 'numeric',
+                  }).format(project.date)}
+                </p>
+              </ViewTransition>
             )}
           </div>
           <div className="flex items-center gap-3">
@@ -71,10 +73,7 @@ export function ProjectContent({ project }: TProjectContentProperties) {
             )}
             {project.externalUrl && (
               <Link
-                className={cn(
-                  'flex cursor-external items-center gap-2 rounded-full bg-foreground px-4 py-2 text-background text-sm transition-opacity',
-                  'hover:opacity-80'
-                )}
+                className="flex cursor-pointer items-center gap-2 rounded-full bg-foreground px-4 py-2 text-background text-sm transition-opacity hover:opacity-80"
                 href={project.externalUrl}
               >
                 Visit
@@ -96,13 +95,11 @@ export function ProjectContent({ project }: TProjectContentProperties) {
             )}
           </div>
         </div>
-        {project.description && (
-          <ViewTransition name={`project-description-${project.slug}`}>
-            <p className="text-foreground-lighter text-sm leading-relaxed">
-              {project.description}
-            </p>
-          </ViewTransition>
-        )}
+        <ViewTransition name={`project-description-${project.slug}`}>
+          <p className="text-foreground-lighter text-sm leading-relaxed">
+            {project.description}
+          </p>
+        </ViewTransition>
         {project.tags && project.tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2">
             {project.tags.map((tag) => (

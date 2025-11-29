@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 export type TProject = {
   slug: string;
   title: string;
-  description?: string;
+  description: string;
   image?: string;
   video?: string;
   externalUrl?: string;
@@ -99,6 +99,35 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
           <>
             {projectContent}
             <div className="absolute inset-0 rounded-lg ring-1 ring-black/10 ring-inset dark:ring-white/10" />
+            <div className="absolute right-0 bottom-0 left-0 p-6">
+              <ViewTransition name={`project-title-${project.slug}`}>
+                <h2
+                  className="font-bold text-2xl text-white"
+                  style={{
+                    textShadow:
+                      '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9)',
+                  }}
+                >
+                  {project.title}
+                </h2>
+              </ViewTransition>
+              {project.date && (
+                <ViewTransition name={`project-date-${project.slug}`}>
+                  <p
+                    className="mt-1 text-white text-xs"
+                    style={{
+                      textShadow:
+                        '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9)',
+                    }}
+                  >
+                    {new Intl.DateTimeFormat('en-US', {
+                      month: 'long',
+                      year: 'numeric',
+                    }).format(project.date)}
+                  </p>
+                </ViewTransition>
+              )}
+            </div>
           </>
         )}
       </div>

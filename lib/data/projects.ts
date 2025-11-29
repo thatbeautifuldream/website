@@ -22,6 +22,17 @@ export const PROJECTS: TProject[] = [
     tags: ["Next.js", "React Query", "LLMs", "RAG"],
   },
   {
+    slug: "json-visualizer",
+    title: "JSON Visualizer",
+    description:
+      "Interactive tool for tree/grid visualization of complex JSON, built for dev teams to debug and understand frontend/backend data structures.",
+    externalUrl: "https://jsonvisualiser.com",
+    video: "https://cdn.milind.app/media/projects/json-visualiser.webm",
+    githubUrl: "https://github.com/thatbeautifuldream/json-visualizer",
+    date: new Date("2024-10-01"),
+    tags: ["React", "TypeScript", "D3.js"],
+  },
+  {
     slug: "ai-roadmap-generator",
     title: "AI Roadmap Generator",
     description:
@@ -31,16 +42,5 @@ export const PROJECTS: TProject[] = [
     githubUrl: "https://github.com/thatbeautifuldream/ai-roadmap-generator",
     date: new Date("2024-08-01"),
     tags: ["React", "Next.js", "TypeScript", "Canvas", "LLMs"],
-  },
-  {
-    slug: "json-visualizer",
-    title: "JSON Visualizer",
-    description:
-      "Interactive tool for tree/grid visualization of complex JSON, built for dev teams to debug and understand frontend/backend data structures.",
-    externalUrl: "https://jsonvisualiser.com",
-    video: "https://cdn.milind.app/media/projects/json-visualiser.webm",
-    githubUrl: "https://github.com/thatbeautifuldream/json-visualizer",
-    date: new Date("2024-08-01"),
-    tags: ["React", "TypeScript", "D3.js"],
   },
 ];
