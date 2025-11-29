@@ -84,7 +84,7 @@ export const Navigation = () => {
               </li>
             );
           })}
-          <li>
+          <li className="hidden md:block">
             <button
               className={cn(
                 'relative flex items-center justify-center rounded-lg border-none px-3 py-1.5 font-medium text-xs transition-colors duration-200',
