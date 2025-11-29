@@ -86,7 +86,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
     <Link
       aria-label={project.title}
       className="group relative block outline-none transition-transform duration-200 ease-out hover:scale-[1.025] focus-visible:outline active:scale-100"
-      href={`/projects/${project.slug}`}
+      href={`/project/${project.slug}`}
     >
       <div className={`relative w-full overflow-clip rounded-lg transition-shadow duration-200 ease-out group-hover:shadow-2xl group-active:shadow-none dark:shadow-none ${project.video ? '' : 'aspect-16/10'}`}>
         {children || (
