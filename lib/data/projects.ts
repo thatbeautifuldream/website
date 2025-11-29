@@ -22,6 +22,16 @@ export const PROJECTS: TProject[] = [
     tags: ["Next.js", "React Query", "LLMs", "RAG"],
   },
   {
+    slug: "models-surf",
+    title: "Models Surf",
+    description: "Surf AI models and filter through their capablities!",
+    externalUrl: "https://models.surf",
+    video: "https://cdn.milind.app/media/projects/models-surf.webm",
+    githubUrl: "https://github.com/thatbeautifuldream/models",
+    date: new Date("2025-09-01"),
+    tags: ["Next.js", "Models", "Virtualisation"],
+  },
+  {
     slug: "json-visualizer",
     title: "JSON Visualizer",
     description:

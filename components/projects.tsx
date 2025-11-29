@@ -46,7 +46,9 @@ export const getStripRotation = (slug: string): number => {
   const hash = slug
     .split('')
     .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return -3 + (hash % 7); // Random rotation between -3 and 3 degrees
+  const value = hash % 6;
+  // Map to -3, -2, -1, 1, 2, 3 (skipping 0 to ensure strips are always tilted)
+  return value < 3 ? value - 3 : value - 2;
 };
 
 export const ProjectCard = ({ project, children }: TProjectCardProps) => {
