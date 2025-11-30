@@ -6,6 +6,8 @@ import { Tweet } from 'react-tweet';
 import { DiscordPresence } from './discord-presence';
 import { Features } from './features';
 import { ImageZoom } from './image-zoom';
+import { TalkGrid } from './talks';
+import { TALKS } from '@/lib/data/talks';
 import { Link } from './link';
 import { Mermaid } from './mdx/mermaid';
 import { SpotifyNowPlaying } from './spotify-now-playing';
@@ -187,6 +189,8 @@ const CodeSandbox = ({
   );
 };
 
+const Talks = () => <TalkGrid talks={TALKS} />;
+
 export const Mdx = ({ code }: MdxProperties) => {
   return (
     <MDXContent
@@ -209,6 +213,7 @@ export const Mdx = ({ code }: MdxProperties) => {
         Tweet,
         Timeline,
         Features,
+        Talks,
         YouTubeVideos,
         SpotifyNowPlaying,
         SpotifyTopTracks,
