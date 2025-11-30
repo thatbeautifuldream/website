@@ -32,6 +32,16 @@ export const PROJECTS: TProject[] = [
     tags: ["Next.js", "Models", "Virtualisation"],
   },
   {
+    slug: "resume-app",
+    title: "Resume App",
+    description: "Open source hackable resume that you can chat with!",
+    externalUrl: "https://resume.milind.app",
+    video: "https://cdn.milind.app/media/projects/resume-milind-app.webm",
+    githubUrl: "https://github.com/thatbeautifuldream/resume",
+    date: new Date("2024-08-01"),
+    tags: ["Next.js", "Print Friendly", "AI Chat"],
+  },
+  {
     slug: "json-visualizer",
     title: "JSON Visualizer",
     description:
