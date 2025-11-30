@@ -25,7 +25,7 @@ export const PROJECTS: TProject[] = [
     slug: "saral-admin-dashboard",
     title: "Saral's Admin Dashboard",
     description:
-      "Revamped Saral's old admin dashboard into beautiful looking one, which reduced onboarding and insight delivery time significantly.",
+      "Revamped Saral's old admin dashboard into beautiful looking one maintaining its improved design system, which also reduced onboarding and insight delivery time significantly.",
     video: "https://cdn.milind.app/media/projects/saral-admin-dash-revamp.webm",
     date: new Date("2025-01-01"),
     tags: ["Tanstack Router", "Framer Motion", "Data Aggregation"],
