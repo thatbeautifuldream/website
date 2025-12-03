@@ -4,6 +4,7 @@ import { Maximize, Minimize, RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { ButtonGroup } from '@/components/ui/button-group';
+import { Button } from '@/components/ui/button';
 
 interface SvgPanZoomInstance {
   destroy: () => void;
@@ -409,44 +410,6 @@ export function Mermaid({ chart }: { chart: string }) {
     }
   };
 
-  const controlItems = [
-    {
-      label: <ZoomIn className="size-4" />,
-      value: 'zoomIn',
-      onClick: () => {
-        if (!panzoomRef.current) {
-          return;
-        }
-        panzoomRef.current.zoomIn();
-      },
-    },
-    {
-      label: <RotateCcw className="size-4" />,
-      value: 'reset',
-      onClick: handleReset,
-    },
-    {
-      label: <ZoomOut className="size-4" />,
-      value: 'zoomOut',
-      onClick: () => {
-        if (!panzoomRef.current) {
-          return;
-        }
-        panzoomRef.current.zoomOut();
-      },
-    },
-    {
-      label: isFullscreen ? (
-        <Minimize className="size-4" />
-      ) : (
-        <Maximize className="size-4" />
-      ),
-      value: 'fullscreen',
-      onClick: handleFullscreen,
-      variant: (isFullscreen ? 'default' : 'outline') as 'default' | 'outline',
-    },
-  ];
-
   return (
     <div
       className={`relative w-full overflow-hidden rounded-lg border transition-all duration-150 ${
@@ -477,11 +440,55 @@ export function Mermaid({ chart }: { chart: string }) {
               ? 'border-gray-300 bg-white/90 dark:border-gray-600 dark:bg-gray-800/90'
               : 'border-border/50 bg-background/90'
           }`}
-          items={controlItems}
           orientation="vertical"
-          size="default"
-          variant="ghost"
-        />
+        >
+          <Button
+            onClick={() => {
+              if (!panzoomRef.current) {
+                return;
+              }
+              panzoomRef.current.zoomIn();
+            }}
+            size="default"
+            type="button"
+            variant="ghost"
+          >
+            <ZoomIn className="size-4" />
+          </Button>
+          <Button
+            onClick={handleReset}
+            size="default"
+            type="button"
+            variant="ghost"
+          >
+            <RotateCcw className="size-4" />
+          </Button>
+          <Button
+            onClick={() => {
+              if (!panzoomRef.current) {
+                return;
+              }
+              panzoomRef.current.zoomOut();
+            }}
+            size="default"
+            type="button"
+            variant="ghost"
+          >
+            <ZoomOut className="size-4" />
+          </Button>
+          <Button
+            onClick={handleFullscreen}
+            size="default"
+            type="button"
+            variant={isFullscreen ? 'default' : 'outline'}
+          >
+            {isFullscreen ? (
+              <Minimize className="size-4" />
+            ) : (
+              <Maximize className="size-4" />
+            )}
+          </Button>
+        </ButtonGroup>
       </div>
 
       {/* Mermaid Container */}
