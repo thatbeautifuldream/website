@@ -99,6 +99,15 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
       className="group relative block outline-none transition-transform duration-200 ease-out hover:scale-[1.025] focus-visible:outline active:scale-100"
       href={`/project/${project.slug}`}
     >
+      <div className="sr-only">
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+        {project.tags && project.tags.length > 0 && (
+          <p>Technologies: {project.tags.join(', ')}</p>
+        )}
+        {project.externalUrl && <p>Live: {project.externalUrl}</p>}
+        {project.githubUrl && <p>Source code: {project.githubUrl}</p>}
+      </div>
       <div
         className={cn(
           'relative w-full overflow-clip rounded-lg transition-shadow duration-200 ease-out group-hover:shadow-lg group-active:shadow-none dark:shadow-none',
