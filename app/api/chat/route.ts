@@ -4,6 +4,33 @@ import { convertToModelMessages, streamText, type UIMessage } from "ai";
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+  const origin = req.headers.get("origin");
+  const referer = req.headers.get("referer");
+  const host = req.headers.get("host");
+
+  const allowedOrigins = [
+    `https://${host}`,
+    `http://${host}`,
+    process.env.NEXT_PUBLIC_SITE_URL,
+  ].filter(Boolean);
+
+  const hasValidOrigin = origin ? allowedOrigins.includes(origin) : false;
+  const hasValidReferer = referer
+    ? allowedOrigins.some((allowed) => referer.startsWith(allowed as string))
+    : false;
+
+  const isAllowed = hasValidOrigin || hasValidReferer;
+
+  if (!isAllowed) {
+    return new Response(
+      JSON.stringify({ error: "Forbidden: Cross-origin access not allowed" }),
+      {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
   const {
     messages,
   }: {
