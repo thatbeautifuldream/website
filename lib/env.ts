@@ -20,6 +20,7 @@ export const env = createEnv({
       ),
     CLARITY_API_TOKEN: z.string().min(1),
     API_AUTH_TOKEN: z.string().min(1),
+    OPENAI_API_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_CLARITY_ID: z.string().min(1),
@@ -33,6 +34,7 @@ export const env = createEnv({
     SERVER_URL: process.env.SERVER_URL,
     CLARITY_API_TOKEN: process.env.CLARITY_API_TOKEN,
     API_AUTH_TOKEN: process.env.API_AUTH_TOKEN,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     NEXT_PUBLIC_CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID,
   },
 });

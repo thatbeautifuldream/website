@@ -1,92 +1,83 @@
-import type { ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
-interface ButtonGroupItem {
-    label: string | ReactNode;
-    value?: string;
-    onClick?: () => void;
-    disabled?: boolean;
-    variant?:
-    | 'default'
-    | 'secondary'
-    | 'destructive'
-    | 'outline'
-    | 'ghost'
-    | 'link';
+import { cn } from "@/lib/utils"
+import { Separator } from "@/components/ui/separator"
+
+const buttonGroupVariants = cva(
+  "flex w-fit items-stretch [&>*]:focus-visible:z-10 [&>*]:focus-visible:relative [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-md has-[>[data-slot=button-group]]:gap-2",
+  {
+    variants: {
+      orientation: {
+        horizontal:
+          "[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none",
+        vertical:
+          "flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none",
+      },
+    },
+    defaultVariants: {
+      orientation: "horizontal",
+    },
+  }
+)
+
+function ButtonGroup({
+  className,
+  orientation,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
+  return (
+    <div
+      role="group"
+      data-slot="button-group"
+      data-orientation={orientation}
+      className={cn(buttonGroupVariants({ orientation }), className)}
+      {...props}
+    />
+  )
 }
 
-interface ButtonGroupProps {
-    items: ButtonGroupItem[];
-    orientation?: 'horizontal' | 'vertical';
-    className?: string;
-    size?: 'sm' | 'default' | 'lg';
-    variant?:
-    | 'default'
-    | 'secondary'
-    | 'destructive'
-    | 'outline'
-    | 'ghost'
-    | 'link';
-    onItemClick?: (item: ButtonGroupItem, index: number) => void;
+function ButtonGroupText({
+  className,
+  asChild = false,
+  ...props
+}: React.ComponentProps<"div"> & {
+  asChild?: boolean
+}) {
+  const Comp = asChild ? Slot : "div"
+
+  return (
+    <Comp
+      className={cn(
+        "bg-muted flex items-center gap-2 rounded-md border px-4 text-sm font-medium shadow-xs [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
-const ButtonGroup = ({
-    items,
-    orientation = 'horizontal',
-    className,
-    size = 'default',
-    variant = 'default',
-    onItemClick,
-}: ButtonGroupProps) => {
-    const isHorizontal = orientation === 'horizontal';
+function ButtonGroupSeparator({
+  className,
+  orientation = "vertical",
+  ...props
+}: React.ComponentProps<typeof Separator>) {
+  return (
+    <Separator
+      data-slot="button-group-separator"
+      orientation={orientation}
+      className={cn(
+        "bg-input relative !m-0 self-stretch data-[orientation=vertical]:h-auto",
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
-    const handleItemClick = (item: ButtonGroupItem, index: number) => {
-        if (item.onClick) {
-            item.onClick();
-        }
-        if (onItemClick) {
-            onItemClick(item, index);
-        }
-    };
-
-    return (
-        <div
-            className={cn(
-                'inline-flex',
-                isHorizontal ? 'flex-row' : 'flex-col',
-                'rounded-md',
-                'border border-input',
-                'overflow-hidden',
-                className
-            )}
-        >
-            {items.map((item, index) => {
-                const isLast = index === items.length - 1;
-
-                return (
-                    <Button
-                        className={cn(
-                            'relative rounded-none border-0',
-                            // Horizontal orientation styling
-                            isHorizontal && !isLast && 'border-input border-r',
-                            // Vertical orientation styling
-                            !(isHorizontal || isLast) && 'border-input border-b',
-                            // Hover styling
-                            'hover:z-10'
-                        )}
-                        disabled={item.disabled}
-                        key={item.value || index}
-                        onClick={() => handleItemClick(item, index)}
-                        size={size}
-                        variant={item.variant || variant}
-                    >
-                        {item.label}
-                    </Button>
-                );
-            })}
-        </div>
-    );
-};
-
-export default ButtonGroup;
+export {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+  buttonGroupVariants,
+}
