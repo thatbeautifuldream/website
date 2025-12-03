@@ -31,16 +31,6 @@ export const PROJECTS: TProject[] = [
     tags: ["Tanstack Router", "Framer Motion", "Data Aggregation"],
   },
   {
-    slug: "live-proof-of-skill",
-    title: "Proof of Skill Protocol's Live Actions",
-    description:
-      "Lifetime actions on proof of skill protocol dashboard with admin access.",
-    externalUrl: "https://live.proofofskill.org",
-    video: "https://cdn.milind.app/media/projects/live-proof-of-skill.webm",
-    date: new Date("2024-11-01"),
-    tags: ["Next.js", "List Virtualisation", "Framer Motion"],
-  },
-  {
     slug: "models-surf",
     title: "Models Surf",
     description: "Surf AI models and filter through their capablities!",
