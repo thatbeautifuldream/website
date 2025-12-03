@@ -7,6 +7,13 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from '@/components/ai-elements/conversation';
+
+const SUGGESTED_PROMPTS = [
+  "Tell me about Milind's experience",
+  "What projects has Milind worked on?",
+  "What are Milind's technical skills?",
+  "How can I contact Milind?",
+];
 import { Loader } from '@/components/ai-elements/loader';
 import {
   Message,
@@ -56,6 +63,30 @@ const ChatBotDemo = () => {
       <div className="flex h-full flex-col">
         <Conversation className="h-full">
           <ConversationContent>
+            {messages.length === 0 && (
+              <div className="flex h-full items-center justify-center">
+                <div className="mx-auto max-w-2xl text-center">
+                  <h2 className="mb-2 font-semibold text-2xl">
+                    Hi, I'm Milind's AI Assistant
+                  </h2>
+                  <p className="mb-6 text-muted-foreground">
+                    Ask me anything about Milind's work, experience, or projects
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-2">
+                    {SUGGESTED_PROMPTS.map((prompt) => (
+                      <button
+                        className="cursor-pointer rounded-full border border-border bg-secondary/50 px-4 py-2 text-sm transition-colors hover:bg-secondary"
+                        key={prompt}
+                        onClick={() => setInput(prompt)}
+                        type="button"
+                      >
+                        {prompt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
             {messages.map((message) => (
               <div key={message.id}>
                 {message.role === 'assistant' &&
