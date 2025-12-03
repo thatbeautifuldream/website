@@ -2,13 +2,17 @@
 
 import { Moon, Sun } from 'lucide-react';
 import { motion } from 'motion/react';
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
+const HIDE_THEME_SWITCHER_ON_PAGES = ['/chat'];
+
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const currentPath = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -35,10 +39,14 @@ export function ThemeSwitcher() {
     setTheme(themeKey);
   };
 
+  if (HIDE_THEME_SWITCHER_ON_PAGES.includes(currentPath)) {
+    return null;
+  }
+
   return (
     <div
       className={cn(
-        'fixed right-5 bottom-4 flex h-7 rounded-full p-0.5 ring-1 ring-border transition-all bg-secondary/80',
+        'fixed right-5 bottom-4 flex h-7 rounded-full bg-secondary/80 p-0.5 ring-1 ring-border transition-all',
         'max-w-[100px]',
         theme === 'light' && 'justify-start',
         theme === 'dark' && 'justify-end'
@@ -57,7 +65,7 @@ export function ThemeSwitcher() {
           >
             {isActive && (
               <motion.div
-                className="absolute inset-0 rounded-full bg-secondary border border-border/80"
+                className="absolute inset-0 rounded-full border border-border/80 bg-secondary"
                 layoutId="activeTheme"
                 transition={{ type: 'spring', duration: 0.5 }}
               />

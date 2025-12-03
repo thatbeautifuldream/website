@@ -52,7 +52,7 @@ const ChatBotDemo = () => {
     setInput('');
   };
   return (
-    <div className="relative mx-auto size-full h-[86vh] max-w-4xl">
+    <div className="relative mx-auto size-full h-[83dvh] max-w-4xl sm:h-[85dvh]">
       <div className="flex h-full flex-col">
         <Conversation className="h-full">
           <ConversationContent>
