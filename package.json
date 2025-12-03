@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"content-collections watch\" \"cross-env NODE_OPTIONS=--no-deprecation next dev\"",
-    "build": "content-collections build && cross-env NODE_OPTIONS=--no-deprecation next build",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "dev": "concurrently \"content-collections watch\" \"cross-env next dev\"",
+    "build": "content-collections build && cross-env next build",
+    "start": "next start",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
