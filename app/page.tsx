@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { ImageZoom } from '@/components/image-zoom';
 import { ProjectGrid } from '@/components/projects';
 import { Section } from '@/components/section';
+import { SpotifyNowPlaying } from '@/components/spotify-now-playing';
 import { PROJECTS } from '@/lib/data/projects';
 import { createMetadata } from '@/lib/metadata';
 
@@ -43,6 +44,10 @@ const HomePage = () => (
           <a href="https://getmerlin.in/chat">Merlin AI</a>.
         </p>
       </div>
+    </Section>
+
+    <Section delay={0.2}>
+      <SpotifyNowPlaying />
     </Section>
 
     <Section delay={0.3}>
