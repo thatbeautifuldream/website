@@ -1,9 +1,9 @@
 import { allPages } from 'content-collections';
 import type { Metadata } from 'next';
+import { FlippingSubtext } from '@/components/flipping-subtext';
 import { ImageZoom } from '@/components/image-zoom';
 import { ProjectGrid } from '@/components/projects';
 import { Section } from '@/components/section';
-import { SpotifyNowPlaying } from '@/components/spotify-now-playing';
 import { PROJECTS } from '@/lib/data/projects';
 import { createMetadata } from '@/lib/metadata';
 
@@ -39,15 +39,8 @@ const HomePage = () => (
         <p className="font-medium text-foreground leading-normal">
           Milind Mishra
         </p>
-        <p className="text-foreground-lighter text-sm leading-normal">
-          Product Engineer, currently at{' '}
-          <a href="https://getmerlin.in/chat">Merlin AI</a>.
-        </p>
+        <FlippingSubtext />
       </div>
-    </Section>
-
-    <Section delay={0.2}>
-      <SpotifyNowPlaying />
     </Section>
 
     <Section delay={0.3}>

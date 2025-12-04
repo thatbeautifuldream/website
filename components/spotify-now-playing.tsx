@@ -1,22 +1,14 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import {
-  AnnoyedIcon,
-  ExternalLinkIcon,
-  FileMusicIcon,
-  Music,
-} from 'lucide-react';
+import { AnnoyedIcon, ExternalLinkIcon, Music } from 'lucide-react';
 import { motion } from 'motion/react';
-import { usePathname } from 'next/navigation';
 import { orpc } from '@/lib/orpc';
 import { ImageZoom } from './image-zoom';
 import { Link } from './link';
 import { Section } from './section';
 
 export function SpotifyNowPlaying() {
-  const currentPath = usePathname();
-  const isHomepage = currentPath === '/';
   const {
     data: spotifyData,
     isLoading,
@@ -85,7 +77,7 @@ export function SpotifyNowPlaying() {
           <div className="flex-1 space-y-1">
             <Link
               className="line-clamp-1 font-medium text-foreground text-sm transition-colors hover:text-foreground-light"
-              href={isHomepage ? '/spotify' : track.url}
+              href={track.url}
             >
               {track.name}
             </Link>
@@ -96,7 +88,7 @@ export function SpotifyNowPlaying() {
                 <span key={artist.name}>
                   <Link
                     className="hover:text-foreground-light"
-                    href={isHomepage ? '/spotify' : artist.url}
+                    href={artist.url}
                   >
                     {artist.name}
                   </Link>
@@ -112,14 +104,10 @@ export function SpotifyNowPlaying() {
 
           <Link
             className="flex items-center gap-1 text-foreground-lighter text-xs transition-colors hover:text-foreground-light"
-            href={isHomepage ? '/spotify' : track.url}
+            href={track.url}
           >
-            {isHomepage ? (
-              <FileMusicIcon className="size-3" />
-            ) : (
-              <ExternalLinkIcon className="size-3" />
-            )}
-            <span>{isHomepage ? 'Show more' : 'Spotify'}</span>
+            <ExternalLinkIcon className="size-3" />
+            <span>Spotify</span>
           </Link>
         </div>
       </Section>
