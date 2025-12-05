@@ -41,6 +41,16 @@ export const PROJECTS: TProject[] = [
     tags: ["Next.js", "Models", "Virtualisation"],
   },
   {
+    slug: "rizzboard",
+    title: "Rizzboard (Meme Sounds)",
+    description: "A soundboard with meme sounds. Tap to play, and most used sounds will float to the top!",
+    externalUrl: "https://rizzboard.milind.app",
+    video: "https://cdn.milind.app/media/projects/rizzboard.webm",
+    githubUrl: "https://github.com/thatbeautifuldream/rizzboard",
+    date: new Date("2025-08-01"),
+    tags: ["Next.js", "Framer Motion", "useSound", "Zustand"],
+  },
+  {
     slug: "resume-app",
     title: "Resume App",
     description: "Open source hackable resume that you can chat with!",
