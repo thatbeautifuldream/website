@@ -42,7 +42,7 @@ export const PROJECTS: TProject[] = [
   },
   {
     slug: "rizzboard",
-    title: "Rizzboard (Meme Sounds)",
+    title: "Rizzboard (Meme Soundboard)",
     description: "A soundboard with meme sounds. Tap to play, and most used sounds will float to the top!",
     externalUrl: "https://rizzboard.milind.app",
     video: "https://cdn.milind.app/media/projects/rizzboard.webm",
