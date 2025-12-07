@@ -41,6 +41,16 @@ export const PROJECTS: TProject[] = [
     tags: ["Next.js", "Models", "Virtualisation"],
   },
   {
+    slug: "typescript-playground",
+    title: "TypeScript Playground",
+    description: "A modern, browser-based TypeScript and JavaScript playground with real-time execution and console output.",
+    externalUrl: "https://ts.milind.app",
+    video: "https://cdn.milind.app/media/projects/typescript-playground.webm",
+    githubUrl: "https://github.com/thatbeautifuldream/playground",
+    date: new Date("2025-08-01"),
+    tags: ["Next.js", "Code Sandboxing", "Typescript Compiler API"],
+  },
+  {
     slug: "rizzboard",
     title: "Rizzboard (Meme Soundboard)",
     description: "A soundboard with meme sounds. Tap to play, and most used sounds will float to the top!",
