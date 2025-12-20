@@ -35,20 +35,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       className={cn(
-        sans.geist.variable,
+        sans.googleSansFlex.variable,
         mono.geistMono.variable,
         serif.instrumentSerif.variable
       )}
       lang="en"
       suppressHydrationWarning
     >
-      <head>
-        <script
-          async
-          crossOrigin="anonymous"
-          src="https://tweakcn.com/live-preview.min.js"
-        />
-      </head>
       <body
         className={cn('bg-background font-sans leading-relaxed antialiased')}
       >
