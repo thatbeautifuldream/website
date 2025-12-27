@@ -1,4 +1,5 @@
 import type { TProject } from "@/components/projects";
+import { CASE_STUDIES } from "./case-studies";
 
 export const PROJECTS: TProject[] = [
   {
@@ -9,6 +10,7 @@ export const PROJECTS: TProject[] = [
     externalUrl: "https://www.thine.com",
     video: "https://cdn.milind.app/media/projects/thine.webm",
     date: new Date("2025-11-01"),
+    caseStudy: JSON.stringify(CASE_STUDIES["thine-landing"].markdown),
     tags: ["Tanstack Start", "Tailwind CSS", "Framer Motion", "CSS Animation"],
   },
   {
@@ -43,7 +45,8 @@ export const PROJECTS: TProject[] = [
   {
     slug: "typescript-playground",
     title: "TypeScript Playground",
-    description: "A modern, browser-based TypeScript and JavaScript playground with real-time execution and console output.",
+    description:
+      "A modern, browser-based TypeScript and JavaScript playground with real-time execution and console output.",
     externalUrl: "https://ts.milind.app",
     video: "https://cdn.milind.app/media/projects/typescript-playground.webm",
     githubUrl: "https://github.com/thatbeautifuldream/playground",
@@ -53,7 +56,8 @@ export const PROJECTS: TProject[] = [
   {
     slug: "rizzboard",
     title: "Rizzboard (Meme Soundboard)",
-    description: "A soundboard with meme sounds. Tap to play, and most used sounds will float to the top!",
+    description:
+      "A soundboard with meme sounds. Tap to play, and most used sounds will float to the top!",
     externalUrl: "https://rizzboard.milind.app",
     video: "https://cdn.milind.app/media/projects/rizzboard.webm",
     githubUrl: "https://github.com/thatbeautifuldream/rizzboard",

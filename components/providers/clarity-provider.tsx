@@ -4,7 +4,7 @@ import clarity from '@microsoft/clarity';
 import { useEffect } from 'react';
 import { env } from '@/lib/env';
 
-export default function ClarityInit() {
+export function ClarityProvider() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       clarity.init(env.NEXT_PUBLIC_CLARITY_ID);

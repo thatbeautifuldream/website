@@ -4,13 +4,13 @@ import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
-import { Background } from '@/components/background';
-import ClarityInit from '@/components/clarity-init';
 import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 import { Navigation } from '@/components/navigation';
+// import { Background } from '@/components/background';
+import { ClarityProvider } from '@/components/providers/clarity-provider';
 import { CommandPaletteProvider } from '@/components/providers/command-palette-provider';
 import { LevaProvider } from '@/components/providers/leva-provider';
 import { QueryClientProviderWrapper } from '@/components/providers/query-client-provider';
@@ -61,12 +61,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 </div>
               </LayoutWrapper>
             </CommandPaletteProvider>
-            <Background />
+            {/* <Background /> */}
             <Toaster />
             <ThemeSwitcher />
             <JsonLd />
             <LayoutDebug />
-            <ClarityInit />
+            <ClarityProvider />
             <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
             <Analytics />
             <LevaProvider />

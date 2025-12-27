@@ -16,6 +16,7 @@ export type TProject = {
   githubUrl?: string;
   date?: Date;
   tags?: string[];
+  caseStudy?: string;
 };
 
 type TProjectCardProps = {

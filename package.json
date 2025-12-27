@@ -72,6 +72,7 @@
     "schema-dts": "^1.1.5",
     "sharp": "^0.34.5",
     "sonner": "^2.0.7",
+    "streamdown": "^1.6.10",
     "svg-pan-zoom": "^3.6.2",
     "tailwind-merge": "^3.4.0",
     "use-lanyard": "^1.7.0",

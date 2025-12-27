@@ -3,6 +3,7 @@
 import { ArrowLeftToLineIcon, GithubIcon } from 'lucide-react';
 import Image from 'next/image';
 import { ViewTransition } from 'react';
+import { Streamdown } from 'streamdown';
 import { Link } from '@/components/link';
 import { getStripRotation, type TProject } from '@/components/projects';
 import { Section } from '@/components/section';
@@ -125,7 +126,7 @@ export function ProjectContent({ project }: TProjectContentProperties) {
           </div>
         </div>
         <ViewTransition name={`project-description-${project.slug}`}>
-          <p className="text-foreground-lighter text-sm leading-relaxed">
+          <p className="mt-6 text-foreground-lighter text-sm leading-relaxed">
             {project.description}
           </p>
         </ViewTransition>
@@ -133,7 +134,7 @@ export function ProjectContent({ project }: TProjectContentProperties) {
           <div className="mt-2 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <code
-                className="whitespace-nowrap rounded-md bg-secondary px-3 py-1 text-xs"
+                className="whitespace-nowrap rounded-md border bg-secondary/40 px-3 py-1 text-xs"
                 key={tag}
               >
                 {tag}
@@ -165,11 +166,17 @@ export function ProjectContent({ project }: TProjectContentProperties) {
                 alt={project.title}
                 className="w-full overflow-hidden rounded-lg border border-border/50"
                 height={600}
+                // biome-ignore lint/style/noNonNullAssertion: fallback
                 src={project.image!}
                 width={800}
               />
             )}
           </ViewTransition>
+        </Section>
+      ) : null}
+      {project.caseStudy ? (
+        <Section>
+          <Streamdown>{JSON.parse(project.caseStudy)}</Streamdown>
         </Section>
       ) : null}
     </>
