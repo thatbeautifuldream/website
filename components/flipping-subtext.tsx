@@ -30,7 +30,7 @@ export function FlippingSubtext() {
   return (
     <div className="relative h-5 overflow-hidden">
       <motion.div
-        animate={{ y: isPlaying ? -20 : 0 }}
+        animate={{ y: isPlaying ? -24 : 0 }}
         transition={{
           duration: 0.6,
           ease: [0.25, 0.46, 0.45, 0.94],
@@ -38,14 +38,14 @@ export function FlippingSubtext() {
           delay: isPlaying ? 3 : 0,
         }}
       >
-        <p className="h-5 text-foreground-lighter text-sm leading-normal">
+        <p className="h-6 text-foreground-lighter text-sm leading-normal">
           Product Engineer, currently at{' '}
           <a href="https://getmerlin.in/chat">Merlin AI</a>.
         </p>
       </motion.div>
 
       <motion.div
-        animate={{ y: isPlaying ? -20 : 0 }}
+        animate={{ y: isPlaying ? -24 : 0 }}
         transition={{
           duration: 0.6,
           ease: [0.25, 0.46, 0.45, 0.94],
@@ -53,7 +53,7 @@ export function FlippingSubtext() {
           delay: isPlaying ? 3 : 0,
         }}
       >
-        <p className="h-5 text-foreground-lighter text-sm leading-normal">
+        <p className="h-6 text-foreground-lighter text-sm leading-normal">
           <span className="text-green-500">♫</span>{' '}
           <Link
             className="transition-colors hover:text-foreground"
