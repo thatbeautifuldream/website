@@ -10,7 +10,7 @@ export const metadata: Metadata = createMetadata({
   image: `/og?title=${encodeURIComponent('Portfolio Stats 2025')}&description=${encodeURIComponent('Portfolio repository statistics for 2025')}`,
 });
 
-const WITTY_MESSSAGES = [
+const WITTY_MESSAGES = [
   {
     title: 'Portfolio Evolution',
     message: 'Continuously improving and evolving the personal website.',
@@ -68,7 +68,7 @@ function CommitTypeBar({
   total: number;
   delay?: number;
 }) {
-  const percentage = ((count / total) * 100).toFixed(1);
+  const percentageNumber = total > 0 ? (count / total) * 100 : 0;
 
   return (
     <Section className="space-y-2" delay={delay}>
@@ -84,10 +84,10 @@ function CommitTypeBar({
       <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
         <div
           className="h-full rounded-full bg-primary transition-all duration-500"
-          style={{ width: `${percentage}%` }}
+          style={{ width: `${percentageNumber.toFixed(1)}%` }}
         />
       </div>
-      <p className="text-muted-foreground text-xs">{percentage}% of total</p>
+      <p className="text-muted-foreground text-xs">{percentageNumber.toFixed(1)}% of total</p>
     </Section>
   );
 }
@@ -135,7 +135,7 @@ const WrappedPage = () => {
     1
   );
   const randomMessage =
-    WITTY_MESSSAGES[Math.floor(Math.random() * WITTY_MESSSAGES.length)];
+    WITTY_MESSAGES[Math.floor(Math.random() * WITTY_MESSAGES.length)];
 
   return (
     <>
