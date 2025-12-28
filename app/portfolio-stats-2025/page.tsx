@@ -1,16 +1,3 @@
-import {
-  BarChart3Icon,
-  Code2Icon,
-  FileTextIcon,
-  FlameIcon,
-  GitCommitIcon,
-  KeyboardIcon,
-  MusicIcon,
-  PaletteIcon,
-  RocketIcon,
-  SparklesIcon,
-  TrophyIcon,
-} from 'lucide-react';
 import type { Metadata } from 'next';
 import { Section } from '@/components/section';
 import { WRAPPED_2025_STATS, WRAPPED_HIGHLIGHTS } from '@/lib/data/wrapped';
@@ -18,58 +5,37 @@ import { createMetadata } from '@/lib/metadata';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = createMetadata({
-  title: 'Milind Wrapped 2025',
-  description: 'A year in review of Milind Mishra coding journey in 2025',
-  image: `/og?title=${encodeURIComponent('Milind Wrapped 2025')}&description=${encodeURIComponent('A year in review of 2025')}`,
+  title: 'Portfolio Stats 2025',
+  description: 'Git statistics and highlights from the portfolio repository in 2025',
+  image: `/og?title=${encodeURIComponent('Portfolio Stats 2025')}&description=${encodeURIComponent('Portfolio repository statistics for 2025')}`,
 });
 
 const WITTY_MESSSAGES = [
   {
-    title: 'Code Commit Champion',
-    message: 'More commits than some people have thoughts in a day!',
+    title: 'Portfolio Evolution',
+    message: 'Continuously improving and evolving the personal website.',
   },
   {
-    title: 'Feature Factory',
-    message: "Shipping features like it's a pizza delivery service.",
+    title: 'Iterative Development',
+    message: "Building better experiences, one commit at a time.",
   },
   {
-    title: 'Bug Slayer',
-    message: 'Fixing bugs with surgical precision (and some duct tape).',
+    title: 'Personal Project',
+    message: 'A space for learning, experimenting, and showcasing work.',
   },
   {
-    title: 'Full Stack Warrior',
-    message: "Frontend, backend, database - you name it, I've done it.",
+    title: 'Always Building',
+    message: 'Consistently adding features and refining the portfolio.',
   },
 ];
 
-function getHighlightIcon(iconName: string) {
-  switch (iconName) {
-    case 'palette':
-      return PaletteIcon;
-    case 'keyboard':
-      return KeyboardIcon;
-    case 'music':
-      return MusicIcon;
-    case 'chart':
-      return BarChart3Icon;
-    case 'file':
-      return FileTextIcon;
-    case 'sparkles':
-      return SparklesIcon;
-    default:
-      return SparklesIcon;
-  }
-}
-
 function StatCard({
-  icon: Icon,
   title,
   value,
   description,
   delay,
   className,
 }: {
-  icon: React.ElementType;
   title: string;
   value: string | number;
   description: string;
@@ -79,12 +45,6 @@ function StatCard({
   return (
     <Section className={cn('flex h-full flex-col', className)} delay={delay}>
       <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:bg-accent/5">
-        <div className="mb-3 flex shrink-0 items-start justify-between">
-          <Icon className="h-5 w-5 text-muted-foreground" />
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
-            <Icon className="h-4 w-4 text-primary" />
-          </div>
-        </div>
         <h3 className="shrink-0 font-medium text-foreground-lighter text-xs uppercase tracking-wider">
           {title}
         </h3>
@@ -101,13 +61,11 @@ function CommitTypeBar({
   type,
   count,
   total,
-  color,
   delay,
 }: {
   type: string;
   count: number;
   total: number;
-  color: string;
   delay?: number;
 }) {
   const percentage = ((count / total) * 100).toFixed(1);
@@ -116,7 +74,7 @@ function CommitTypeBar({
     <Section className="space-y-2" delay={delay}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className={cn('h-3 w-3 rounded-full', color)} />
+          <div className="h-3 w-3 rounded-full bg-primary" />
           <span className="font-medium text-foreground text-sm capitalize">
             {type}
           </span>
@@ -125,10 +83,7 @@ function CommitTypeBar({
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
         <div
-          className={cn(
-            'h-full rounded-full transition-all duration-500',
-            color
-          )}
+          className="h-full rounded-full bg-primary transition-all duration-500"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -154,13 +109,19 @@ function MonthBar({
   return (
     <Section className="flex flex-col items-center gap-2" delay={delay}>
       <div className="flex h-40 w-full items-end justify-center">
-        <div
-          className="w-full max-w-[3rem] rounded-t-lg bg-primary transition-all duration-500 hover:bg-primary/80"
-          style={{ height: `${height}%` }}
-        />
+        {count > 0 ? (
+          <div
+            className="w-full max-w-[3rem] rounded-t-lg bg-primary transition-all duration-500 hover:bg-primary/80"
+            style={{ height: `${height}%` }}
+          />
+        ) : (
+          <div className="w-full max-w-[3rem] border-t-2 border-dashed border-border" />
+        )}
       </div>
       <div className="text-center">
-        <p className="font-medium text-foreground text-sm">{count}</p>
+        <p className="font-medium text-foreground text-sm">
+          {count > 0 ? count : '-'}
+        </p>
         <p className="text-muted-foreground text-xs">{month.substring(0, 3)}</p>
       </div>
     </Section>
@@ -176,29 +137,16 @@ const WrappedPage = () => {
   const randomMessage =
     WITTY_MESSSAGES[Math.floor(Math.random() * WITTY_MESSSAGES.length)];
 
-  const COLORS = {
-    feat: 'bg-primary',
-    fix: 'bg-destructive',
-    refactor: 'bg-accent',
-    chore: 'bg-secondary',
-    other: 'bg-muted-foreground',
-  };
-
   return (
     <>
       <Section className="gap-0">
-        <div className="mb-8 flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-primary/10">
-            <SparklesIcon className="h-8 w-8 text-primary" />
-          </div>
-          <div>
-            <h1 className="font-bold text-4xl text-foreground">
-              Milind Wrapped 2025
-            </h1>
-            <p className="text-muted-foreground">
-              A year in review of code & creativity
-            </p>
-          </div>
+        <div className="mb-8">
+          <h1 className="font-bold text-4xl text-foreground">
+            Portfolio Stats 2025
+          </h1>
+          <p className="text-muted-foreground">
+            Git statistics and highlights from the portfolio repository
+          </p>
         </div>
 
         <div className="my-6 rounded-lg border border-border bg-accent/5 p-4">
@@ -217,29 +165,25 @@ const WrappedPage = () => {
         <div className="grid gap-4 sm:grid-cols-2">
           <StatCard
             delay={0.25}
-            description="Pushed to git this year"
-            icon={GitCommitIcon}
+            description="Commits to the portfolio repository"
             title="Total Commits"
             value={stats.totalCommits}
           />
           <StatCard
             delay={0.3}
-            description="Fresh code written"
-            icon={Code2Icon}
+            description="Lines added to the portfolio"
             title="Lines Added"
             value={stats.linesAdded.toLocaleString()}
           />
           <StatCard
             delay={0.35}
-            description="New things built"
-            icon={TrophyIcon}
+            description="New portfolio features shipped"
             title="Features Shipped"
             value={stats.featCommits}
           />
           <StatCard
             delay={0.4}
-            description="Total lines modified"
-            icon={FlameIcon}
+            description="Total lines changed in portfolio"
             title="Code Changes"
             value={stats.totalChanges.toLocaleString()}
           />
@@ -281,35 +225,30 @@ const WrappedPage = () => {
         </h2>
         <div className="space-y-4 rounded-lg border border-border bg-card p-6">
           <CommitTypeBar
-            color={COLORS.feat}
             count={stats.featCommits}
             delay={0.75}
             total={stats.totalCommits}
             type="features"
           />
           <CommitTypeBar
-            color={COLORS.fix}
             count={stats.fixCommits}
             delay={0.8}
             total={stats.totalCommits}
             type="fixes"
           />
           <CommitTypeBar
-            color={COLORS.refactor}
             count={stats.refactorCommits}
             delay={0.85}
             total={stats.totalCommits}
             type="refactors"
           />
           <CommitTypeBar
-            color={COLORS.chore}
             count={stats.choreCommits}
             delay={0.9}
             total={stats.totalCommits}
             type="chores"
           />
           <CommitTypeBar
-            color={COLORS.other}
             count={stats.otherCommits}
             delay={0.95}
             total={stats.totalCommits}
@@ -320,49 +259,43 @@ const WrappedPage = () => {
 
       <Section delay={1.1}>
         <h2 className="mb-4 font-bold text-foreground text-xl">
-          Year Highlights
+          Portfolio Highlights
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {WRAPPED_HIGHLIGHTS.map((highlight, index) => {
-            const Icon = getHighlightIcon(highlight.icon);
-            return (
-              <Section
-                className="flex h-full flex-col rounded-lg border border-border bg-card p-5 transition-colors hover:bg-accent/5"
-                delay={1.15 + index * 0.05}
-                key={highlight.title}
-              >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  <Icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="mb-2 shrink-0 font-semibold text-foreground text-sm">
-                  {highlight.title}
-                </h3>
-                <p className="line-clamp-3 text-muted-foreground text-xs">
-                  {highlight.description}
-                </p>
-              </Section>
-            );
-          })}
+          {WRAPPED_HIGHLIGHTS.map((highlight, index) => (
+            <Section
+              className="flex h-full flex-col rounded-lg border border-border bg-card p-5 transition-colors hover:bg-accent/5"
+              delay={1.15 + index * 0.05}
+              key={highlight.title}
+            >
+              <h3 className="mb-2 shrink-0 font-semibold text-foreground text-sm">
+                {highlight.title}
+              </h3>
+              <p className="line-clamp-3 text-muted-foreground text-xs">
+                {highlight.description}
+              </p>
+            </Section>
+          ))}
         </div>
       </Section>
 
       <Section delay={1.5}>
-        <h2 className="mb-4 font-bold text-foreground text-xl">Fun Facts</h2>
+        <h2 className="mb-4 font-bold text-foreground text-xl">Portfolio Insights</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
             <p className="mb-2 shrink-0 text-muted-foreground text-xs uppercase">
-              Most Productive Day
+              Most Active Day
             </p>
             <p className="shrink-0 font-semibold text-foreground text-lg">
               {stats.mostActiveDate || 'N/A'}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
-              The day with most commits
+              Day with the most portfolio commits
             </p>
           </div>
           <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
             <p className="mb-2 shrink-0 text-muted-foreground text-xs uppercase">
-              Code Efficiency
+              Code Growth
             </p>
             <p className="shrink-0 font-semibold text-foreground text-lg">
               {(
@@ -373,7 +306,7 @@ const WrappedPage = () => {
               %
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
-              Net code growth rate
+              Net portfolio code growth rate
             </p>
           </div>
           <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
@@ -384,7 +317,7 @@ const WrappedPage = () => {
               {(stats.totalCommits / 365).toFixed(1)}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
-              Daily commitment level
+              Daily portfolio development pace
             </p>
           </div>
           <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
@@ -395,7 +328,7 @@ const WrappedPage = () => {
               {(stats.totalChanges / (stats.totalCommits || 1)).toFixed(0)}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
-              Average impact per commit
+              Average changes per portfolio commit
             </p>
           </div>
         </div>
@@ -403,15 +336,11 @@ const WrappedPage = () => {
 
       <Section delay={1.7}>
         <div className="rounded-lg border border-border bg-accent/5 p-6 text-center">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <RocketIcon className="h-6 w-6 text-primary" />
-            <p className="font-bold text-foreground text-xl">
-              Here's to an even better 2026!
-            </p>
-            <RocketIcon className="h-6 w-6 text-primary" />
-          </div>
+          <p className="mb-4 font-bold text-foreground text-xl">
+            Here's to an even better portfolio in 2026!
+          </p>
           <p className="text-muted-foreground text-sm">
-            Keep building, keep shipping, keep growing
+            Keep building, keep shipping, keep improving
           </p>
         </div>
       </Section>
