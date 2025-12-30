@@ -18,8 +18,56 @@ export const instrumentSerif = Instrument_Serif({
 });
 
 export const googleSansFlex = localFont({
-  src: "../public/font/GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf",
+  src: [
+    {
+      path: "../public/font/GoogleSansFlex_24pt-Thin.woff2",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-ExtraLight.woff2",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-ExtraBold.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/font/GoogleSansFlex_24pt-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
   variable: "--font-google-sans-flex",
+  display: "swap",
+  preload: true,
 });
 
 export const sans = {
