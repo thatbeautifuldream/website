@@ -45,11 +45,11 @@ function StatCard({
   return (
     <Section className={cn('flex h-full flex-col', className)} delay={delay}>
       <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:bg-accent/5">
-        <h3 className="shrink-0 font-medium text-foreground-lighter text-xs uppercase tracking-wider">
+        <h3 className="shrink-0 text-foreground-lighter text-xs uppercase tracking-wider">
           {title}
         </h3>
         <div className="mt-2 flex shrink-0 items-baseline gap-2">
-          <p className="font-bold text-3xl text-foreground">{value}</p>
+          <p className="text-2xl text-foreground">{value}</p>
         </div>
         <p className="mt-1 text-muted-foreground text-xs">{description}</p>
       </div>
@@ -75,7 +75,7 @@ function CommitTypeBar({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="h-3 w-3 rounded-full bg-primary" />
-          <span className="font-medium text-foreground text-sm capitalize">
+          <span className="text-foreground text-sm capitalize">
             {type}
           </span>
         </div>
@@ -119,7 +119,7 @@ function MonthBar({
         )}
       </div>
       <div className="text-center">
-        <p className="font-medium text-foreground text-sm">
+        <p className="text-foreground text-sm">
           {count > 0 ? count : '-'}
         </p>
         <p className="text-muted-foreground text-xs">{month.substring(0, 3)}</p>
@@ -141,17 +141,17 @@ const WrappedPage = () => {
     <>
       <Section className="gap-0">
         <div className="mb-8">
-          <h1 className="font-bold text-4xl text-foreground">
+          <h1>
             Portfolio Stats 2025
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-foreground-lighter">
             Git statistics and highlights from the portfolio repository
           </p>
         </div>
 
         <div className="my-6 rounded-lg border border-border bg-accent/5 p-4">
           <p className="text-foreground-lighter text-sm">
-            <span className="font-semibold text-foreground">
+            <span className="text-foreground">
               {randomMessage.title}
             </span>
             <span className="mx-2">•</span>
@@ -161,7 +161,7 @@ const WrappedPage = () => {
       </Section>
 
       <Section delay={0.2}>
-        <h2 className="mb-4 font-bold text-foreground text-xl">The Numbers</h2>
+        <h2 className="mb-4">The Numbers</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <StatCard
             delay={0.25}
@@ -191,17 +191,17 @@ const WrappedPage = () => {
       </Section>
 
       <Section delay={0.5}>
-        <h2 className="mb-4 font-bold text-foreground text-xl">
+        <h2 className="mb-4">
           Commit Activity by Month
         </h2>
         <div className="rounded-lg border border-border bg-card p-6">
           <p className="mb-6 text-muted-foreground text-sm">
             Most active month:{' '}
-            <span className="font-semibold text-foreground">
+            <span className="text-foreground">
               {stats.mostActiveMonth}
             </span>{' '}
             with{' '}
-            <span className="font-semibold text-foreground">
+            <span className="text-foreground">
               {Math.max(...stats.commitsByMonth.map((m) => m.count))} commits
             </span>
           </p>
@@ -220,7 +220,7 @@ const WrappedPage = () => {
       </Section>
 
       <Section delay={0.7}>
-        <h2 className="mb-4 font-bold text-foreground text-xl">
+        <h2 className="mb-4">
           Commit Breakdown
         </h2>
         <div className="space-y-4 rounded-lg border border-border bg-card p-6">
@@ -258,7 +258,7 @@ const WrappedPage = () => {
       </Section>
 
       <Section delay={1.1}>
-        <h2 className="mb-4 font-bold text-foreground text-xl">
+        <h2 className="mb-4">
           Portfolio Highlights
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -268,7 +268,7 @@ const WrappedPage = () => {
               delay={1.15 + index * 0.05}
               key={highlight.title}
             >
-              <h3 className="mb-2 shrink-0 font-semibold text-foreground text-sm">
+              <h3 className="mb-2 shrink-0 text-foreground text-sm">
                 {highlight.title}
               </h3>
               <p className="line-clamp-3 text-muted-foreground text-xs">
@@ -280,13 +280,13 @@ const WrappedPage = () => {
       </Section>
 
       <Section delay={1.5}>
-        <h2 className="mb-4 font-bold text-foreground text-xl">Portfolio Insights</h2>
+        <h2 className="mb-4">Portfolio Insights</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
             <p className="mb-2 shrink-0 text-muted-foreground text-xs uppercase">
               Most Active Day
             </p>
-            <p className="shrink-0 font-semibold text-foreground text-lg">
+            <p className="shrink-0 text-foreground text-lg">
               {stats.mostActiveDate || 'N/A'}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
@@ -297,7 +297,7 @@ const WrappedPage = () => {
             <p className="mb-2 shrink-0 text-muted-foreground text-xs uppercase">
               Code Growth
             </p>
-            <p className="shrink-0 font-semibold text-foreground text-lg">
+            <p className="shrink-0 text-foreground text-lg">
               {(
                 ((stats.linesAdded - stats.linesDeleted) /
                   (stats.linesAdded || 1)) *
@@ -313,7 +313,7 @@ const WrappedPage = () => {
             <p className="mb-2 shrink-0 text-muted-foreground text-xs uppercase">
               Avg. Commits/Day
             </p>
-            <p className="shrink-0 font-semibold text-foreground text-lg">
+            <p className="shrink-0 text-foreground text-lg">
               {(stats.totalCommits / 365).toFixed(1)}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
@@ -324,7 +324,7 @@ const WrappedPage = () => {
             <p className="mb-2 shrink-0 text-muted-foreground text-xs uppercase">
               Lines per Commit
             </p>
-            <p className="shrink-0 font-semibold text-foreground text-lg">
+            <p className="shrink-0 text-foreground text-lg">
               {(stats.totalChanges / (stats.totalCommits || 1)).toFixed(0)}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
@@ -336,7 +336,7 @@ const WrappedPage = () => {
 
       <Section delay={1.7}>
         <div className="rounded-lg border border-border bg-accent/5 p-6 text-center">
-          <p className="mb-4 font-bold text-foreground text-xl">
+          <p className="mb-4 text-foreground text-lg">
             Here's to an even better portfolio in 2026!
           </p>
           <p className="text-muted-foreground text-sm">
