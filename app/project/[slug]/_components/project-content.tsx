@@ -41,10 +41,10 @@ export function ProjectContent({ project }: TProjectContentProperties) {
             'flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors',
             'hover:text-foreground'
           )}
-          href="/"
+          href="/project"
         >
           <ArrowLeftToLineIcon size={12} />
-          Home
+          Projects
         </Link>
       </Section>
       <Section className="gap-1">

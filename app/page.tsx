@@ -1,11 +1,10 @@
-import { allPages } from 'content-collections';
-import type { Metadata } from 'next';
 import { FlippingSubtext } from '@/components/flipping-subtext';
 import { ImageZoom } from '@/components/image-zoom';
-import { ProjectGrid } from '@/components/projects';
+import { Mdx } from '@/components/mdx';
 import { Section } from '@/components/section';
-import { PROJECTS } from '@/lib/data/projects';
 import { createMetadata } from '@/lib/metadata';
+import { allPages } from 'content-collections';
+import type { Metadata } from 'next';
 
 const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
 
@@ -43,15 +42,11 @@ const HomePage = () => (
       </div>
     </Section>
 
-    <Section delay={0.3}>
-      <ProjectGrid projects={PROJECTS} />
-    </Section>
-
-    {/* <article>
-      <Section delay={0.5}>
+    <article>
+      <Section delay={0.2}>
         <Mdx code={page.body} />
       </Section>
-    </article> */}
+    </article>
   </>
 );
 
