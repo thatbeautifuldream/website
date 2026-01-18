@@ -5,7 +5,7 @@ import { Section } from './section';
 const routes = [
   // { href: '/presence', label: 'Presence' },
   { href: '/wakatime', label: 'Wakatime' },
-  { href: '/ixd', label: 'Interaction Design Challenge' },
+  // { href: '/ixd', label: 'Interaction Design Challenge' },
   // { href: '/guestbook', label: 'Guestbook' },
 ];
 
