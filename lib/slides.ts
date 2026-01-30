@@ -16,6 +16,14 @@ export const slides: TSlide[] = [
     description:
       "Learn how to create smooth, stunning UI transitions in React applications using the View Transitions API.",
   },
+  {
+    id: "component-distribution-shadcn-registry",
+    title: "Building a Component Distribution System with shadcn Registry",
+    embedUrl:
+      "https://docs.google.com/presentation/d/e/2PACX-1vQy1BmsgKS28NDb8MsSVnBOTuh35sz_d5PsCkYBGIk8J2RIP16Bsn4LBNkjHiIBTD7SbmszRLjLqSmF/pubembed?start=false&loop=false&delayms=3000",
+    date: new Date("2026-01-31"),
+    description: "Why copy-paste might be the most scalable UI strategy !?",
+  },
 ];
 
 export const getSlideById = (id: string): TSlide | undefined =>
