@@ -10,11 +10,6 @@ const redirectsConfig = async () => {
       permanent: true,
     },
     {
-      source: "/thine-dev",
-      destination: "https://thine-com-git-dev-merlin-ai.vercel.app",
-      permanent: true,
-    },
-    {
       source: "/json",
       destination: "https://json.milind.app",
       permanent: true,
@@ -50,8 +45,18 @@ const redirectsConfig = async () => {
       permanent: true,
     },
     {
-      source: "/dm",
-      destination: "https://wa.me/919631333128",
+      source: "/slides",
+      destination: "/slide",
+      permanent: true,
+    },
+    {
+      source: "/blogs",
+      destination: "/blog",
+      permanent: true,
+    },
+    {
+      source: "/gists",
+      destination: "/gist",
       permanent: true,
     },
   ];
