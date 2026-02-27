@@ -1,12 +1,8 @@
 import { Link } from '@/components/link';
+import { dateFormatterShort } from '@/lib/date-formatters';
 import type { TSlide } from '@/lib/slides';
 
 type SlideProps = Pick<TSlide, 'id' | 'title' | 'date'>;
-
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  day: '2-digit',
-});
 
 export const Slide = ({ id, title, date }: SlideProps) => (
   <Link
@@ -16,7 +12,7 @@ export const Slide = ({ id, title, date }: SlideProps) => (
     <p className="text-foreground">{title}</p>
     <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
     <p className="text-foreground-lighter transition-colors group-hover:text-foreground-light">
-      {dateFormatter.format(date)}
+      {dateFormatterShort.format(date)}
     </p>
   </Link>
 );

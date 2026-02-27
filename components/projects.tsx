@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import type { ReactNode } from 'react';
-import { ViewTransition } from 'react';
+import { type ReactNode, ViewTransition } from 'react';
 import { Link } from '@/components/link';
+import { dateFormatterMonthYear } from '@/lib/date-formatters';
 import { cn } from '@/lib/utils';
 
 export type TProject = {
@@ -43,13 +43,21 @@ const getVideoMimeType = (videoUrl: string): string => {
   }
 };
 
+const rotationCache = new Map<string, number>();
+
 export const getStripRotation = (slug: string): number => {
+  if (rotationCache.has(slug)) {
+    return rotationCache.get(slug) as number;
+  }
+
   const hash = slug
     .split('')
     .reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const value = hash % 6;
-  // Map to -3, -2, -1, 1, 2, 3 (skipping 0 to ensure strips are always tilted)
-  return value < 3 ? value - 3 : value - 2;
+  const rotation = value < 3 ? value - 3 : value - 2;
+
+  rotationCache.set(slug, rotation);
+  return rotation;
 };
 
 export const ProjectCard = ({ project, children }: TProjectCardProps) => {
@@ -138,10 +146,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
                       </h2>
                       {project.date && (
                         <p className="mt-0.5 text-[0.625rem] text-white/90 md:text-xs">
-                          {new Intl.DateTimeFormat('en-US', {
-                            month: 'long',
-                            year: 'numeric',
-                          }).format(project.date)}
+                          {dateFormatterMonthYear.format(project.date)}
                         </p>
                       )}
                     </div>

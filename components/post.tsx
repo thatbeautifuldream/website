@@ -1,12 +1,8 @@
 import type { Blog } from '@/.content-collections/generated';
 import { Link } from '@/components/link';
+import { dateFormatterShort } from '@/lib/date-formatters';
 
 type PostProps = Pick<Blog, '_meta' | 'title' | 'date'>;
-
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
-  month: 'short',
-  day: '2-digit',
-});
 
 export const Post = ({ _meta, title, date }: PostProps) => (
   <Link
@@ -16,7 +12,7 @@ export const Post = ({ _meta, title, date }: PostProps) => (
     <p className="text-foreground">{title}</p>
     <span className="hidden h-px grow bg-border transition-colors group-hover:bg-border-dark sm:block" />
     <p className="text-foreground-lighter transition-colors group-hover:text-foreground-light">
-      {dateFormatter.format(date)}
+      {dateFormatterShort.format(date)}
     </p>
   </Link>
 );

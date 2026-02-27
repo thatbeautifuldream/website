@@ -1,21 +1,83 @@
+'use client';
+
 import { MDXContent } from '@content-collections/mdx/react';
 import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import type { HTMLProps, ReactNode } from 'react';
-import { Tweet } from 'react-tweet';
-import { DiscordPresence } from './discord-presence';
+import { TALKS } from '@/lib/data/talks';
 import { Features } from './features';
 import { ImageZoom } from './image-zoom';
-import { TalkGrid } from './talks';
-import { TALKS } from '@/lib/data/talks';
 import { Link } from './link';
-import { Mermaid } from './mdx/mermaid';
-import { SpotifyNowPlaying } from './spotify-now-playing';
-import { SpotifyTopTracks } from './spotify-top-tracks';
+import { TalkGrid } from './talks';
 import { Timeline } from './timeline';
-import { Video } from './video';
-import { Wakatime } from './wakatime/wakatime';
-import { YouTubeVideos } from './youtube-videos';
+
+const Video = dynamic(
+  () => import('./video').then((m) => ({ default: m.Video })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="aspect-video animate-pulse rounded-md bg-muted" />
+    ),
+  }
+);
+
+const Tweet = dynamic(
+  () => import('react-tweet').then((m) => ({ default: m.Tweet })),
+  {
+    ssr: false,
+  }
+);
+
+const Mermaid = dynamic(
+  () => import('./mdx/mermaid').then((m) => ({ default: m.Mermaid })),
+  {
+    ssr: false,
+    loading: () => <div className="h-48 animate-pulse rounded-lg bg-muted" />,
+  }
+);
+
+const DiscordPresence = dynamic(
+  () =>
+    import('./discord-presence').then((m) => ({ default: m.DiscordPresence })),
+  {
+    ssr: false,
+  }
+);
+
+const SpotifyNowPlaying = dynamic(
+  () =>
+    import('./spotify-now-playing').then((m) => ({
+      default: m.SpotifyNowPlaying,
+    })),
+  {
+    ssr: false,
+  }
+);
+
+const SpotifyTopTracks = dynamic(
+  () =>
+    import('./spotify-top-tracks').then((m) => ({
+      default: m.SpotifyTopTracks,
+    })),
+  {
+    ssr: false,
+  }
+);
+
+const Wakatime = dynamic(
+  () => import('./wakatime/wakatime').then((m) => ({ default: m.Wakatime })),
+  {
+    ssr: false,
+  }
+);
+
+const YouTubeVideos = dynamic(
+  () => import('./youtube-videos').then((m) => ({ default: m.YouTubeVideos })),
+  {
+    ssr: false,
+  }
+);
 
 type MdxProperties = {
   readonly code: string;

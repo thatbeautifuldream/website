@@ -3,15 +3,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { Section } from '@/components/section';
 import { DailyBreakdownChart } from '@/components/wakatime/daily-breakdown-chart';
+import { dateFormatterLong } from '@/lib/date-formatters';
 import { orpc } from '@/lib/orpc';
 import {
   type TWakatimeStatsCard,
   WakatimeStatsCard,
 } from './wakatime-stats-card';
-
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
-  weekday: 'long',
-});
 
 export function WakatimeCodingActivity() {
   const codingActivityQuery = useQuery(
@@ -96,7 +93,7 @@ export function WakatimeCodingActivity() {
     },
     {
       title: 'Most Active Day',
-      value: dateFormatter.format(new Date(mostActiveDay.range.date)),
+      value: dateFormatterLong.format(new Date(mostActiveDay.range.date)),
       description: 'Peak coding day',
       delay: 0.3,
     },

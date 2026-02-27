@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { TGuestbook } from '@/db/schema';
+import { dateFormatterShort } from '@/lib/date-formatters';
 import { orpc } from '@/lib/orpc';
 
 type TGuestbookEntry = {
@@ -264,14 +265,6 @@ function GuestbookEntry({
   entry: TGuestbookEntry;
   delay?: number;
 }) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: '2-digit',
-      year: 'numeric',
-    });
-  };
-
   return (
     <Section className="gap-0" delay={delay}>
       <div className="group flex flex-col gap-1 border-none text-sm">
@@ -279,7 +272,7 @@ function GuestbookEntry({
           <p className="text-foreground">{entry.name}</p>
           <span className="h-px grow bg-border" />
           <time className="text-foreground-lighter transition-colors">
-            {formatDate(entry.createdAt)}
+            {dateFormatterShort.format(new Date(entry.createdAt))}
           </time>
         </div>
         <blockquote className="mt-2 border-border border-l-2 pl-4 text-foreground-lighter text-sm italic leading-relaxed">

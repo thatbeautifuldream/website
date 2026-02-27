@@ -16,8 +16,9 @@ export function SpotifyNowPlaying() {
   } = useQuery({
     ...orpc.spotify['currently-playing'].queryOptions(),
     refetchInterval: 30_000,
-    refetchIntervalInBackground: true,
-    staleTime: 25_000,
+    refetchIntervalInBackground: false,
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {

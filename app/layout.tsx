@@ -1,5 +1,3 @@
-import { GoogleAnalytics } from '@next/third-parties/google';
-import { Analytics } from '@vercel/analytics/react';
 import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
@@ -9,10 +7,8 @@ import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 import { Navigation } from '@/components/navigation';
-// import { Background } from '@/components/background';
-import { ClarityProvider } from '@/components/providers/clarity-provider';
+import { AnalyticsProviders } from '@/components/providers/analytics-providers';
 import { CommandPaletteProvider } from '@/components/providers/command-palette-provider';
-import { LevaProvider } from '@/components/providers/leva-provider';
 import { QueryClientProviderWrapper } from '@/components/providers/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { mono, sans, serif } from '@/lib/fonts';
@@ -61,15 +57,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 </div>
               </LayoutWrapper>
             </CommandPaletteProvider>
-            {/* <Background /> */}
             <Toaster />
             <ThemeSwitcher />
             <JsonLd />
             <LayoutDebug />
-            <ClarityProvider />
-            <GoogleAnalytics gaId="G-W9JFLQ2YJR" />
-            <Analytics />
-            <LevaProvider />
+            <AnalyticsProviders />
           </QueryClientProviderWrapper>
         </ThemeProvider>
       </body>
