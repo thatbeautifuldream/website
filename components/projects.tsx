@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { type ReactNode, ViewTransition } from 'react';
+import { type ReactNode, useState, ViewTransition } from 'react';
 import { Link } from '@/components/link';
 import { dateFormatterMonthYear } from '@/lib/date-formatters';
 import { cn } from '@/lib/utils';
@@ -120,7 +120,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
       <div
         className={cn(
           'relative w-full overflow-clip rounded-lg transition-shadow duration-200 ease-out group-hover:shadow-lg group-active:shadow-none dark:shadow-none',
-          project.video ? '' : 'aspect-16/10'
+          'aspect-16/10'
         )}
       >
         {children || (
@@ -162,6 +162,8 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
 };
 
 export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
+  const [visibleCount, setVisibleCount] = useState(2);
+
   if (children) {
     return <div className="grid gap-6">{children}</div>;
   }
@@ -170,11 +172,25 @@ export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
     return null;
   }
 
+  const visibleProjects = projects.slice(0, visibleCount);
+  const hasMore = projects.length > visibleCount;
+
   return (
     <div className="grid gap-6">
-      {projects.map((project) => (
+      {visibleProjects.map((project) => (
         <ProjectCard key={project.slug} project={project} />
       ))}
+      {hasMore && (
+        <div>
+          <button
+            className="cursor-pointer text-neutral-400 text-sm underline decoration-neutral-300 underline-offset-2 transition-all hover:text-neutral-600 hover:decoration-neutral-400 hover:underline-offset-[2.5px] dark:text-neutral-500 dark:decoration-neutral-600 dark:hover:text-neutral-400 dark:hover:decoration-neutral-500"
+            onClick={() => setVisibleCount(projects.length)}
+            type="button"
+          >
+            See {projects.length - visibleCount} more...
+          </button>
+        </div>
+      )}
     </div>
   );
 };
