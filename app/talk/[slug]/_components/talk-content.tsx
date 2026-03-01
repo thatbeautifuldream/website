@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftToLineIcon, ExternalLinkIcon } from 'lucide-react';
+import { ArrowLeftToLineIcon, ArrowUpRightIcon, ExternalLinkIcon } from 'lucide-react';
 import Image from 'next/image';
 import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
@@ -53,22 +53,23 @@ export function TalkContent({ talk }: TTalkContentProperties) {
               </div>
             </ViewTransition>
           </div>
-          <div className="flex items-center gap-3">
-            {talk.url && (
-              <div className="inline-block">
-                <div className="inline-block bg-black/85 px-4 py-2 transition-opacity hover:opacity-80 dark:bg-white/90">
-                  <Link
-                    className="flex cursor-pointer items-center gap-2 text-sm text-white dark:text-black"
-                    href={talk.url}
-                  >
-                    Event
-                    <ExternalLinkIcon size={16} />
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
+        {talk.url && (
+          <ViewTransition name={`talk-event-${talk.slug}`}>
+            <div className="mt-2">
+              <Link
+                className="group inline-flex items-center gap-x-0.5 text-foreground/70 text-sm underline underline-offset-2 hover:underline-offset-[2.5px] decoration-foreground/50 transition-colors hover:text-foreground hover:decoration-foreground"
+                href={talk.url}
+              >
+                Event
+                <ArrowUpRightIcon
+                  size={16}
+                  className="shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </Link>
+            </div>
+          </ViewTransition>
+        )}
         <ViewTransition name={`talk-description-${talk.slug}`}>
           <div className="space-y-2">
             <p className="text-foreground-lighter text-sm leading-relaxed">
