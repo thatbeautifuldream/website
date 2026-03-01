@@ -1,10 +1,11 @@
-import { FlippingSubtext } from '@/components/flipping-subtext';
-import { ImageZoom } from '@/components/image-zoom';
-import { Mdx } from '@/components/mdx';
-import { Section } from '@/components/section';
-import { createMetadata } from '@/lib/metadata';
 import { allPages } from 'content-collections';
 import type { Metadata } from 'next';
+import { FlippingSubtext } from '@/components/flipping-subtext';
+import { Mdx } from '@/components/mdx';
+import { ProfileAvatarOrAlbumCover } from '@/components/profile-avatar-or-album-cover';
+import { ProfileName } from '@/components/profile-name';
+import { Section } from '@/components/section';
+import { createMetadata } from '@/lib/metadata';
 
 const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
 
@@ -18,26 +19,12 @@ export const metadata: Metadata = createMetadata({
   image: '/images/opengraph-image.png',
 });
 
-const GITHUB_AVATAR_URL =
-  'https://avatars.githubusercontent.com/u/28717686?v=4';
-
 const HomePage = () => (
   <>
     <Section className="flex items-center gap-4" delay={0.1}>
-      <ImageZoom>
-        {/** biome-ignore lint/performance/noImgElement: Need to use img element to escape Next.js image optimization */}
-        <img
-          alt=""
-          className="size-10 rounded-full transition-all duration-300 hover:scale-110"
-          height={40}
-          src={GITHUB_AVATAR_URL}
-          width={40}
-        />
-      </ImageZoom>
+      <ProfileAvatarOrAlbumCover />
       <div>
-        <p className="font-medium text-foreground leading-normal">
-          Milind Mishra
-        </p>
+        <ProfileName />
         <FlippingSubtext />
       </div>
     </Section>

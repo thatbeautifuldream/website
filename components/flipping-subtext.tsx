@@ -1,16 +1,16 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { motion, useReducedMotion } from 'motion/react';
+import { useMemo } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { orpc } from '@/lib/orpc';
-import { Link } from './link';
+import { useQuery } from '@tanstack/react-query';
 
-const PORTFOLIO_STATS_PROMO_END_DATE = new Date('2026-01-15');
+const FALLBACK_TEXT = 'Product Engineer, currently at Merlin AI.';
+
+const easeOutQuart = [0.165, 0.84, 0.44, 1] as const;
 
 export function FlippingSubtext() {
-  const shouldReduceMotion = useReducedMotion();
-  const shouldShowPromo = new Date() < PORTFOLIO_STATS_PROMO_END_DATE;
-
+  const prefersReducedMotion = useReducedMotion();
   const { data: spotifyData } = useQuery({
     ...orpc.spotify['currently-playing'].queryOptions(),
     refetchInterval: 30_000,
@@ -18,69 +18,43 @@ export function FlippingSubtext() {
     staleTime: 25_000,
   });
 
-  const isPlaying = spotifyData?.isPlaying && spotifyData?.track;
-  const trackTitle = isPlaying ? spotifyData.track?.name : null;
+  const displayText = useMemo(() => {
+    const isPlaying = spotifyData?.isPlaying && spotifyData?.track;
+    const trackTitle = isPlaying ? spotifyData.track?.name : null;
+    return trackTitle && trackTitle.length > 0 ? trackTitle : FALLBACK_TEXT;
+  }, [spotifyData]);
 
-  if (shouldShowPromo) {
-    return (
-      <p className="text-foreground-lighter text-sm leading-normal">
-        Check out my{' '}
-        <Link
-          className="transition-colors hover:text-foreground"
-          href="/portfolio-stats-2025"
-        >
-          Portfolio Stats 2025
-        </Link>
-        .
-      </p>
-    );
-  }
-
-  if (shouldReduceMotion || !isPlaying) {
-    return (
-      <p className="text-foreground-lighter text-sm leading-normal">
-        Product Engineer, currently at{' '}
-        <a href="https://getmerlin.in/chat">Merlin AI</a>.
-      </p>
-    );
-  }
+  const transition = {
+    duration: prefersReducedMotion ? 0 : 0.25,
+    ease: easeOutQuart,
+  };
 
   return (
-    <div className="relative h-5 overflow-hidden">
-      <motion.div
-        animate={{ y: isPlaying ? -24 : 0 }}
-        transition={{
-          duration: 0.6,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          type: 'tween',
-          delay: isPlaying ? 3 : 0,
-        }}
-      >
-        <p className="h-6 text-foreground-lighter text-sm leading-normal">
-          Product Engineer, currently at{' '}
-          <a href="https://getmerlin.in/chat">Merlin AI</a>.
-        </p>
-      </motion.div>
-
-      <motion.div
-        animate={{ y: isPlaying ? -24 : 0 }}
-        transition={{
-          duration: 0.6,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          type: 'tween',
-          delay: isPlaying ? 3 : 0,
-        }}
-      >
-        <p className="h-6 text-foreground-lighter text-sm leading-normal">
-          <span className="text-green-500">♫</span>{' '}
-          <Link
-            className="transition-colors hover:text-foreground"
-            href="/spotify"
-          >
-            {trackTitle}
-          </Link>
-        </p>
-      </motion.div>
+    <div className="relative min-h-[1.5em] w-fit overflow-hidden text-foreground-lighter text-sm leading-normal">
+      <span aria-hidden="true" className="invisible block whitespace-nowrap">
+        {displayText}
+      </span>
+      <AnimatePresence initial={false} mode="wait">
+        <motion.span
+          key={displayText}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          className="absolute inset-x-0 top-0 block whitespace-nowrap"
+          exit={
+            prefersReducedMotion
+              ? { opacity: 0 }
+              : { opacity: 0.6, y: '-100%' }
+          }
+          initial={
+            prefersReducedMotion ? { opacity: 0 } : { opacity: 0.6, y: '100%' }
+          }
+          transition={transition}
+        >
+          {displayText}
+        </motion.span>
+      </AnimatePresence>
     </div>
   );
 }
