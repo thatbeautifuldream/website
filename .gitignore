@@ -42,3 +42,6 @@ next-env.d.ts
 
 .content-collections
 .env*.local
+
+# opensrc - source code for packages
+opensrc/

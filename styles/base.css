@@ -32,6 +32,13 @@
   body {
     text-rendering: optimizelegibility;
     font-feature-settings: "kern", "ss02";
+
+    hanging-punctuation: first allow-end last;
+    hyphens: auto;
+    hyphenate-limit-chars: 10 6 6;
+
+    letter-spacing: 0.0085em;
+    word-spacing: -0.04em;
   }
 
   /* Font utility classes */
@@ -133,6 +140,8 @@
 
   article blockquote {
     @apply border-l-4 border-border/50 pl-4 italic;
+    box-shadow: 1px 0 0 var(--border) inset;
+    border-left: 0;
   }
 
   article [class*="quoted-tweet-container"] {
