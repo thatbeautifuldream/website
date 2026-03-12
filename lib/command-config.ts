@@ -35,11 +35,11 @@ const navigationActions: TCommandAction[] = [
     keywords: ['home', 'main', 'index'],
   },
   {
-    id: 'nav-about',
-    label: 'Go to About',
-    description: 'Learn more about me',
-    href: '/about',
-    keywords: ['about', 'bio', 'info'],
+    id: 'nav-talk',
+    label: 'Go to Talk',
+    description: 'Browse my talks and meetup sessions',
+    href: '/talk',
+    keywords: ['talk', 'talks', 'speaking', 'meetups', 'presentations'],
   },
   {
     id: 'nav-work',

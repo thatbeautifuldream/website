@@ -4,10 +4,10 @@ import { Mdx } from '@/components/mdx';
 import { Section } from '@/components/section';
 import { createMetadata } from '@/lib/metadata';
 
-const page = allPages.find((p) => p._meta.fileName === 'about.mdx');
+const page = allPages.find((p) => p._meta.fileName === 'talk.mdx');
 
 if (!page) {
-  throw new Error('About page not found');
+  throw new Error('Talk page not found');
 }
 
 export const metadata: Metadata = createMetadata({
@@ -16,7 +16,7 @@ export const metadata: Metadata = createMetadata({
   image: `/og?title=${encodeURIComponent(page.title)}&description=${encodeURIComponent(page.description)}`,
 });
 
-const AboutPage = () => (
+const TalkPage = () => (
   <>
     <Section className="gap-0">
       <h1>{page.title}</h1>
@@ -30,4 +30,4 @@ const AboutPage = () => (
   </>
 );
 
-export default AboutPage;
+export default TalkPage;

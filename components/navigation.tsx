@@ -17,9 +17,9 @@ const links = [
     active: (pathname: string) => pathname === '/',
   },
   {
-    href: '/about',
-    label: 'About',
-    active: (pathname: string) => pathname.startsWith('/about'),
+    href: '/talk',
+    label: 'Talk',
+    active: (pathname: string) => pathname.startsWith('/talk'),
   },
   {
     href: '/work',

@@ -24,10 +24,10 @@ export function TalkContent({ talk }: TTalkContentProperties) {
             'flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors',
             'hover:text-foreground'
           )}
-          href="/about"
+          href="/talk"
         >
           <ArrowLeftToLineIcon size={12} />
-          About
+          Talk
         </Link>
       </Section>
       <Section className="gap-1">
