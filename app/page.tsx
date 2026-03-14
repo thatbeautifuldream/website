@@ -1,22 +1,23 @@
-import { allPages } from 'content-collections';
-import type { Metadata } from 'next';
-import { FlippingSubtext } from '@/components/flipping-subtext';
-import { Mdx } from '@/components/mdx';
-import { ProfileAvatarOrAlbumCover } from '@/components/profile-avatar-or-album-cover';
-import { ProfileName } from '@/components/profile-name';
-import { Section } from '@/components/section';
-import { createMetadata } from '@/lib/metadata';
+import { allPages } from "content-collections";
+import type { Metadata } from "next";
+import { FlippingSubtext } from "@/components/flipping-subtext";
+import { GitHubContributionGraph } from "@/components/github-contribution-graph";
+import { Mdx } from "@/components/mdx";
+import { ProfileAvatarOrAlbumCover } from "@/components/profile-avatar-or-album-cover";
+import { ProfileName } from "@/components/profile-name";
+import { Section } from "@/components/section";
+import { createMetadata } from "@/lib/metadata";
 
-const page = allPages.find((p) => p._meta.fileName === 'home.mdx');
+const page = allPages.find((p) => p._meta.fileName === "home.mdx");
 
 if (!page) {
-  throw new Error('Home page not found');
+  throw new Error("Home page not found");
 }
 
 export const metadata: Metadata = createMetadata({
   title: page.title,
   description: page.description,
-  image: '/images/opengraph-image.png',
+  image: "/images/opengraph-image.png",
 });
 
 const HomePage = () => (
@@ -29,8 +30,12 @@ const HomePage = () => (
       </div>
     </Section>
 
+    <Section delay={0.2}>
+      <GitHubContributionGraph className="mt-4" />
+    </Section>
+
     <article>
-      <Section delay={0.2}>
+      <Section delay={0.3}>
         <Mdx code={page.body} />
       </Section>
     </article>

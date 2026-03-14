@@ -39,7 +39,6 @@ export function GitHubContributionGraph({
     data: contributionsData,
     isLoading,
     isError,
-    error,
   } = useQuery({
     ...orpc.github.contributions.queryOptions({
       input: { username, year, format, noCache },
@@ -51,21 +50,10 @@ export function GitHubContributionGraph({
   if (isLoading) {
     return (
       <Section>
-        <div className="space-y-4">
-          <div className="p-6">
-            <div className="flex items-center justify-center py-8">
-              <div className="space-y-3 text-center">
-                <p className="text-foreground-lighter text-md">
-                  <span className="animate-pulse">
-                    Loading GitHub contributions...
-                  </span>
-                </p>
-                <p className="text-foreground-lighter/60 text-xs">
-                  Fetching those green squares
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="flex items-center justify-center py-10">
+          <p className="text-sm text-muted-foreground">
+            <span className="animate-pulse">Loading GitHub contributions...</span>
+          </p>
         </div>
       </Section>
     );
@@ -74,14 +62,8 @@ export function GitHubContributionGraph({
   if (isError) {
     return (
       <Section>
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 rounded-lg border-destructive bg-destructive/10 p-4 transition-all hover:bg-destructive/20">
-            <div className="flex items-center gap-2 text-destructive text-sm">
-              <span>
-                GitHub contributions took a coffee break
-              </span>
-            </div>
-          </div>
+        <div className="flex items-center justify-center py-10 text-sm text-destructive">
+          GitHub contributions took a coffee break
         </div>
       </Section>
     );
@@ -90,10 +72,8 @@ export function GitHubContributionGraph({
   if (!contributionsData?.contributions?.length) {
     return (
       <Section>
-        <div className="flex items-center justify-center py-8">
-          <div className="text-muted-foreground text-sm">
-            No contributions found
-          </div>
+        <div className="flex items-center justify-center py-10 text-sm text-muted-foreground">
+          No contributions found
         </div>
       </Section>
     );
@@ -108,23 +88,13 @@ export function GitHubContributionGraph({
           <ContributionGraph
             data={contributions}
             totalCount={contributionsData.total}
-            className="w-full"
+            blockSize={11}
+            blockMargin={4}
+            blockRadius={0}
+            className="w-full text-[15px]"
           >
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                {contributionsData.years.length > 0 && (
-                  <p className="text-sm text-muted-foreground">
-                    {year === "last"
-                      ? "Until last year"
-                      : year === "all"
-                        ? `${contributionsData.years.length} years (${contributionsData.years.join(", ")})`
-                        : `Year ${year}`}
-                  </p>
-                )}
-                <ContributionGraphTotalCount className="text-sm" />
-              </div>
-
-              <ContributionGraphCalendar className="w-full">
+            <div className="space-y-3">
+              <ContributionGraphCalendar className="w-full overflow-x-auto pb-1">
                 {({ activity, dayIndex, weekIndex }) => (
                   <Tooltip key={`${weekIndex}-${dayIndex}`}>
                     <TooltipTrigger asChild>
@@ -133,11 +103,18 @@ export function GitHubContributionGraph({
                           activity={activity}
                           dayIndex={dayIndex}
                           weekIndex={weekIndex}
-                          className="cursor-pointer transition-opacity hover:opacity-80"
+                          className={cn(
+                            "cursor-pointer transition-opacity hover:opacity-80",
+                            'data-[level="0"]:fill-foreground/6',
+                            'data-[level="1"]:fill-foreground/18',
+                            'data-[level="2"]:fill-foreground/32',
+                            'data-[level="3"]:fill-foreground/48',
+                            'data-[level="4"]:fill-foreground/72'
+                          )}
                         />
                       </g>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipContent sideOffset={8}>
                       <p className="font-semibold">{activity.date}</p>
                       <p>
                         {activity.count} contribution{activity.count !== 1 ? "s" : ""}
@@ -147,8 +124,44 @@ export function GitHubContributionGraph({
                 )}
               </ContributionGraphCalendar>
 
-              <ContributionGraphFooter>
-                <ContributionGraphLegend />
+              <ContributionGraphFooter className="items-end justify-between gap-3 text-xs">
+                <ContributionGraphTotalCount className="text-xs text-muted-foreground">
+                  {({ totalCount, year: contributionYear }) => (
+                    <p className="text-balance text-xs text-muted-foreground">
+                      {totalCount.toLocaleString("en-US")} contributions in{" "}
+                      {contributionYear} on{" "}
+                      <a
+                        className="font-medium text-foreground underline underline-offset-4"
+                        href={`https://github.com/${username}`}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        GitHub
+                      </a>
+                      .
+                    </p>
+                  )}
+                </ContributionGraphTotalCount>
+                <ContributionGraphLegend className="text-xs text-muted-foreground">
+                  {({ level }) => (
+                    <svg aria-hidden="true" height={11} width={11}>
+                      <rect
+                        className={cn(
+                          'data-[level="0"]:fill-foreground/6',
+                          'data-[level="1"]:fill-foreground/18',
+                          'data-[level="2"]:fill-foreground/32',
+                          'data-[level="3"]:fill-foreground/48',
+                          'data-[level="4"]:fill-foreground/72'
+                        )}
+                        data-level={level}
+                        height={11}
+                        rx={0}
+                        ry={0}
+                        width={11}
+                      />
+                    </svg>
+                  )}
+                </ContributionGraphLegend>
               </ContributionGraphFooter>
             </div>
           </ContributionGraph>
