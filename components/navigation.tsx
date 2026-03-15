@@ -201,6 +201,10 @@ export const Navigation = () => {
     };
   };
 
+  const mobileMenuExitDelay = shouldReduceMotion
+    ? 0
+    : mobileMenuLinks.length * 0.025 + 0.12;
+
   const handleMobileMenuToggle = () => {
     if (!mobileMenuOpen) {
       captureMobileChromePositions();
@@ -359,7 +363,13 @@ export const Navigation = () => {
                     animate={{ opacity: 1 }}
                     aria-label="Close mobile menu"
                     className="absolute right-0 bottom-0 left-0 bg-black/55 backdrop-blur-xl"
-                    exit={{ opacity: 0 }}
+                    exit={{
+                      opacity: 0,
+                      transition: {
+                        duration: shouldReduceMotion ? 0 : 0.12,
+                        delay: mobileMenuExitDelay,
+                      },
+                    }}
                     initial={{ opacity: 0 }}
                     onClick={() => setMobileMenuOpen(false)}
                     style={{ top: mobileHeaderBottom }}
