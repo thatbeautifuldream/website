@@ -246,7 +246,7 @@ export const Navigation = () => {
               </li>
             );
           })}
-          <li className="hidden md:block">
+          <li>
             <button
               className={cn(
                 "relative flex items-center justify-center rounded-lg border-none px-2 py-1.5 font-medium text-xs transition-colors duration-200 sm:px-3",
@@ -275,6 +275,15 @@ export const Navigation = () => {
             </button>
           </li>
         </ul>
+        <button
+          aria-label="Open search"
+          className="flex h-8 w-8 items-center justify-center rounded-lg border bg-muted/80 transition-colors duration-200 sm:hidden"
+          onClick={toggle}
+          title="Search commands"
+          type="button"
+        >
+          <SearchIcon className="h-4 w-4" />
+        </button>
       </nav>
     </Section>
   );
