@@ -1,78 +1,136 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { TextMorph } from "torph/react";
 import { Link } from "@/components/link";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useCommandPalette } from "./providers/command-palette-provider";
-import { Section } from "./section";
+import { createSectionTransition } from "./section";
 import { Sign } from "./sign";
 
 const links = [
   {
     href: "/",
     label: "Home",
+    showInDesktop: true,
+    showInMobileMenu: true,
     active: (pathname: string) => pathname === "/",
   },
   {
     href: "/talk",
     label: "Talk",
+    showInDesktop: true,
+    showInMobileMenu: true,
     active: (pathname: string) => pathname.startsWith("/talk"),
   },
   {
     href: "/work",
     label: "Work",
+    showInDesktop: true,
+    showInMobileMenu: true,
     active: (pathname: string) => pathname.startsWith("/work"),
   },
   {
     href: "/project",
     label: "Project",
+    showInDesktop: true,
+    showInMobileMenu: true,
     active: (pathname: string) => pathname.startsWith("/project"),
   },
   {
     href: "/blog",
     label: "Blog",
+    showInDesktop: true,
+    showInMobileMenu: true,
     active: (pathname: string) => pathname.startsWith("/blog"),
+  },
+  {
+    href: "/wakatime",
+    label: "Wakatime",
+    showInDesktop: false,
+    showInMobileMenu: true,
+    active: (pathname: string) => pathname.startsWith("/wakatime"),
+  },
+  {
+    href: "/spotify",
+    label: "Spotify",
+    showInDesktop: false,
+    showInMobileMenu: true,
+    active: (pathname: string) => pathname.startsWith("/wakatime"),
   },
 ];
 
 export const Navigation = () => {
   const pathname = usePathname();
+  const desktopLinks = links.filter((link) => link.showInDesktop);
+  const mobileMenuLinks = links.filter((link) => link.showInMobileMenu);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileMenuPosition, setMobileMenuPosition] = useState({
-    left: 16,
-    triggerTop: 24,
-    top: 72,
-    width: 320,
+    left: 0,
+    top: 24,
+    width: 89,
   });
+  const [mobileLogoPosition, setMobileLogoPosition] = useState({
+    left: 16,
+    top: 24,
+  });
+  const [mobileHeaderBottom, setMobileHeaderBottom] = useState(72);
+  const mobileLogoRef = useRef<HTMLDivElement | null>(null);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const mobileMenuPanelRef = useRef<HTMLDivElement | null>(null);
   const { toggle } = useCommandPalette();
+  const shouldReduceMotion = useReducedMotion();
+
+  const captureMobileChromePositions = () => {
+    const triggerRect = mobileNavRef.current?.getBoundingClientRect();
+    const logoRect = mobileLogoRef.current?.getBoundingClientRect();
+
+    if (!triggerRect || !logoRect) {
+      return false;
+    }
+
+    setMobileMenuPosition({
+      left: triggerRect.left,
+      top: triggerRect.top,
+      width: triggerRect.width,
+    });
+    setMobileLogoPosition({
+      left: logoRect.left,
+      top: logoRect.top,
+    });
+    setMobileHeaderBottom(Math.max(triggerRect.bottom, logoRect.bottom) + 8);
+
+    return true;
+  };
+
+  useEffect(() => {
+    setIsMounted(true);
+    captureMobileChromePositions();
+
+    const handleResize = () => {
+      if (!mobileMenuOpen) {
+        captureMobileChromePositions();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     if (!mobileMenuOpen) {
       return;
     }
-
-    const updatePosition = () => {
-      const rect = mobileNavRef.current?.getBoundingClientRect();
-
-      if (!rect) {
-        return;
-      }
-
-      setMobileMenuPosition({
-        left: rect.left,
-        triggerTop: rect.top,
-        top: rect.bottom + 14,
-        width: Math.min(384, window.innerWidth - 32),
-      });
-    };
 
     const handlePointerDown = (event: MouseEvent) => {
       const target = event.target as Node;
@@ -90,8 +148,6 @@ export const Navigation = () => {
       }
     };
 
-    updatePosition();
-
     const previousBodyOverflow = document.body.style.overflow;
     const previousHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
@@ -99,28 +155,114 @@ export const Navigation = () => {
 
     document.addEventListener("mousedown", handlePointerDown);
     document.addEventListener("keydown", handleEscape);
-    window.addEventListener("resize", updatePosition);
 
     return () => {
       document.body.style.overflow = previousBodyOverflow;
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("keydown", handleEscape);
-      window.removeEventListener("resize", updatePosition);
     };
   }, [mobileMenuOpen]);
 
+  const getMobileLinkMotion = (index: number) => {
+    if (shouldReduceMotion) {
+      return {
+        initial: { opacity: 1 },
+        animate: { opacity: 1 },
+        exit: { opacity: 1 },
+      };
+    }
+
+    return {
+      initial: {
+        filter: "blur(4px)",
+        translateY: -10,
+        opacity: 0,
+      },
+      animate: {
+        filter: "blur(0px)",
+        translateY: 0,
+        opacity: 1,
+        transition: createSectionTransition(0.02 + index * 0.035, {
+          duration: 0.16,
+        }),
+      },
+      exit: {
+        filter: "blur(4px)",
+        translateY: -10,
+        opacity: 0,
+        transition: createSectionTransition(
+          (mobileMenuLinks.length - index) * 0.025,
+          {
+            duration: 0.12,
+          },
+        ),
+      },
+    };
+  };
+
+  const handleMobileMenuToggle = () => {
+    if (!mobileMenuOpen) {
+      captureMobileChromePositions();
+    }
+
+    setMobileMenuOpen((open) => !open);
+  };
+
   return (
-    <Section delay={0.05}>
+    <div className="grid gap-4">
       <nav className="flex items-center justify-between gap-3 text-xs sm:gap-4">
-        <div className="relative sm:hidden" ref={mobileNavRef}>
+        <div className="h-10 w-10 sm:hidden" ref={mobileLogoRef}>
+          <Link
+            aria-label="Home"
+            className={cn("block", mobileMenuOpen && "fixed z-121")}
+            href="/"
+            style={
+              mobileMenuOpen
+                ? {
+                    left: mobileLogoPosition.left,
+                    top: mobileLogoPosition.top,
+                  }
+                : undefined
+            }
+          >
+            <Sign className="size-10" color="currentColor" />
+          </Link>
+        </div>
+        <div
+          className="relative ml-auto h-8 sm:hidden"
+          ref={mobileNavRef}
+          style={
+            mobileMenuOpen
+              ? {
+                  width: mobileMenuPosition.width,
+                }
+              : undefined
+          }
+        >
           <Button
             aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-haspopup="dialog"
-            className="h-8 touch-manipulation items-center justify-start gap-2.5 px-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent dark:hover:bg-transparent"
-            onClick={() => setMobileMenuOpen((open) => !open)}
+            className={cn(
+              "h-8 w-full touch-manipulation items-center justify-start gap-2.5 px-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent dark:hover:bg-transparent",
+              mobileMenuOpen && "fixed z-121",
+            )}
+            onClick={handleMobileMenuToggle}
+            style={
+              mobileMenuOpen
+                ? {
+                    left: mobileMenuPosition.left,
+                    top: mobileMenuPosition.top,
+                    width: mobileMenuPosition.width,
+                  }
+                : undefined
+            }
             variant="ghost"
           >
+            <TextMorph className="flex h-8 items-center text-lg leading-none font-medium">
+              {mobileMenuOpen ? "Close" : "Menu"}
+            </TextMorph>
             <div className="relative flex h-8 w-4 items-center justify-center">
               <div className="relative size-4">
                 <span
@@ -138,81 +280,13 @@ export const Navigation = () => {
               </div>
               <span className="sr-only">Toggle Menu</span>
             </div>
-            <span className="flex h-8 items-center text-lg leading-none font-medium">
-              Menu
-            </span>
           </Button>
-          {mobileMenuOpen &&
-            createPortal(
-              <div className="fixed inset-0 z-120 sm:hidden">
-                <button
-                  aria-label="Close mobile menu"
-                  className="absolute inset-0 bg-black/55 backdrop-blur-xl"
-                  onClick={() => setMobileMenuOpen(false)}
-                  type="button"
-                />
-                <div
-                  className="fixed inset-0 overflow-y-auto"
-                  role="dialog"
-                  ref={mobileMenuPanelRef}
-                >
-                  <div className="flex min-h-dvh flex-col px-6 py-6">
-                    <button
-                      aria-label="Close mobile menu"
-                      className="fixed z-121 flex h-8 w-fit items-center justify-start gap-2.5 px-0 text-foreground"
-                      onClick={() => setMobileMenuOpen(false)}
-                      style={{
-                        left: mobileMenuPosition.left,
-                        top: mobileMenuPosition.triggerTop,
-                      }}
-                      type="button"
-                    >
-                      <div className="relative flex h-8 w-4 items-center justify-center">
-                        <div className="relative size-4">
-                          <span className="absolute left-0 top-[0.4rem] block h-0.5 w-4 -rotate-45 bg-foreground" />
-                          <span className="absolute left-0 top-[0.4rem] block h-0.5 w-4 rotate-45 bg-foreground" />
-                        </div>
-                      </div>
-                      <span className="flex h-8 items-center text-lg leading-none font-medium">
-                        Menu
-                      </span>
-                    </button>
-                    <div
-                      className="flex flex-col gap-12 pt-16"
-                      style={{
-                        marginLeft: Math.max(mobileMenuPosition.left, 0),
-                        maxWidth: mobileMenuPosition.width,
-                      }}
-                    >
-                      <div className="flex flex-col gap-4">
-                        <div className="text-sm font-medium text-muted-foreground">
-                          Menu
-                        </div>
-                        <div className="flex flex-col gap-3">
-                          {links.map(({ href, label }) => (
-                            <Link
-                              className="flex items-center gap-2 text-2xl font-medium text-foreground"
-                              href={href}
-                              key={href}
-                              onClick={() => setMobileMenuOpen(false)}
-                            >
-                              {label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>,
-              document.body,
-            )}
         </div>
         <Link aria-label="Home" className="hidden sm:block" href="/">
           <Sign className="size-10 sm:size-12" color="currentColor" />
         </Link>
         <ul className="hidden items-center gap-0.5 rounded-xl border bg-muted/80 p-0.5 transition-colors duration-200 sm:flex sm:gap-1 sm:p-1">
-          {links.map(({ href, label, active }, index) => {
+          {desktopLinks.map(({ href, label, active }, index) => {
             const isActive = active(pathname);
             const isHovered = hoveredIndex === index;
             const isActiveOrHovered = isActive || isHovered;
@@ -250,15 +324,15 @@ export const Navigation = () => {
             <button
               className={cn(
                 "relative flex items-center justify-center rounded-lg border-none px-2 py-1.5 font-medium text-xs transition-colors duration-200 sm:px-3",
-                hoveredIndex === links.length && "text-foreground",
+                hoveredIndex === desktopLinks.length && "text-foreground",
               )}
               onClick={toggle}
-              onMouseEnter={() => setHoveredIndex(links.length)}
+              onMouseEnter={() => setHoveredIndex(desktopLinks.length)}
               onMouseLeave={() => setHoveredIndex(null)}
               title="Search commands (⌘K)"
               type="button"
             >
-              {hoveredIndex === links.length && (
+              {hoveredIndex === desktopLinks.length && (
                 <motion.span
                   animate={{ opacity: 1 }}
                   aria-label="Open search"
@@ -275,16 +349,77 @@ export const Navigation = () => {
             </button>
           </li>
         </ul>
-        <button
-          aria-label="Open search"
-          className="flex h-8 w-8 items-center justify-center rounded-lg border bg-muted/80 transition-colors duration-200 sm:hidden"
-          onClick={toggle}
-          title="Search commands"
-          type="button"
-        >
-          <SearchIcon className="h-4 w-4" />
-        </button>
       </nav>
-    </Section>
+      {isMounted
+        ? createPortal(
+            <AnimatePresence>
+              {mobileMenuOpen ? (
+                <div className="fixed inset-0 z-120 sm:hidden">
+                  <motion.button
+                    animate={{ opacity: 1 }}
+                    aria-label="Close mobile menu"
+                    className="absolute right-0 bottom-0 left-0 bg-black/55 backdrop-blur-xl"
+                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0 }}
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{ top: mobileHeaderBottom }}
+                    type="button"
+                  />
+                  <div
+                    className="fixed inset-0 overflow-y-auto"
+                    ref={mobileMenuPanelRef}
+                    role="dialog"
+                  >
+                    <div className="flex min-h-dvh flex-col px-6 py-6">
+                      <div
+                        className="flex flex-col gap-12 pt-16"
+                        style={{
+                          paddingRight: Math.max(mobileMenuPosition.width, 0),
+                        }}
+                      >
+                        <div className="flex flex-col gap-4">
+                          <motion.div
+                            animate={getMobileLinkMotion(0).animate}
+                            exit={getMobileLinkMotion(0).exit}
+                            initial={getMobileLinkMotion(0).initial}
+                            className="text-sm font-medium text-muted-foreground"
+                          >
+                            Menu
+                          </motion.div>
+                          <div className="flex flex-col gap-3">
+                            {mobileMenuLinks.map(({ href, label }, index) => {
+                              const motionState = getMobileLinkMotion(
+                                index + 1,
+                              );
+
+                              return (
+                                <motion.div
+                                  animate={motionState.animate}
+                                  exit={motionState.exit}
+                                  initial={motionState.initial}
+                                  key={href}
+                                >
+                                  <Link
+                                    className="flex items-center gap-2 text-2xl font-medium text-foreground transition-[color,text-shadow] duration-150 ease-out hover:text-[var(--color-link-hover)] hover:[text-shadow:0_0_24px_color-mix(in_srgb,var(--color-link-hover)_58%,transparent),0_0_48px_color-mix(in_srgb,var(--color-link-hover)_24%,transparent)] active:text-[var(--color-link-hover)] active:[text-shadow:0_0_24px_color-mix(in_srgb,var(--color-link-hover)_58%,transparent),0_0_48px_color-mix(in_srgb,var(--color-link-hover)_24%,transparent)] focus-visible:text-[var(--color-link-hover)] focus-visible:outline-none focus-visible:[text-shadow:0_0_24px_color-mix(in_srgb,var(--color-link-hover)_58%,transparent),0_0_48px_color-mix(in_srgb,var(--color-link-hover)_24%,transparent)]"
+                                    href={href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                  >
+                                    {label}
+                                  </Link>
+                                </motion.div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
+    </div>
   );
 };
