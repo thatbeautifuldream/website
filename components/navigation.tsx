@@ -362,7 +362,7 @@ export const Navigation = () => {
                   <motion.button
                     animate={{ opacity: 1 }}
                     aria-label="Close mobile menu"
-                    className="absolute right-0 bottom-0 left-0 bg-black/55 backdrop-blur-xl"
+                    className="absolute right-0 bottom-0 left-0 bg-background dark:bg-background/55 dark:backdrop-blur-xl"
                     exit={{
                       opacity: 0,
                       transition: {
