@@ -13,6 +13,8 @@ import { useCommandPalette } from "./providers/command-palette-provider";
 import { createSectionTransition } from "./section";
 import { Sign } from "./sign";
 
+const desktopNavigationMediaQuery = "(min-width: 640px)";
+
 const links = [
   {
     href: "/",
@@ -115,9 +117,7 @@ export const Navigation = () => {
     captureMobileChromePositions();
 
     const handleResize = () => {
-      if (!mobileMenuOpen) {
-        captureMobileChromePositions();
-      }
+      captureMobileChromePositions();
     };
 
     window.addEventListener("resize", handleResize);
@@ -125,7 +125,7 @@ export const Navigation = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [mobileMenuOpen]);
+  }, []);
 
   useEffect(() => {
     if (!mobileMenuOpen) {
@@ -163,6 +163,29 @@ export const Navigation = () => {
       document.removeEventListener("keydown", handleEscape);
     };
   }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(desktopNavigationMediaQuery);
+
+    const syncMobileMenuState = (
+      event: MediaQueryList | MediaQueryListEvent,
+    ) => {
+      if (event.matches) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    syncMobileMenuState(mediaQuery);
+    mediaQuery.addEventListener("change", syncMobileMenuState);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncMobileMenuState);
+    };
+  }, []);
 
   const getMobileLinkMotion = (index: number) => {
     if (shouldReduceMotion) {
