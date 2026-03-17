@@ -1,17 +1,16 @@
 import type { Viewport } from 'next';
+import { headers } from 'next/headers';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
-import { Footer } from '@/components/footer';
 import { JsonLd } from '@/components/json-ld';
 import { LayoutDebug } from '@/components/layout-debug';
-import { LayoutWrapper } from '@/components/layout-wrapper';
-import { Navigation } from '@/components/navigation';
 import { AnalyticsProviders } from '@/components/providers/analytics-providers';
 import { CommandPaletteProvider } from '@/components/providers/command-palette-provider';
 import { QueryClientProviderWrapper } from '@/components/providers/query-client-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { mono, sans, serif } from '@/lib/fonts';
+import { defaultLocale, isLocale, localeHeaderName } from '@/lib/i18n/config';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
@@ -27,7 +26,14 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const headerStore = await headers();
+  const requestedLocale = headerStore.get(localeHeaderName);
+  const locale =
+    requestedLocale && isLocale(requestedLocale)
+      ? requestedLocale
+      : defaultLocale;
+
   return (
     <html
       className={cn(
@@ -35,7 +41,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         mono.geistMono.variable,
         serif.instrumentSerif.variable
       )}
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
     >
       <body
@@ -49,13 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <QueryClientProviderWrapper>
             <CommandPaletteProvider>
-              <LayoutWrapper>
-                <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
-                  <Navigation />
-                  {children}
-                  <Footer />
-                </div>
-              </LayoutWrapper>
+              {children}
             </CommandPaletteProvider>
             <Toaster />
             <ThemeSwitcher />

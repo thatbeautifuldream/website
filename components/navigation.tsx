@@ -5,8 +5,11 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 import { TextMorph } from "torph/react";
 import { Link } from "@/components/link";
+import { useLocale } from "@/components/providers/locale-provider";
+import { stripLocaleFromPathname } from "@/lib/i18n/locale-path";
 import { cn } from "@/lib/utils";
 import { durations, easings } from "@/lib/motion-tokens";
 import { Button } from "./ui/button";
@@ -69,9 +72,17 @@ const links = [
 ];
 
 export const Navigation = () => {
-  const pathname = usePathname();
-  const desktopLinks = links.filter((link) => link.showInDesktop);
-  const mobileMenuLinks = links.filter((link) => link.showInMobileMenu);
+  const { dictionary } = useLocale();
+  const pathname = stripLocaleFromPathname(usePathname());
+  const localizedLinks = links.map((link) => ({
+    ...link,
+    label:
+      dictionary.navigation[
+        link.label.toLowerCase() as keyof typeof dictionary.navigation
+      ],
+  }));
+  const desktopLinks = localizedLinks.filter((link) => link.showInDesktop);
+  const mobileMenuLinks = localizedLinks.filter((link) => link.showInMobileMenu);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -373,7 +384,13 @@ export const Navigation = () => {
             </button>
           </li>
         </ul>
+        <div className="hidden sm:block">
+          <LocaleSwitcher />
+        </div>
       </nav>
+      <div className="sm:hidden">
+        <LocaleSwitcher />
+      </div>
       {isMounted
         ? createPortal(
             <AnimatePresence>

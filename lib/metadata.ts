@@ -1,11 +1,13 @@
 import merge from "deepmerge";
 import type { Metadata } from "next";
+import { defaultLocale, type Locale } from "@/lib/i18n/config";
 
 type MetadataGenerator = Omit<Metadata, "description" | "title"> & {
   title: string;
   description: string;
   ogText?: string;
   image?: string;
+  locale?: Locale;
 };
 
 const applicationName = "Milind Mishra";
@@ -21,6 +23,7 @@ export const createMetadata = ({
   description,
   ogText,
   image,
+  locale = defaultLocale,
   ...properties
 }: MetadataGenerator): Metadata => {
   const parsedTitle = `${title} | ${applicationName}`;
@@ -44,7 +47,7 @@ export const createMetadata = ({
       description,
       type: "website",
       siteName: applicationName,
-      locale: "en_US",
+      locale: locale === "hi" ? "hi_IN" : "en_US",
       images: [
         {
           url: image ?? `/og?title=${encodeURIComponent(ogText ?? "")}`,

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { type ReactNode, useState, ViewTransition } from 'react';
 import { Link } from '@/components/link';
+import { useOptionalLocale } from '@/components/providers/locale-provider';
 import { dateFormatterMonthYear } from '@/lib/date-formatters';
 import { cn } from '@/lib/utils';
 
@@ -61,6 +62,7 @@ export const getStripRotation = (slug: string): number => {
 };
 
 export const ProjectCard = ({ project, children }: TProjectCardProps) => {
+  const { locale } = useOptionalLocale();
   const stripRotation = getStripRotation(project.slug);
   let projectContent: ReactNode;
 
@@ -146,7 +148,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
                       </h2>
                       {project.date && (
                         <p className="mt-0.5 text-[0.625rem] text-white/90 md:text-xs">
-                          {dateFormatterMonthYear.format(project.date)}
+                          {dateFormatterMonthYear(locale).format(project.date)}
                         </p>
                       )}
                     </div>
