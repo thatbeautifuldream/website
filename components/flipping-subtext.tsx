@@ -4,10 +4,9 @@ import { useMemo } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { orpc } from '@/lib/orpc';
 import { useQuery } from '@tanstack/react-query';
+import { durations, easings } from '@/lib/motion-tokens';
 
 const FALLBACK_TEXT = 'Product Engineer, currently at Merlin AI.';
-
-const easeOutQuart = [0.165, 0.84, 0.44, 1] as const;
 
 export function FlippingSubtext() {
   const prefersReducedMotion = useReducedMotion();
@@ -25,12 +24,12 @@ export function FlippingSubtext() {
   }, [spotifyData]);
 
   const transition = {
-    duration: prefersReducedMotion ? 0 : 0.25,
-    ease: easeOutQuart,
+    duration: prefersReducedMotion ? 0 : durations.medium,
+    ease: easings.QUICK,
   };
 
   return (
-    <div className="relative min-h-[1.5em] w-fit overflow-hidden text-foreground-lighter text-sm leading-normal">
+    <div className="relative min-h-[1.5em] w-fit overflow-hidden text-foreground-lighter text-sm leading-normal" style={{ contain: 'layout' }}>
       <span aria-hidden="true" className="invisible block whitespace-nowrap">
         {displayText}
       </span>

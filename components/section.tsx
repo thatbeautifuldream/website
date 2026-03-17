@@ -9,6 +9,7 @@ import type {
 } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { durations, easings } from "@/lib/motion-tokens";
 
 type SectionMotionOptions = {
   delay?: number;
@@ -16,19 +17,17 @@ type SectionMotionOptions = {
   blur?: number;
 };
 
-const SECTION_EASE = [0.25, 0.46, 0.45, 0.94] as const;
-
 export const createSectionTransition = (
   delay = 0,
   overrides?: Transition,
 ): Transition => ({
   delay,
-  duration: 0.6,
-  ease: SECTION_EASE,
+  duration: durations.slower,
+  ease: easings.DEFAULT,
   type: "tween",
   layout: {
-    duration: 0.3,
-    ease: SECTION_EASE,
+    duration: durations.medium,
+    ease: easings.DEFAULT,
   },
   ...overrides,
 });
@@ -129,9 +128,6 @@ export const Section = ({
       className={cn("grid gap-4", className)}
       exit={exit ?? createSectionAnimation().exit}
       initial={createSectionAnimation().initial}
-      style={{
-        willChange: "transform, opacity, filter",
-      }}
       transition={createSectionTransition(delay)}
       viewport={{ once: true, amount: 0.3 }}
       {...(layout ? { layout } : {})}
