@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { TextMorph } from "torph/react";
 import { Link } from "@/components/link";
 import { cn } from "@/lib/utils";
+import { durations, easings } from "@/lib/motion-tokens";
 import { Button } from "./ui/button";
 import { useCommandPalette } from "./providers/command-palette-provider";
 import { createSectionTransition } from "./section";
@@ -214,19 +215,15 @@ export const Navigation = () => {
         filter: "blur(4px)",
         translateY: -10,
         opacity: 0,
-        transition: createSectionTransition(
-          (mobileMenuLinks.length - index) * 0.025,
-          {
-            duration: 0.12,
-          },
-        ),
+        transition: createSectionTransition(0, {
+          duration: durations.fast,
+        }),
       },
     };
   };
 
-  const mobileMenuExitDelay = shouldReduceMotion
-    ? 0
-    : mobileMenuLinks.length * 0.025 + 0.12;
+  // Fixed exit delay for cleaner, more predictable animation
+  const mobileMenuExitDelay = shouldReduceMotion ? 0 : durations.fast;
 
   const handleMobileMenuToggle = () => {
     if (!mobileMenuOpen) {
@@ -337,8 +334,8 @@ export const Navigation = () => {
                       initial={{ opacity: 0 }}
                       layoutId="nav-pill"
                       transition={{
-                        duration: 0.2,
-                        ease: "easeInOut",
+                        duration: durations.normal,
+                        ease: easings.LAYOUT,
                       }}
                     />
                   )}

@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { TGuestbook } from '@/db/schema';
 import { dateFormatterShort } from '@/lib/date-formatters';
+import { durations, easings } from '@/lib/motion-tokens';
 import { orpc } from '@/lib/orpc';
 
 type TGuestbookEntry = {
@@ -134,8 +135,8 @@ export function Guestbook() {
                 key="guestbook-form"
                 onSubmit={handleSubmit}
                 transition={{
-                  duration: shouldReduceMotion ? 0 : 0.2,
-                  ease: 'easeInOut',
+                  duration: shouldReduceMotion ? 0 : durations.normal,
+                  ease: easings.LAYOUT,
                 }}
               >
                 {createEntryMutation.error && (
@@ -216,8 +217,8 @@ export function Guestbook() {
                 initial={{ opacity: 0 }}
                 key="add-entry-button"
                 transition={{
-                  duration: shouldReduceMotion ? 0 : 0.2,
-                  ease: 'easeInOut',
+                  duration: shouldReduceMotion ? 0 : durations.normal,
+                  ease: easings.LAYOUT,
                 }}
               >
                 <Button
