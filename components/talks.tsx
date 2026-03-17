@@ -4,6 +4,8 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
+import { useLocale } from '@/components/providers/locale-provider';
+import { formatMonthYear } from '@/lib/i18n/formatters';
 import { cn } from '@/lib/utils';
 
 export type TTalk = {
@@ -27,6 +29,8 @@ type TTalkGridProps = {
 };
 
 export const TalkCard = ({ talk, children }: TTalkCardProps) => {
+  const { locale } = useLocale();
+
   const talkContent = talk.image ? (
     <ViewTransition name={`talk-image-${talk.slug}`}>
       <Image
@@ -72,10 +76,7 @@ export const TalkCard = ({ talk, children }: TTalkCardProps) => {
                       </h2>
                       {talk.date && (
                         <p className="mt-0.5 text-[0.625rem] text-white/90 md:text-xs">
-                          {new Intl.DateTimeFormat('en-US', {
-                            month: 'long',
-                            year: 'numeric',
-                          }).format(talk.date)}
+                          {formatMonthYear(talk.date, locale)}
                         </p>
                       )}
                     </div>

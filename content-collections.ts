@@ -21,7 +21,7 @@ const rehypeCodeOptions: RehypeCodeOptions = {
 const pages = defineCollection({
   name: "pages",
   directory: "content",
-  include: "pages/*.mdx",
+  include: "pages/**/*.mdx",
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
@@ -32,9 +32,15 @@ const pages = defineCollection({
       rehypePlugins: [[rehypeCode, rehypeCodeOptions], remarkHeading],
     });
 
+    const [, locale = "en", pageId = page._meta.fileName.replace(/\.mdx$/, "")] =
+      page._meta.path.split("/");
+
     return {
       ...page,
       body,
+      entryId: pageId,
+      locale,
+      pageId,
     };
   },
 });
@@ -42,7 +48,7 @@ const pages = defineCollection({
 const blogs = defineCollection({
   name: "blogs",
   directory: "content",
-  include: "blog/*.mdx",
+  include: "blog/**/*.mdx",
   schema: (z) => ({
     title: z.string(),
     description: z.string().optional(),
@@ -59,6 +65,8 @@ const blogs = defineCollection({
       remarkPlugins: [remarkGfm],
       rehypePlugins: [[rehypeCode, rehypeCodeOptions], remarkHeading],
     });
+    const [, locale = "en", ...slugParts] = page._meta.path.split("/");
+    const derivedSlug = page.slug || slugParts.join("/");
 
     // Support both date formats - use datePublished if available, fallback to date
     const postDate = page.datePublished || page.date || new Date();
@@ -69,9 +77,12 @@ const blogs = defineCollection({
     return {
       ...page,
       date: new Date(postDate),
+      entryId: derivedSlug,
       image: postImage,
       body,
-      slug: page.slug || page._meta.path,
+      locale,
+      pathname: `/${locale}/blog/${derivedSlug}`,
+      slug: derivedSlug,
       readingTime: readingTime(page.content).text,
     };
   },
@@ -80,7 +91,7 @@ const blogs = defineCollection({
 const posts = defineCollection({
   name: "posts",
   directory: "content",
-  include: "post/*.mdx",
+  include: "post/**/*.mdx",
   schema: (z) => ({
     title: z.string(),
     description: z.string().optional(),
@@ -96,6 +107,8 @@ const posts = defineCollection({
       remarkPlugins: [remarkGfm],
       rehypePlugins: [[rehypeCode, rehypeCodeOptions], remarkHeading],
     });
+    const [, locale = "en", ...slugParts] = page._meta.path.split("/");
+    const derivedSlug = page.slug || slugParts.join("/");
 
     // Support both date formats - use datePublished if available, fallback to date
     const postDate = page.datePublished || page.date || new Date();
@@ -106,9 +119,12 @@ const posts = defineCollection({
     return {
       ...page,
       date: new Date(postDate),
+      entryId: derivedSlug,
       image: postImage,
       body,
-      slug: page.slug || page._meta.path,
+      locale,
+      pathname: `/${locale}/post/${derivedSlug}`,
+      slug: derivedSlug,
       readingTime: readingTime(page.content).text,
     };
   },
@@ -117,7 +133,7 @@ const posts = defineCollection({
 const gists = defineCollection({
   name: "gists",
   directory: "content",
-  include: "gist/*.mdx",
+  include: "gist/**/*.mdx",
   schema: (z) => ({
     title: z.string(),
     description: z.string().optional(),
@@ -134,6 +150,8 @@ const gists = defineCollection({
       remarkPlugins: [remarkGfm],
       rehypePlugins: [[rehypeCode, rehypeCodeOptions], remarkHeading],
     });
+    const [, locale = "en", ...slugParts] = page._meta.path.split("/");
+    const derivedSlug = page.slug || slugParts.join("/");
 
     // Support both date formats - use datePublished if available, fallback to date
     const gistDate = page.datePublished || page.date || new Date();
@@ -142,7 +160,10 @@ const gists = defineCollection({
       ...page,
       date: new Date(gistDate),
       body,
-      slug: page.slug || page._meta.path,
+      entryId: derivedSlug,
+      locale,
+      pathname: `/${locale}/gist/${derivedSlug}`,
+      slug: derivedSlug,
       readingTime: readingTime(page.content).text,
     };
   },

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Section } from '@/components/section';
 import { DailyBreakdownChart } from '@/components/wakatime/daily-breakdown-chart';
 import { dateFormatterLong } from '@/lib/date-formatters';
+import { defaultLocale } from '@/lib/i18n/config';
 import { orpc } from '@/lib/orpc';
 import {
   type TWakatimeStatsCard,
@@ -93,7 +94,7 @@ export function WakatimeCodingActivity() {
     },
     {
       title: 'Most Active Day',
-      value: dateFormatterLong.format(new Date(mostActiveDay.range.date)),
+      value: dateFormatterLong(defaultLocale).format(new Date(mostActiveDay.range.date)),
       description: 'Peak coding day',
       delay: 0.3,
     },

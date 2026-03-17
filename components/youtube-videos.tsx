@@ -3,6 +3,7 @@
 import { CalendarIcon, ExternalLinkIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { dateFormatterShort } from '@/lib/date-formatters';
+import { useLocale } from '@/components/providers/locale-provider';
 import { type TYouTubeVideosResponse, videos } from '@/lib/videos';
 import { Link } from './link';
 import { Section } from './section';
@@ -11,6 +12,7 @@ import { Video } from './video';
 type VideoItem = TYouTubeVideosResponse['items'][number];
 
 const VideoCard = ({ video }: { video: VideoItem }) => {
+  const { locale } = useLocale();
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const videoRef = useRef<HTMLDivElement>(null);
@@ -33,7 +35,7 @@ const VideoCard = ({ video }: { video: VideoItem }) => {
     return () => observer.disconnect();
   }, []);
 
-  const formattedDate = dateFormatterShort.format(
+  const formattedDate = dateFormatterShort(locale).format(
     new Date(video.snippet.publishedAt)
   );
 
