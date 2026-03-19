@@ -1,22 +1,33 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { ResumeDialog } from './resume-dialog';
 
-export const ResumeLink = () => {
+type ResumeLinkProps = {
+  children?: ReactNode;
+  className?: string;
+};
+
+export const ResumeLink = ({
+  children = 'Resume',
+  className,
+}: ResumeLinkProps) => {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   return (
     <>
-      <div className="flex items-center">
-        <button
-          className="cursor-pointer transition-colors hover:text-foreground"
-          onClick={() => setIsResumeOpen(true)}
-          type="button"
-        >
-          Resume
-        </button>
-      </div>
+      <button
+        className={cn(
+          'cursor-pointer transition-colors hover:text-foreground',
+          className
+        )}
+        onClick={() => setIsResumeOpen(true)}
+        type="button"
+      >
+        {children}
+      </button>
       <ResumeDialog
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}
