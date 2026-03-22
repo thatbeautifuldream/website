@@ -20,6 +20,8 @@ export const metadata: Metadata = createMetadata({
   image: "/images/opengraph-image.png",
 });
 
+export const revalidate = 86_400;
+
 const HomePage = () => (
   <>
     <Section className="flex items-center gap-4" delay={0.1}>
@@ -30,15 +32,13 @@ const HomePage = () => (
       </div>
     </Section>
 
-    <Section delay={0.2}>
+    <Section delay={0.15}>
       <GitHubContributionGraph className="mt-4" />
     </Section>
 
-    <article>
-      <Section delay={0.3}>
-        <Mdx code={page.body} />
-      </Section>
-    </article>
+    <Section delay={0.2}>
+      <Mdx code={page.body} />
+    </Section>
   </>
 );
 
