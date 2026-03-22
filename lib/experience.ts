@@ -1,6 +1,7 @@
 export const experience = [
   {
     company: "Merlin AI by Foyer",
+    icon: "/images/work/company/merlin-ai-by-foyer.png",
     position: "Product Engineer",
     location: "Bengaluru, Karnataka, India",
     startDate: "2025-02-01",
@@ -18,6 +19,7 @@ export const experience = [
   },
   {
     company: "SARAL - The Influencer OS",
+    icon: "/images/work/company/saral.png",
     position: "Software Engineer",
     location: "Bengaluru, Karnataka, India",
     startDate: "2025-01-01",
@@ -34,6 +36,7 @@ export const experience = [
   },
   {
     company: "Proof-of-Skill Protocol",
+    icon: "/images/work/company/proof-of-skill-protocol.png",
     position: "Founding Product Engineer",
     location: "Bengaluru, Karnataka, India",
     startDate: "2024-06-01",
@@ -51,6 +54,7 @@ export const experience = [
   },
   {
     company: "Freelance",
+    icon: "/images/work/company/freelance.png",
     position: "Independent Contractor",
     location: "Bengaluru, Karnataka, India",
     startDate: "2024-02-01",
@@ -66,6 +70,7 @@ export const experience = [
   },
   {
     company: "StartupHire",
+    icon: "/images/work/company/startuphire.png",
     position: "Software Engineer",
     location: "Remote",
     startDate: "2023-08-01",
@@ -80,6 +85,7 @@ export const experience = [
   },
   {
     company: "National Yang Ming Chiao Tung University",
+    icon: "/images/work/company/nycu.png",
     position: "Research Assistant",
     location: "Hsinchu, Taiwan",
     startDate: "2023-02-01",
@@ -95,6 +101,7 @@ export const experience = [
   },
   {
     company: "Locus Connect",
+    icon: "/images/work/company/locus-connect.png",
     position: "Software Engineer",
     location: "Hsinchu, Taiwan",
     startDate: "2022-07-01",
@@ -110,6 +117,7 @@ export const experience = [
   },
   {
     company: "iNeuron.ai",
+    icon: "/images/work/company/ineuron-ai.png",
     position: "UX Designer",
     location: "Bengaluru, Karnataka, India",
     startDate: "2022-05-01",
@@ -125,6 +133,7 @@ export const experience = [
   },
   {
     company: "Plusklass",
+    icon: "/images/work/company/plusklass.png",
     position: "Technical Writer",
     location: "Remote",
     startDate: "2022-01-01",

@@ -4,12 +4,12 @@ import { XIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { calculateDuration, formatDate } from '@/lib/experience';
-import { getFavicon } from '@/lib/favicon';
 import { Link } from './link';
 import { Section } from './section';
 
 type ExperienceItemProps = {
   company: string;
+  icon: string;
   position: string;
   location: string;
   startDate: string;
@@ -23,6 +23,7 @@ type ExperienceItemProps = {
 
 export const ExperienceItem = ({
   company,
+  icon,
   position,
   location,
   startDate,
@@ -37,8 +38,6 @@ export const ExperienceItem = ({
   const formattedStartDate = formatDate(startDate);
   const formattedEndDate = endDate ? formatDate(endDate) : 'Present';
 
-  const faviconSrc = getFavicon(url);
-
   if (!isExpanded) {
     return (
       <div className="group relative flex gap-4 rounded-lg p-4 transition-colors hover:bg-primary-foreground/10">
@@ -47,11 +46,12 @@ export const ExperienceItem = ({
           layoutId={`favicon-${company}-${startDate}`}
         >
           <Image
-            alt=""
+            alt={`${company} icon`}
             className="rounded-lg"
             height={48}
-            src={faviconSrc}
-            unoptimized
+            priority
+            sizes="48px"
+            src={icon}
             width={48}
           />
         </motion.div>
@@ -121,11 +121,11 @@ export const ExperienceItem = ({
               layoutId={`favicon-${company}-${startDate}`}
             >
               <Image
-                alt=""
+                alt={`${company} icon`}
                 className="rounded-lg"
                 height={48}
-                src={faviconSrc}
-                unoptimized
+                sizes="48px"
+                src={icon}
                 width={48}
               />
             </motion.div>
