@@ -7,6 +7,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes media-gradient-drift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 :root {
   --background: oklch(0.99 0 0);
   --foreground: oklch(0 0 0);
@@ -236,4 +248,14 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+}
+
+.media-gradient-loading {
+  animation: media-gradient-drift 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-gradient-loading {
+    animation: none;
+  }
 }

@@ -1,9 +1,9 @@
 'use client';
 
-import { ArrowLeftToLineIcon, ArrowUpRightIcon, ExternalLinkIcon } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowLeftToLineIcon, ArrowUpRightIcon } from 'lucide-react';
 import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
+import { RemoteMediaImage } from '@/components/media-frame';
 import { Section } from '@/components/section';
 import type { TTalk } from '@/components/talks';
 import { cn } from '@/lib/utils';
@@ -86,13 +86,7 @@ export function TalkContent({ talk }: TTalkContentProperties) {
       {talk.image && (
         <Section>
           <ViewTransition name={`talk-image-${talk.slug}`}>
-            <Image
-              alt={talk.title}
-              className="w-full overflow-hidden rounded-lg border border-border/50"
-              height={600}
-              src={talk.image}
-              width={800}
-            />
+            <RemoteMediaImage alt={talk.title} priority src={talk.image} />
           </ViewTransition>
         </Section>
       )}

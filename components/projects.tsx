@@ -1,8 +1,12 @@
 'use client';
 
-import Image from 'next/image';
-import { type ReactNode, useState, ViewTransition } from 'react';
+import { type ReactNode, ViewTransition } from 'react';
 import { Link } from '@/components/link';
+import {
+  MediaFallback,
+  RemoteMediaImage,
+  RemoteMediaVideo,
+} from '@/components/media-frame';
 import { dateFormatterMonthYear } from '@/lib/date-formatters';
 import { cn } from '@/lib/utils';
 
@@ -22,6 +26,7 @@ export type TProject = {
 type TProjectCardProps = {
   project: TProject;
   children?: ReactNode;
+  priority?: boolean;
 };
 
 type TProjectGridProps = {
@@ -60,32 +65,34 @@ export const getStripRotation = (slug: string): number => {
   return rotation;
 };
 
-export const ProjectCard = ({ project, children }: TProjectCardProps) => {
+export const ProjectCard = ({
+  project,
+  children,
+  priority = false,
+}: TProjectCardProps) => {
   const stripRotation = getStripRotation(project.slug);
   let projectContent: ReactNode;
 
   if (project.video) {
     projectContent = (
       <ViewTransition name={`project-image-${project.slug}`}>
-        <video
+        <RemoteMediaVideo
           autoPlay
-          className="size-full object-cover object-top"
           loop
           muted
           playsInline
-          poster={project.image}
-        >
-          <source src={project.video} type={getVideoMimeType(project.video)} />
-        </video>
+          priority={priority}
+          sourceType={getVideoMimeType(project.video)}
+          src={project.video}
+        />
       </ViewTransition>
     );
   } else if (project.image) {
     projectContent = (
       <ViewTransition name={`project-image-${project.slug}`}>
-        <Image
+        <RemoteMediaImage
           alt={project.title}
-          className="size-full object-cover object-top"
-          fill
+          priority={priority}
           src={project.image}
         />
       </ViewTransition>
@@ -93,11 +100,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
   } else {
     projectContent = (
       <ViewTransition name={`project-image-${project.slug}`}>
-        <div className="flex size-full items-center justify-center bg-linear-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900">
-          <span className="font-medium text-lg text-neutral-400">
-            {project.title}
-          </span>
-        </div>
+        <MediaFallback title={project.title} />
       </ViewTransition>
     );
   }
@@ -119,8 +122,7 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
       </div>
       <div
         className={cn(
-          'relative w-full overflow-clip rounded-lg transition-shadow duration-200 ease-out group-hover:shadow-lg group-active:shadow-none dark:shadow-none',
-          'aspect-16/10'
+          'relative w-full overflow-clip rounded-lg transition-shadow duration-200 ease-out group-hover:shadow-lg group-active:shadow-none dark:shadow-none'
         )}
       >
         {children || (
@@ -162,8 +164,6 @@ export const ProjectCard = ({ project, children }: TProjectCardProps) => {
 };
 
 export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
-  const [visibleCount, setVisibleCount] = useState(2);
-
   if (children) {
     return <div className="grid gap-6">{children}</div>;
   }
@@ -172,25 +172,11 @@ export const ProjectGrid = ({ projects, children }: TProjectGridProps) => {
     return null;
   }
 
-  const visibleProjects = projects.slice(0, visibleCount);
-  const hasMore = projects.length > visibleCount;
-
   return (
     <div className="grid gap-6">
-      {visibleProjects.map((project) => (
-        <ProjectCard key={project.slug} project={project} />
+      {projects.map((project, index) => (
+        <ProjectCard key={project.slug} priority={index < 2} project={project} />
       ))}
-      {hasMore && (
-        <div>
-          <button
-            className="cursor-pointer text-neutral-400 text-sm underline decoration-neutral-300 underline-offset-2 transition-all hover:text-neutral-600 hover:decoration-neutral-400 hover:underline-offset-[2.5px] dark:text-neutral-500 dark:decoration-neutral-600 dark:hover:text-neutral-400 dark:hover:decoration-neutral-500"
-            onClick={() => setVisibleCount(projects.length)}
-            type="button"
-          >
-            See {projects.length - visibleCount} more...
-          </button>
-        </div>
-      )}
     </div>
   );
 };

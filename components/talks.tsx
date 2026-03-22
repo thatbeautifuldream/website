@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { ViewTransition } from 'react';
 import { Link } from '@/components/link';
+import { MediaFallback, RemoteMediaImage } from '@/components/media-frame';
+import { Section } from '@/components/section';
 import { cn } from '@/lib/utils';
 
 export type TTalk = {
@@ -19,6 +20,7 @@ export type TTalk = {
 type TTalkCardProps = {
   talk: TTalk;
   children?: ReactNode;
+  priority?: boolean;
 };
 
 type TTalkGridProps = {
@@ -26,24 +28,14 @@ type TTalkGridProps = {
   children?: ReactNode;
 };
 
-export const TalkCard = ({ talk, children }: TTalkCardProps) => {
+export const TalkCard = ({ talk, children, priority = false }: TTalkCardProps) => {
   const talkContent = talk.image ? (
     <ViewTransition name={`talk-image-${talk.slug}`}>
-      <Image
-        alt={talk.title}
-        className="w-full"
-        height={600}
-        src={talk.image}
-        width={800}
-      />
+      <RemoteMediaImage alt={talk.title} priority={priority} src={talk.image} />
     </ViewTransition>
   ) : (
     <ViewTransition name={`talk-image-${talk.slug}`}>
-      <div className="flex size-full items-center justify-center bg-linear-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900">
-        <span className="font-medium text-lg text-neutral-400">
-          {talk.title}
-        </span>
-      </div>
+      <MediaFallback title={talk.title} />
     </ViewTransition>
   );
 
@@ -101,8 +93,10 @@ export const TalkGrid = ({ talks, children }: TTalkGridProps) => {
 
   return (
     <div className="grid gap-6">
-      {talks.map((talk) => (
-        <TalkCard key={talk.slug} talk={talk} />
+      {talks.map((talk, index) => (
+        <Section delay={0.12 + index * 0.04} key={talk.slug}>
+          <TalkCard priority={index < 3} talk={talk} />
+        </Section>
       ))}
     </div>
   );

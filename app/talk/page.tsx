@@ -18,12 +18,12 @@ export const metadata: Metadata = createMetadata({
 
 const TalkPage = () => (
   <>
-    <Section className="gap-0">
+    <Section className="gap-0" delay={0.04}>
       <h1>{page.title}</h1>
       <p className="text-foreground-lighter">{page.description}</p>
     </Section>
     <article>
-      <Section>
+      <Section delay={0.1}>
         <Mdx code={page.body} />
       </Section>
     </article>

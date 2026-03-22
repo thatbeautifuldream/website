@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { ArrowLeftToLineIcon, GithubIcon } from 'lucide-react';
-import Image from 'next/image';
-import { ViewTransition } from 'react';
-import { Streamdown } from 'streamdown';
-import { Link } from '@/components/link';
-import { getStripRotation, type TProject } from '@/components/projects';
-import { Section } from '@/components/section';
-import { cn } from '@/lib/utils';
+import { ArrowLeftToLineIcon, GithubIcon } from "lucide-react";
+import { ViewTransition } from "react";
+import { Streamdown } from "streamdown";
+import { Link } from "@/components/link";
+import { RemoteMediaImage, RemoteMediaVideo } from "@/components/media-frame";
+import { getStripRotation, type TProject } from "@/components/projects";
+import { Section } from "@/components/section";
+import { cn } from "@/lib/utils";
 
 type TProjectContentProperties = {
   readonly project: TProject;
 };
 
 const getVideoMimeType = (videoUrl: string): string => {
-  const extension = videoUrl.split('.').pop()?.toLowerCase();
+  const extension = videoUrl.split(".").pop()?.toLowerCase();
   switch (extension) {
-    case 'webm':
-      return 'video/webm';
-    case 'mp4':
-      return 'video/mp4';
-    case 'ogg':
-      return 'video/ogg';
+    case "webm":
+      return "video/webm";
+    case "mp4":
+      return "video/mp4";
+    case "ogg":
+      return "video/ogg";
     default:
-      return 'video/mp4';
+      return "video/mp4";
   }
 };
 
@@ -38,8 +38,8 @@ export function ProjectContent({ project }: TProjectContentProperties) {
       >
         <Link
           className={cn(
-            'flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors',
-            'hover:text-foreground'
+            "flex items-center gap-2 text-nowrap text-foreground-lighter text-xs transition-colors",
+            "hover:text-foreground",
           )}
           href="/project"
         >
@@ -68,9 +68,9 @@ export function ProjectContent({ project }: TProjectContentProperties) {
                     </h1>
                     {project.date && (
                       <p className="mt-0.5 text-white/90 text-xs dark:text-black/80">
-                        {new Intl.DateTimeFormat('en-US', {
-                          month: 'long',
-                          year: 'numeric',
+                        {new Intl.DateTimeFormat("en-US", {
+                          month: "long",
+                          year: "numeric",
                         }).format(project.date)}
                       </p>
                     )}
@@ -147,28 +147,21 @@ export function ProjectContent({ project }: TProjectContentProperties) {
         <Section>
           <ViewTransition name={`project-image-${project.slug}`}>
             {project.video ? (
-              <video
+              <RemoteMediaVideo
                 autoPlay
-                className="w-full overflow-hidden rounded-lg border border-border/50"
                 controls
                 loop
                 muted
                 playsInline
-                poster={project.image}
-              >
-                <source
-                  src={project.video}
-                  type={getVideoMimeType(project.video)}
-                />
-              </video>
+                priority
+                sourceType={getVideoMimeType(project.video)}
+                src={project.video}
+              />
             ) : (
-              <Image
+              <RemoteMediaImage
                 alt={project.title}
-                className="w-full overflow-hidden rounded-lg border border-border/50"
-                height={600}
-                // biome-ignore lint/style/noNonNullAssertion: fallback
+                priority
                 src={project.image!}
-                width={800}
               />
             )}
           </ViewTransition>
