@@ -31,7 +31,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       className={cn(
-        sans.googleSansFlex.variable,
+        sans.familjenGrotesk.variable,
         mono.geistMono.variable,
         serif.instrumentSerif.variable
       )}

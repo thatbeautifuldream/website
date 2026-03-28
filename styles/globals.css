@@ -223,8 +223,6 @@
   --color-link-hover: var(--link-hover);
   --color-link-underline-hover: var(--link-underline-hover);
 
-  /* --font-sans: var(--font-geist); */
-  --font-sans: var(--font-google-sans-flex);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-instrument-serif);
 
