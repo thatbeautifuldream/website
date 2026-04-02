@@ -45,3 +45,11 @@ next-env.d.ts
 
 # opensrc - source code for packages
 opensrc/
+
+.mcp.json
+opencode.json
+
+.agents
+.claude
+.codex
+.opencode

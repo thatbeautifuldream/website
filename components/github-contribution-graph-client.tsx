@@ -74,9 +74,9 @@ export function GitHubContributionGraphClient({
             </ContributionGraphCalendar>
 
             <ContributionGraphFooter className="items-end justify-between gap-3 text-xs">
-              <ContributionGraphTotalCount className="text-muted-foreground text-xs">
+              <ContributionGraphTotalCount className="text-muted-foreground text-xs tabular-nums">
                 {({ totalCount, year: contributionYear }) => (
-                  <p className="text-balance text-muted-foreground text-xs">
+                  <p className="text-balance text-muted-foreground text-xs tabular-nums">
                     {totalCount.toLocaleString('en-US')} contributions in{' '}
                     {contributionYear} on{' '}
                     <a

@@ -15,7 +15,7 @@ export function ProfileName() {
   const isPlaying = spotifyData?.isPlaying && spotifyData?.track;
 
   return (
-    <TextMorph className="font-medium text-foreground leading-normal">
+    <TextMorph className="text-balance font-semibold text-foreground leading-normal tracking-tight">
       {isPlaying ? 'Milind is listening to...' : 'Milind Mishra'}
     </TextMorph>
   );

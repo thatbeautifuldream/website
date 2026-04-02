@@ -123,35 +123,35 @@ const Callout = ({ children }: { children: ReactNode }) => (
 );
 
 const h2 = ({ children, ...props }: HTMLProps<HTMLHeadingElement>) => (
-  <h2 {...props}>
+  <h2 {...props} className="text-balance tracking-tight">
     <span className="mr-2 select-none text-border">##</span>
     {children}
   </h2>
 );
 
 const h3 = ({ children, ...props }: HTMLProps<HTMLHeadingElement>) => (
-  <h3 {...props}>
+  <h3 {...props} className="text-balance tracking-tight">
     <span className="mr-2 select-none text-border">###</span>
     {children}
   </h3>
 );
 
 const h4 = ({ children, ...props }: HTMLProps<HTMLHeadingElement>) => (
-  <h4 {...props}>
+  <h4 {...props} className="text-balance">
     <span className="mr-2 select-none text-border">####</span>
     {children}
   </h4>
 );
 
 const h5 = ({ children, ...props }: HTMLProps<HTMLHeadingElement>) => (
-  <h5 {...props}>
+  <h5 {...props} className="text-balance">
     <span className="mr-2 select-none text-border">#####</span>
     {children}
   </h5>
 );
 
 const h6 = ({ children, ...props }: HTMLProps<HTMLHeadingElement>) => (
-  <h6 {...props}>
+  <h6 {...props} className="text-balance">
     <span className="mr-2 select-none text-border">######</span>
     {children}
   </h6>

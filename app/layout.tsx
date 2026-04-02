@@ -50,7 +50,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <QueryClientProviderWrapper>
             <CommandPaletteProvider>
               <LayoutWrapper>
-                <div className="mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
+                <div className="isolate mx-auto grid max-w-2xl gap-12 px-4 py-8 pb-12 sm:px-8">
                   <Navigation />
                   {children}
                   <Footer />
